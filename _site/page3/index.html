@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+  <title>
+    
+      Akash Nair &middot; 
+    
+  </title>
+
+  
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/blog/assets/css/main.css" />
+  
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/blog/favicon.png" />
+<link rel="shortcut icon" href="/blog/favicon.ico" />
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml" />
+
+  <!-- Additional head bits without overriding original head -->
+</head>
+
+
+  <body class="index">
+
+    <div id="sidebar">
+  <header>
+    <h1 class="site-title">
+      <a href="/blog/">
+        
+          <span class="back-arrow icon"><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+</svg></span>
+        
+        Akash Nair
+      </a>
+    </h1>
+    <p class="lead">DevOps Engineer | Berlin</p>
+  </header>
+  <nav id="sidebar-nav-links">
+  
+  
+
+  
+
+  <div id="profile-container">
+     <image id="profileImage" src="/blog/assets/images/avatar.jpg" />
+  </div>
+
+
+  <!-- Icons downloaded from https://iconmonstr.com/ -->
+  <!-- Blog link sidebar-->
+  <a id="blog-link"
+       title="Blog" aria-label="Blog"
+       href="/blog/" target="_blank">
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.5 14.625c0 .484-.387.875-.864.875h-5.273c-.477 0-.863-.392-.863-.875s.387-.875.863-.875h5.272c.478 0 .865.391.865.875zm-6.191-4.375h2.466c.448 0 .809-.392.809-.875s-.361-.875-.81-.875h-2.465c-.447 0-.809.392-.809.875s.362.875.809.875zm14.691 1.75c0 6.627-5.373 12-12 12s-12-5.373-12-12 5.373-12 12-12 12 5.373 12 12zm-5-1.039c0-.383-.311-.692-.691-.692h-1.138c-.583 0-.69-.446-.69-.996-.001-2.36-1.91-4.273-4.265-4.273h-2.952c-2.355 0-4.264 1.913-4.264 4.272v5.455c0 2.36 1.909 4.273 4.264 4.273h5.474c2.353 0 4.262-1.913 4.262-4.272v-3.767z"/></svg>
+       Blog
+    </a>
+
+  <!--LinkedIn link sidebar-->
+  <a id="linkedin-link"
+       title="LinkedIn" aria-label="LinkedIn"
+       href="https://www.linkedin.com/in/akashnair/" target="_blank">
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 8c0 .557-.447 1.008-1 1.008s-1-.45-1-1.008c0-.557.447-1.008 1-1.008s1 .452 1 1.008zm0 2h-2v6h2v-6zm3 0h-2v6h2v-2.861c0-1.722 2.002-1.881 2.002 0v2.861h1.998v-3.359c0-3.284-3.128-3.164-4-1.548v-1.093z"/></svg>       
+       LinkedIn
+    </a>
+
+  <!--Github link sidebar-->
+  <a id="github-link"
+       title="GitHub" aria-label="GitHub Profile"
+       href="https://github.com/slashr" target="_blank">      
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+       GitHub
+    </a>
+
+ <!-- Resume link sidebar-->
+  <a id="Resume-link"
+       title="Resume" aria-label="Resume"
+       href="/blog/assets/Akash-Nair-Resume.pdf">
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.995 24h-1.995c0-3.104.119-3.55-1.761-3.986-2.877-.664-5.594-1.291-6.584-3.458-.361-.791-.601-2.095.31-3.814 2.042-3.857 2.554-7.165 1.403-9.076-1.341-2.229-5.413-2.241-6.766.034-1.154 1.937-.635 5.227 1.424 9.025.93 1.712.697 3.02.338 3.815-.982 2.178-3.675 2.799-6.525 3.456-1.964.454-1.839.87-1.839 4.004h-1.995l-.005-1.241c0-2.52.199-3.975 3.178-4.663 3.365-.777 6.688-1.473 5.09-4.418-4.733-8.729-1.35-13.678 3.732-13.678 4.983 0 8.451 4.766 3.732 13.678-1.551 2.928 1.65 3.624 5.09 4.418 2.979.688 3.178 2.143 3.178 4.663l-.005 1.241zm-13.478-6l.91 2h1.164l.92-2h-2.994zm2.995 6l-.704-3h-1.615l-.704 3h3.023z"/></svg>
+       Resume
+    </a>
+
+
+ <!-- 
+
+
+  
+    
+  
+
+  
+    
+      <a class="page-link "
+          href="/blog/about.html">About</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+
+  
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+      <a class="category-link "
+          href="/blog/category/edge-case.html">Edge Case</a>
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+      <a class="category-link "
+          href="/blog/category/markup.html">Markup</a>
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+-->
+
+  <!-- Optional additional links to insert in sidebar nav -->
+</nav>
+
+
+  
+
+  <nav id="sidebar-icon-links">
+<!--
+    <a id="github-link"
+       class="icon" title="Github Project" aria-label="Github Project"
+       href="https://github.com/slashr">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    </a>
+    <a id="github-download-link"
+       class="icon" title="Download" aria-label="Download"
+       href="https://github.com/slashr/archive/v.zip">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+    </a>
+  
+
+  <a id="subscribe-link"
+     class="icon" title="Subscribe" aria-label="Subscribe"
+     href="/blog/feed.xml">
+    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <circle cx="6.18" cy="17.82" r="2.18"/>
+    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+</svg>
+  </a>
+
+  
+  
+  
+  
+
+  
+    <a id="tags-link"
+       class="icon"
+       title="Tags" aria-label="Tags"
+       href="/blog/tags.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/>
+</svg>
+    </a>
+  
+
+  
+    <a id="search-link"
+       class="icon"
+       title="Search" aria-label="Search"
+       href="/blog/search.html">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+    </a>
+  
+
+  <!-- Optional additional links to insert for icons links -->
+</nav>
+
+  <p>
+  &copy; 2018
+  <!--<a href="/blog/LICENSE.md">MIT License.</a>-->
+</p>
+
+</div>
+
+    <main class="container">
+      <div class="content">
+  
+<div class="pagination">
+  <a class="pagination-item newer"
+     href="/blog/page2">
+    Newer
+  </a>
+</div>
+
+
+
+  
+
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/blog/deploying-django-to-beanstalk/">
+        Deploying a Django Application to Elastic Beanstalk
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">23 Mar 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <h3 id="setting-up-a-stagingdevelopment-instance">Setting up a staging/development instance</h3>
+
+<p>It is recommended to have a instance on which activities like pulling the code from git and pushing it to Elastic Beanstalk (EB) can be done. This instance can also be used for development or testing purposes of your Django app.</p>
+
+<p>Install the following packages on your instance:</p>
+
+<p>Pip (apt-get install python-pip)</p>
+
+<p>Virtualenv (apt-get install python-virtualenv)</p>
+
+<p>Awsebcli (pip install awsebcli)</p>
+
+<hr />
+
+<h3 id="setting-up-the-tools-and-environment-for-running-django-by-using-a-virtual-environment">Setting up the tools and environment for running Django by using a virtual environment</h3>
+
+<ol>
+  <li>Create a virtual env: virtualenv eb-virt</li>
+  <li>Activate the env: source ~/eb-virt/bin/activate</li>
+  <li>Install Django using pip: pip install django==1.9.2</li>
+  <li>Verify Django is installed by running: pip freeze</li>
+  <li>Deactivate the environment: deactivate</li>
+</ol>
+
+<hr />
+
+<h3 id="creating-a-sample-django-project">Creating a sample Django project</h3>
+
+<ol>
+  <li>Activate the env: source ~/eb-virt/bin/activate</li>
+  <li>Create a sample project: django-admin startproject skywide</li>
+  <li>Enter the project directory: cd skywide</li>
+  <li>Run the Django server: python manage.py runserver 0.0.0.0:8000</li>
+  <li>Deactivate the environment before moving to the next step: deactivate</li>
+</ol>
+
+<p>You can now see the following page by hitting the public IP of your instance in your browser. Example: 54.255.233.22:8000</p>
+
+<p><a href="http://skywide.in/blog/wp-content/uploads/2016/03/Django.png" rel="attachment wp-att-474"><img class="aligncenter wp-image-474 size-large" src="http://skywide.in/blog/wp-content/uploads/2016/03/Django-1024x540.png" alt="Django" width="584" height="308" srcset="https://skywide.in/blog/wp-content/uploads/2016/03/Django-1024x540.png 1024w, https://skywide.in/blog/wp-content/uploads/2016/03/Django-300x158.png 300w, https://skywide.in/blog/wp-content/uploads/2016/03/Django-768x405.png 768w, https://skywide.in/blog/wp-content/uploads/2016/03/Django.png 1301w" sizes="(max-width: 584px) 100vw, 584px" /></a></p>
+
+<p>Now that Django is up and running on your EC2 instance, we can proceed to make it ready to be deployed on Elastic Beanstalk.</p>
+
+<hr />
+
+<h3 id="configuring-your-application-to-work-with-elastic-beanstalk">Configuring your application to work with Elastic Beanstalk</h3>
+
+<ol>
+  <li>Activate the virtual environment: source ~/eb-virt/bin/activate</li>
+  <li>Create a requirements.txt file. This file is used by EB to install the dependencies on the instances it will launch: pip freeze &gt; requirements.txt. (Do verify that requirements.txt contains “django==1.9.2”)</li>
+  <li>Create a new directory called .ebextensions inside ~/skywide. We will create a configuration file inside this directory later: mkdir .ebextensions</li>
+  <li>Create a file django.config inside .ebextensions containing the following code:</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This setting, &lt;code class="code"&gt;WSGIPath&lt;/code&gt;, specifies the location of the WSGI script that Elastic Beanstalk uses to start your application.    5. Finally, deactivate the virtual environment: deactivate 
+</code></pre></div></div>
+
+<p>Next step is to deploy your Django app to EB.</p>
+
+<hr />
+
+<h3 id="deploying-your-applicaiton-to-elastic-beanstalk">Deploying your applicaiton to Elastic Beanstalk</h3>
+
+<p>Make sure you have a directory structure that looks like this:</p>
+
+<ol>
+  <li>Go inside your project directory (~/skywide) and create a new EB application (initiate the repository) with the following command: eb init -p python3.4 skywide</li>
+  <li>Run eb init again configure a default keypair that will be used to login to the instances launched by EB.</li>
+  <li>Next, create an environment inside the application we just created: eb create skywide-env</li>
+</ol>
+
+<p>To see the app live, go to the Elastic Beanstalk console, click on the Application we created and then on the Environment created (skywide-env). Click on the URL listed at the top of the page and you’ll see your app in action in your browser!</p>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/blog/iam-restrict-bucket-access-by-username/">
+        IAM: Restrict Access to Folders Inside Bucket
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">19 Mar 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Custom IAM Policies
+      
+    
+  </span>
+</div>
+
+
+    
+      <p>The following policy restricts access of a user to the folder inside the bucket that is named after the username. It is suited to be applied to IAM groups.</p>
+
+<p>This helps create a bucket inside which you can create several user directories and each directory can be accessed only by it’s owner.</p>
+
+<p>Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, change all occurrences of “home” with the name of your directory.</p>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/blog/route-53-use-cases/">
+        Moving your DNS to Route 53
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">24 Feb 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+  </span>
+</div>
+
+
+    
+      <h4 id="about-route-53">About Route 53</h4>
+
+<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Since it is a native AWS service, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
+
+<hr />
+
+<p>Here are a few common use-cases along with a broad overview of the process steps:</p>
+
+<ul style="list-style-type: square;">
+  <li>
+    Migrating an existing domain&#8217;s DNS to Route 53
+  </li>
+</ul>
+
+<ol>
+  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.skywide.in)</li>
+  <li>Add a <strong>Record Set</strong> to the <strong>Hosted Zone</strong> and add the IP of the server as a <strong>A record</strong> (also create MX, CNAME and other records depending on your requirement)</li>
+  <li>Copy the four name servers provided by the <strong>Hosted Zone</strong></li>
+  <li>Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53.</li>
+  <li>The DNS propagation from your domain registrar to Route 53 will take 48 hours or more.</li>
+</ol>
+
+<hr />
+
+<ul style="list-style-type: square;">
+  <li>
+    Migrating the sub-domain DNS to Route 53 without migrating the parent domain
+  </li>
+</ul>
+
+<ol>
+  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.skywide.in)</li>
+  <li>Add a <strong>Record Set</strong> to the hosted zone and add the IP of the server as a <strong>A record</strong> (similarly add MX, CNAME records if required)</li>
+  <li>Copy the four name servers provided by the <strong>Hosted Zone</strong>. Replace the NS Records of the registrar with these name servers</li>
+</ol>
+
+<p><em>Important:</em> Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
+
+<hr />
+
+<ul style="list-style-type: square;">
+  <li>
+    Private Hosted Zone
+  </li>
+</ul>
+
+<ol>
+  <li><strong>Private Hosted Zone</strong> is a <strong>Hosted Zone</strong> for managing domains within an AWS VPC</li>
+  <li>First step is to Amazon VPC settings to <code class="highlighter-rouge">true</code>: &lt;div class="itemizedlist"&gt;
+    <ul class="itemizedlist" type="disc">
+   <li class="listitem">
+     <code class="code">enableDnsHostnames</code>
+   </li>
+   <li class="listitem">
+     <code class="code">enableDnsSupport</code>
+   </li>
+ </ul>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/div&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>On the Route 53 page, click on <strong>Create Hosted Zone</strong>.</li>
+  <li>Next, in the <strong>Create Private Hosted Zone</strong> pane, enter your domain name. Select <strong>Private Hosted Zone for Amazon VPC</strong> in the <strong>Type</strong> list.</li>
+  <li>Finally, in the <strong>VPC ID</strong> list, select the VPC you want to associate with Route 53.</li>
+  <li>Click on <strong>Create</strong>. Your VPC should get linked with Route 53 within a few minutes.</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * *
+</code></pre></div></div>
+
+<ul style="list-style-type: square;">
+  <li>
+    <em>Inte</em>gration with other AWS Services
+  </li>
+</ul>
+
+<p>Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services.</p>
+
+<table style="width: 571px;">
+  <tr>
+    <td style="width: 90px;">
+      EC2
+    </td>
+    
+    <td style="width: 469px;">
+      Create an <strong>A record</strong> with the <strong>Elastic IP</strong> of the instance
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 90px;">
+      ELB
+    </td>
+    
+    <td style="width: 469px;">
+      Add <strong>public DNS</strong> of the load balancer to a <strong>CNAME record</strong>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 90px;">
+      CloudFront
+    </td>
+    
+    <td style="width: 469px;">
+      Add <strong>Distribution URL</strong> to a <strong>CNAME</strong> record
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 90px;">
+      S3
+    </td>
+    
+    <td style="width: 469px;">
+      Add the <strong>Bucket URL</strong> to a <strong>CNAME</strong> record
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 90px;">
+      RDS
+    </td>
+    
+    <td style="width: 469px;">
+      Add the <strong>RDS endpoint</strong> to a <strong>CNAME</strong> record
+    </td>
+  </tr>
+</table>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/blog/launching-ec2-instances-using-vagrant/">
+        EC2 Instances Automated Deployment using Vagrant
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">12 Feb 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <h2 style="text-align: left;">
+  Why use Vagrant to launch EC2 instance?
+</h2>
+
+<p style="text-align: left;">
+  EC2 instances can be deployed seamlessly using Vagrant. Once you setup Vagrant and configure it, launching an EC2 instance becomes as easy as running the command <em>vagrant up. </em>Such automation is especially useful when you have to launch a large fleet of EC2 instances quickly.
+</p>
+
+<h4 style="text-align: left;">
+  Setting up Vagrant on your machine
+</h4>
+
+<ol>
+  <li>Install vagrant:</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`sudo apt-get install vagrant`   2. Initialize vagrant:
+  
+`vagrant init hashicorp/precise32`
+  
+`vagrant up`
+  
+(This will download the example virtualbox image from vagrant servers. It might take a few minutes)   3. Install vagrant aws plugin:
+  
+`sudo vagrant plugin install vagrant-aws`   4. Get the AWS Box image:
+  
+`vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
+</code></pre></div></div>
+
+<hr />
+
+<h4 style="text-align: left;">
+  Launching the instance
+</h4>
+
+<ol>
+  <li>Create a directory in your home folder and from inside the directory, run</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`vagrant init hashicorp/precise32`
+  
+(This will create a &amp;#8220;Vagrantfile&amp;#8221; in your directory)   2. Open your Vagrantfile, clear all contents and add the following. Please modify the values wherever necessary.
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Save the file and run:</p>
+
+    <p><code class="highlighter-rouge">vagrant up --provider=aws</code></p>
+  </li>
+  <li>
+    <p>Your instance should be up and running in a few minutes.</p>
+  </li>
+</ol>
+
+<hr />
+
+<p>The above configuration only contains the bare essential configurations. Here are some more configuration parameters.</p>
+
+<table style="height: 258px; width: 675px;">
+  <tr>
+    <td style="width: 253px;">
+      availability_zone
+    </td>
+    
+    <td style="width: 408px;">
+      Specify the desired availability zone. (ap-southeast-1a)
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      instance_type
+    </td>
+    
+    <td style="width: 408px;">
+      The default value of this if not specified is &#8220;m3.medium&#8221;
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      private_ip_address
+    </td>
+    
+    <td style="width: 408px;">
+      The private IP address to assign to an instance within a VPC
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      instance_ready_timeout
+    </td>
+    
+    <td style="width: 408px;">
+      The number of seconds to wait for the instance to become &#8220;ready&#8221; in AWS. Defaults to 120 seconds
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      instance_package_timeout
+    </td>
+    
+    <td style="width: 408px;">
+      The number of seconds to wait for the instance to be burnt into an AMI during packaging. Defaults to 600 seconds
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      elastic_ip
+    </td>
+    
+    <td style="width: 408px;">
+      Can be set to &#8216;true&#8217;, or to an existing Elastic IP address
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      security_groups
+    </td>
+    
+    <td style="width: 408px;">
+      An array of security groups for the instance. If this instance will be launched in VPC, this must be a list of security group Name. For a non-default VPC, you must use security group IDs instead
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      subnet_id
+    </td>
+    
+    <td style="width: 408px;">
+      The subnet to launch the instance inside
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      associate_public_ip
+    </td>
+    
+    <td style="width: 408px;">
+      true/false. If true, will associate a public IP address to an instance in a VPC
+    </td>
+  </tr>
+</table>
+
+<p>The full list of options can be found here: <a href="https://github.com/mitchellh/vagrant-aws#configuration" target="_blank">https://github.com/mitchellh/vagrant-aws#configuration</a></p>
+
+<hr />
+
+<p>Note: This guide is written for a *nix environment. The steps are similar for Windows based environments.</p>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/blog/iam-restrict-user-specific-instance/">
+        IAM: Restrict User to Specific Instance
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">28 Dec 2015</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Custom IAM Policies
+      
+    
+  </span>
+</div>
+
+
+    
+      <p>This policy restricts an IAM user to perform start and stop actions only on instances having their IDs specified in the Resource attribute of the policy.</p>
+
+<p>In order to further restrict the actions that can be performed, additional actions like “<strong>ec2:TerminateInstances</strong>” can be added.</p>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+
+  
+<div class="pagination">
+  <a class="pagination-item older"
+     href="/blog/page4">
+    Older
+  </a>
+</div>
+
+
+</div>
+
+    </main>
+
+    <!-- Optional footer content -->
+
+  </body>
+</html>
