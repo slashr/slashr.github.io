@@ -1,0 +1,59 @@
+<nav id="sidebar-nav-links">
+  {% if site.sidebar_home_link %}
+    <a class="home-link {% if page.url == '/' %} active{% endif %}"
+        href="{{ site.baseurl }}/">Home</a>
+  {% endif %}
+  {% if site.sidebar_blog_link %}
+    <a class="page-link {% if page.url == site.sidebar_blog_link %} active{% endif %}"
+	href="{{ site.baseurl }}{{ site.sidebar_blog_link }}">Blog</a>
+  {% endif %}
+
+  {% comment %}
+    The code below dynamically generates a sidebar nav of pages with
+    `sidebar_link: true` in the front-matter. See readme for usage.
+  {% endcomment %}
+
+  <div id="profile-container">
+     <image id="profileImage" src="/blog/assets/images/avatar.jpg" />
+  </div>
+
+
+  <!-- Icons downloaded from https://iconmonstr.com/ -->
+  <!-- Blog link sidebar-->
+  <a id="blog-link"
+       title="Blog" aria-label="Blog"
+       href="/blog/" target="_blank">
+       {% include svg/blog.svg %}
+       Blog
+    </a>
+
+  <!--LinkedIn link sidebar-->
+  <a id="linkedin-link"
+       title="LinkedIn" aria-label="LinkedIn"
+       href="https://www.linkedin.com/in/akashnair/" target="_blank">
+       {% include svg/linkedin.svg %}       
+       LinkedIn
+    </a>
+
+  <!--Github link sidebar-->
+  <a id="github-link"
+       title="GitHub" aria-label="GitHub Profile"
+       href="https://github.com/slashr" target="_blank">      
+       {% include svg/github.svg %}
+       GitHub
+    </a>
+
+ <!-- Resume link sidebar-->
+  <a id="Resume-link"
+       title="Resume" aria-label="Resume"
+       href="/blog/assets/Akash-Nair-Resume.pdf">
+       {% include svg/resume.svg %}
+       Resume
+    </a>
+
+
+ <!-- {% include page-links.html %}
+  {% include category-links.html %}-->
+
+  {% include custom-nav-links.html %}
+</nav>
