@@ -20,7 +20,7 @@ tags:
 ### About AWS Read Replica
 
 Default Read Replicas provided by AWS are instances which should be of the same instance-type as the master DB or higher. This might not always be an ideal solution since read replica servers do not require significant computing power. As an alternative, one can create a read replica on a standalone EC2 instance or a RDS DB instance. In the following scenario, we&#8217;ll create a read replica running on MySQL for a master DB running on Amazon Aurora. The replica instance type can be any type as seen fit by the user.
-
+<!--more-->
 * * *
 
 ### Configure Master DB for replication

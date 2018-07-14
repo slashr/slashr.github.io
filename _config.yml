@@ -8,7 +8,7 @@ title:            Akash Nair
 tagline:          ''
 description:	  'DevOps Engineer | Berlin'
 url:              https://fongandrew.github.io
-baseurl:          '/blog'
+baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
                   # NB: This applies to all pages in your Jekyll site.
                   # If you want to move just the blog index pages but keep
@@ -20,7 +20,7 @@ author:
   url:            https://skywide.in
 
 paginate:         5
-# paginate_path:    '/page:num'
+paginate_path:    '/page:num'
                     # Or '/blog/page:num' if you want to move your index pages
 
 plugins:
