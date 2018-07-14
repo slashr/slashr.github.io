@@ -20,7 +20,7 @@ tags:
 #### Overview
 
 The following Ansible playbook should give an idea about the configuration management prowess of Ansible. This playbook setups up a group of Tomcat nodes which are load-balanced by Apache using the Mod-jk module. In addition to this, it also sets up all other dependencies and also configures the installed services to run on startup.
-
+<!--more-->
 Overview of actions performed:
 
   * Update apt-get cache
