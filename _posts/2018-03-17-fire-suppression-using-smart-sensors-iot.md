@@ -17,12 +17,14 @@ tags:
 
 An IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. We make use of Arduino microcontrollers and several sensors to create this system.
 
+<center><img src="/assets/images/arduino-logo.svg" height="400" width="400"></center>
+<!--more-->
 ***
 
 ## The Design
 
 A fully autonomous monitoring and suppression system that detects fire and extinguishes it using inert gases while also ensuring safety and avoiding danger at the same time. This system consists of the following functionalities:
-<!--more-->
+
 <ul style="list-style-type: square;">
   <li>
     The detection of fire using real-time data from fire and temperature sensors
