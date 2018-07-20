@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-14T23:26:36+02:00</updated><id>http://localhost:4000/</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Suppressing Fires using Gas: An IoT Experiment</title><link href="http://localhost:4000/fire-suppression-using-smart-sensors-iot/" rel="alternate" type="text/html" title="Suppressing Fires using Gas: An IoT Experiment" /><published>2018-03-17T22:03:52+01:00</published><updated>2018-03-17T22:03:52+01:00</updated><id>http://localhost:4000/fire-suppression-using-smart-sensors-iot</id><content type="html" xml:base="http://localhost:4000/fire-suppression-using-smart-sensors-iot/">&lt;h2 id=&quot;purpose-of-this-iot-project&quot;&gt;Purpose of this IoT project&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-20T21:40:46+02:00</updated><id>http://localhost:4000/</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Suppressing Fires using Gas: An IoT Experiment</title><link href="http://localhost:4000/fire-suppression-using-smart-sensors-iot/" rel="alternate" type="text/html" title="Suppressing Fires using Gas: An IoT Experiment" /><published>2018-03-17T22:03:52+01:00</published><updated>2018-03-17T22:03:52+01:00</updated><id>http://localhost:4000/fire-suppression-using-smart-sensors-iot</id><content type="html" xml:base="http://localhost:4000/fire-suppression-using-smart-sensors-iot/">&lt;p&gt;An IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. We make use of Arduino microcontrollers and several sensors to create this system.&lt;/p&gt;
 
-&lt;p&gt;A small IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers.&lt;/p&gt;
+&lt;hr /&gt;
 
 &lt;h2 id=&quot;the-design&quot;&gt;The Design&lt;/h2&gt;
 
@@ -23,6 +23,8 @@
     The interfacing of the system using an HMI to allow monitoring and manual intervention in case of a unexpected event of malfunction.
   &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;hr /&gt;
 
 &lt;h2 id=&quot;the-architecture&quot;&gt;The Architecture&lt;/h2&gt;
 
@@ -110,7 +112,7 @@
   &lt;/tr&gt;
 &lt;/table&gt;
 
-&lt;p&gt; &lt;/p&gt;
+&lt;hr /&gt;
 
 &lt;h2 id=&quot;the-tools&quot;&gt;The Tools&lt;/h2&gt;
 
@@ -128,6 +130,8 @@
 
 &lt;p&gt;Dishonourable mention: Arduino Olimexino is a failed product. It took a lot of troubleshooting attempts before we found out that the microcontroller was sending incorrect signals to the devices (fans changed direction of rotation randomly!)&lt;/p&gt;
 
+&lt;hr /&gt;
+
 &lt;h2 id=&quot;the-code&quot;&gt;The Code&lt;/h2&gt;
 
 &lt;ul style=&quot;list-style-type: square;&quot;&gt;
@@ -139,13 +143,11 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;the-product&quot;&gt;The Product&lt;figure id=&quot;attachment_661&quot; style=&quot;width: 1024px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://skywide.in/blog/wp-content/uploads/2018/03/setup.jpg&quot;&gt;&lt;img class=&quot;wp-image-661 size-large&quot; src=&quot;http://skywide.in/blog/wp-content/uploads/2018/03/setup-1024x699.jpg&quot; alt=&quot;microcontroller and sensors, iot&quot; width=&quot;1024&quot; height=&quot;699&quot; srcset=&quot;https://skywide.in/blog/wp-content/uploads/2018/03/setup-1024x699.jpg 1024w, https://skywide.in/blog/wp-content/uploads/2018/03/setup-300x205.jpg 300w, https://skywide.in/blog/wp-content/uploads/2018/03/setup-768x524.jpg 768w&quot; sizes=&quot;(max-width: 1024px) 100vw, 1024px&quot; /&gt;&lt;/a&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;Starting from the left: Arduino Nano Jr. Arduino Nano Sr., Humble Breadboard, Village Idiot Arduino Olimexino (rightfully abandoned), Whole lotta sensors&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
-
 &lt;hr /&gt;
 
-&lt;p&gt; &lt;/p&gt;</content><author><name>Akash</name></author><category term="arduino" /><category term="IoT" /><category term="microcontroller" /><category term="sensors" /><summary type="html">Purpose of this IoT project A small IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. The Design A fully autonomous monitoring and suppression system that detects fire and extinguishes it using inert gases while also ensuring safety and avoiding danger at the same time. This system consists of the following functionalities:</summary></entry><entry><title type="html">Using Lambda to Turn Off EC2 Instances During Off Hours</title><link href="http://localhost:4000/using-lambda-turn-off-ec2-instances/" rel="alternate" type="text/html" title="Using Lambda to Turn Off EC2 Instances During Off Hours" /><published>2016-11-24T11:53:30+01:00</published><updated>2016-11-24T11:53:30+01:00</updated><id>http://localhost:4000/using-lambda-turn-off-ec2-instances</id><content type="html" xml:base="http://localhost:4000/using-lambda-turn-off-ec2-instances/">&lt;h3 id=&quot;introduction-to-aws-lambda&quot;&gt;Introduction to AWS Lambda&lt;/h3&gt;
+&lt;h2 id=&quot;the-product&quot;&gt;The Product&lt;figure id=&quot;attachment_661&quot; style=&quot;width: 1024px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2018/03/setup.jpg&quot; alt=&quot;Arduino Nano Jr. Arduino Nano Sr., Humble Breadboard, Village Idiot Arduino Olimexino (rightfully abandoned), Whole lotta sensors&quot; /&gt; Starting from the left: Arduino Nano Jr, Arduino Nano Sr, Humble Breadboard, Village Idiot Arduino Olimexino (rightfully abandoned), Whole lotta sensors&lt;/p&gt;</content><author><name>Akash</name></author><category term="arduino" /><category term="IoT" /><category term="microcontroller" /><category term="sensors" /><summary type="html">An IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. We make use of Arduino microcontrollers and several sensors to create this system. The Design A fully autonomous monitoring and suppression system that detects fire and extinguishes it using inert gases while also ensuring safety and avoiding danger at the same time. This system consists of the following functionalities:</summary></entry><entry><title type="html">Using Lambda to Turn Off EC2 Instances During Off Hours</title><link href="http://localhost:4000/using-lambda-turn-off-ec2-instances/" rel="alternate" type="text/html" title="Using Lambda to Turn Off EC2 Instances During Off Hours" /><published>2016-11-24T11:53:30+01:00</published><updated>2016-11-24T11:53:30+01:00</updated><id>http://localhost:4000/using-lambda-turn-off-ec2-instances</id><content type="html" xml:base="http://localhost:4000/using-lambda-turn-off-ec2-instances/">&lt;h3 id=&quot;introduction-to-aws-lambda&quot;&gt;Introduction to AWS Lambda&lt;/h3&gt;
 
 &lt;p&gt;A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT workloads aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on the costs.&lt;/p&gt;
 

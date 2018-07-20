@@ -14,9 +14,10 @@ tags:
   - microcontroller
   - sensors
 ---
-## Purpose of this IoT project
 
-A small IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers.
+An IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. We make use of Arduino microcontrollers and several sensors to create this system.
+
+***
 
 ## The Design
 
@@ -39,6 +40,8 @@ A fully autonomous monitoring and suppression system that detects fire and extin
     The interfacing of the system using an HMI to allow monitoring and manual intervention in case of a unexpected event of malfunction.
   </li>
 </ul>
+
+***
 
 ## The Architecture
 
@@ -126,7 +129,7 @@ The system consist of the following sensors and devices
   </tr>
 </table>
 
-&nbsp;
+***
 
 ## The Tools
 
@@ -144,6 +147,8 @@ Using the HMI Nano, we continuously polled the pins of the System Nano to get th
 
 Dishonourable mention: Arduino Olimexino is a failed product. It took a lot of troubleshooting attempts before we found out that the microcontroller was sending incorrect signals to the devices (fans changed direction of rotation randomly!)
 
+***
+
 ## The Code
 
 <ul style="list-style-type: square;">
@@ -155,10 +160,8 @@ Dishonourable mention: Arduino Olimexino is a failed product. It took a lot of t
   </li>
 </ul>
 
+***
+
 ## The Product<figure id="attachment_661" style="width: 1024px" class="wp-caption aligncenter">
 
-[<img class="wp-image-661 size-large" src="http://skywide.in/blog/wp-content/uploads/2018/03/setup-1024x699.jpg" alt="microcontroller and sensors, iot" width="1024" height="699" srcset="https://skywide.in/blog/wp-content/uploads/2018/03/setup-1024x699.jpg 1024w, https://skywide.in/blog/wp-content/uploads/2018/03/setup-300x205.jpg 300w, https://skywide.in/blog/wp-content/uploads/2018/03/setup-768x524.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" />](http://skywide.in/blog/wp-content/uploads/2018/03/setup.jpg)<figcaption class="wp-caption-text">Starting from the left: Arduino Nano Jr. Arduino Nano Sr., Humble Breadboard, Village Idiot Arduino Olimexino (rightfully abandoned), Whole lotta sensors</figcaption></figure> 
-
-* * *
-
-&nbsp;
+![Arduino Nano Jr. Arduino Nano Sr., Humble Breadboard, Village Idiot Arduino Olimexino (rightfully abandoned), Whole lotta sensors](/assets/images/2018/03/setup.jpg) Starting from the left: Arduino Nano Jr, Arduino Nano Sr, Humble Breadboard, Village Idiot Arduino Olimexino (rightfully abandoned), Whole lotta sensors
