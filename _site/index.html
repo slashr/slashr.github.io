@@ -364,9 +364,7 @@
 
 
     
-      <h3 id="introduction-to-aws-lambda">Introduction to AWS Lambda</h3>
-
-<p>A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT workloads aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on the costs.</p>
+      <p>A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT environments aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on costs.</p>
 
 <p>In order to do this, we can make use of AWS Lambda, which lets you run your code or without setting up any servers. Since it charges based on the compute time taken up by the code, it is very cost efficient. A task running twice within a 24-hour cycle for typically less than 60 seconds with memory consumption up to 128MB (like the script in this post) typically costs around $0.008 per month.</p>
 

@@ -317,9 +317,7 @@
 
 
   <div class="post-body">
-    <h3 id="introduction-to-aws-lambda">Introduction to AWS Lambda</h3>
-
-<p>A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT workloads aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on the costs.</p>
+    <p>A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT environments aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on costs.</p>
 
 <p>In order to do this, we can make use of AWS Lambda, which lets you run your code or without setting up any servers. Since it charges based on the compute time taken up by the code, it is very cost efficient. A task running twice within a 24-hour cycle for typically less than 60 seconds with memory consumption up to 128MB (like the script in this post) typically costs around $0.008 per month.</p>
 
@@ -349,32 +347,32 @@
   <li>
     <h5 id="create-an-iam-role">Create an IAM Role</h5>
 
-    <ol>
-      <li>Create an IAM Role for Lamba to use. You can either create a custom role and give granular permissions. The permissions required are listing, stopping, starting EC2 instances, and listing, creating, modifying CloudWatch logs. Additional dependent permissions may be required so use AWS Policy Simulator to check if you have all the permissions required.</li>
-      <li>Or you can opt for an <strong>AWS Managed Policy</strong>. Add <strong>AmazonEC2FullAccess</strong>and <strong>CloudWatchLogsFullAccess</strong> permissions to the role.</li>
-    </ol>
+    <p>Create an IAM Role for Lamba to use. You can either create a custom role and give granular permissions. The permissions required are listing, stopping, starting EC2 instances, and listing, creating, modifying CloudWatch logs. Additional dependent permissions may be required so use AWS Policy Simulator to check if you have all the permissions required.</p>
+
+    <p>Or you can opt for an <strong>AWS Managed Policy</strong>. Add <strong>AmazonEC2FullAccess</strong> and <strong>CloudWatchLogsFullAccess</strong> permissions to the role.</p>
   </li>
   <li>
     <h5 id="create-two-lambda-functions-for-starting-and-stopping-the-instances-using-the-two-scripts-below">Create two Lambda functions, for starting and stopping the instances using the two scripts below.</h5>
 
     <ol>
-      <li>Refer to <a href="https://docs.aws.amazon.com/lambda/latest/dg/get-started-create-function.html">this guide</a>to get a hang of how to create a simple Lambda function.</li>
+      <li>Refer to <a href="https://docs.aws.amazon.com/lambda/latest/dg/get-started-create-function.html">this guide</a> to get a hang of how to create a simple Lambda function.</li>
       <li>Click on <strong>Create a function</strong> and then choose <strong>Author from scratch</strong>.</li>
       <li>Enter a suitable name for the function, change the <strong>Runtime</strong> to Python.</li>
-      <li>Under <strong>Role,</strong> select <strong>Create a custom role.</strong>You will be taken to a new page to create the role. Create a policy and then come back to the Lambda page and click <strong>Create Function.</strong></li>
-      <li>Under <strong>Add Triggers</strong>, choose <strong>CloudWatch Events.</strong>Click on the newly created box to configure it. Under <strong>Schedule expression,</strong>you can add the cron expression you want. For instance <code class="highlighter-rouge">cron&lt;strong&gt;(0 3 ? * MON-FRI *)&lt;/strong&gt;</code>
-        <ul>
-          <li>Note: As a weird caveat, AWS requires the cron expression to contain a ‘?’ in any one of the first four fields. So <code class="highlighter-rouge">cron(0 3 * * MON-FRI *)</code> will not work but<code class="highlighter-rouge">cron(0 3 ? * MON-FRI *)</code> will.</li>
-        </ul>
+      <li>Under <strong>Role,</strong> select <strong>Create a custom role.</strong> You will be taken to a new page to create the role. Create a policy and then come back to the Lambda page and click <strong>Create Function.</strong></li>
+      <li>Under <strong>Add Triggers</strong>, choose <strong>CloudWatch Events.</strong> Click on the newly created box to configure it. Under <strong>Schedule expression,</strong>you can add the cron expression you want.<br />
+   For instance <code class="highlighter-rouge">cron&lt;strong&gt;(0 3 ? * MON-FRI *)&lt;/strong&gt;</code>.
+        <blockquote>
+          <p>Note: As a weird caveat, AWS requires the cron expression to contain a ‘?’ in any one of the first four fields. So <code class="highlighter-rouge">cron(0 3 * * MON-FRI *)</code> will not work but <code class="highlighter-rouge">cron(0 3 ? * MON-FRI *)</code> will.</p>
+        </blockquote>
       </li>
       <li>Then click on the function box and copy paste the above code into the editor window.</li>
-      <li>Choose the<strong>No VPC</strong> option under <strong>Network</strong>. Keep your Lambda function inside a VPC when the function needs to login into an EC2 instance which is kept in a private subnet and is not publicly accessible. For actions that can be performed over the internet, it is recommended to not put the function inside a VPC. For example, boto’s start and stop API calls are publicly exposed and accessible over the internet which means that Lambda invoke them over the internet but not from within a VPC</li>
+      <li>Choose the <strong>No VPC</strong> option under <strong>Network</strong>. Keep your Lambda function inside a VPC when the function needs to login into an EC2 instance which is kept in a private subnet and is not publicly accessible. For actions that can be performed over the internet, it is recommended to not put the function inside a VPC. For example, boto’s start and stop API calls are publicly exposed and accessible over the internet which means that Lambda invoke them over the internet but not from within a VPC</li>
       <li>Click on <strong>Save</strong> and then click on <strong>Test</strong> for a dry run.</li>
     </ol>
   </li>
 </ol>
 
-<p>You might want to run a few tests to ensure everything is working as expected. You don’t want your instance to be automatically shut down at 15:00 UTC. (or maybe you do)</p>
+<p>You might want to run a few tests to ensure everything is working as expected. You don’t want your instance to be automatically shut down at 15:00 UTC (or maybe you do)</p>
 
     
 
