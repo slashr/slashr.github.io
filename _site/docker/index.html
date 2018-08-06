@@ -309,7 +309,9 @@
   <div class="post-body">
     <h4 id="about-docker">About Docker</h4>
 
-<p>Docker is a <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">container technology</a> that provides a <strong>layer of abstraction</strong> on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a <strong>image</strong> which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the “layer of abstraction” defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the <strong>container</strong>) across any infrastructure or environment.
+<p>Docker is a <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">container technology</a> that provides a <strong>layer of abstraction</strong> on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a <strong>image</strong> which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the common <strong>layer of abstraction</strong> defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the <strong>container</strong>) across any infrastructure or environment.</p>
+
+<p><strong><em>Updated: August, 2018</em></strong>
 <!--more--></p>
 <hr />
 
@@ -326,68 +328,45 @@
 
 <h5 id="the-easy-way">The Easy Way</h5>
 
-<ol>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>wget -qO- https://get.docker.com/</td>
-          <td>sh</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
-</ol>
+<p><code>wget -qO- https://get.docker.com/ | sh</code></p>
 
 <p>OR</p>
 
 <h5 id="the-longer-way-in-case-the-easy-way-doesnt-work-out">The Longer Way (in case the easy way doesn’t work out)</h5>
 
 <ol>
-  <li>Update APT sources &amp; enable APT to work with HTTPS: &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>apt-get update</code>
- </li>
-    <li>
-   <code>apt-&lt;span class="hljs-keyword"&gt;get&lt;/span&gt; &lt;span class="hljs-keyword"&gt;install&lt;/span&gt; apt-transport-https ca-certificates</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Update APT sources &amp; enable APT to work with HTTPS:
+    <ul>
+      <li>
+        <p><code>apt-get update</code></p>
+      </li>
+      <li>
+        <p><code>sudo apt-get install apt-transport-https ca-certificates curl software-properties-common</code></p>
+      </li>
+    </ul>
   </li>
-  <li>Add the GPG keys: &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>apt-key adv --keyserver hkp:&lt;span class="hljs-regexp"&gt;//p&lt;/span&gt;8&lt;span class="hljs-number"&gt;0&lt;/span&gt;.pool.sks-keyservers.net:&lt;span class="hljs-number"&gt;80&lt;/span&gt; --&lt;span class="hljs-keyword"&gt;recv&lt;/span&gt;-&lt;span class="hljs-keyword"&gt;keys&lt;/span&gt; &lt;span class="hljs-number"&gt;58118&lt;/span&gt;E89F3A912897C070ADBF76221572C52609D</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Add the GPG keys:
+    <ul>
+      <li><code> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - </code></li>
+    </ul>
   </li>
-  <li>Create a file<code class="highlighter-rouge">/etc/apt/sources.list.d/docker.list</code> and add the following &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>deb https://apt.dockerproject.org/repo ubuntu-xenial main</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Add the stable repository to the apt sources list:
+    <ul>
+      <li><code>sudo add-apt-repository \   
+ "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+ $(lsb_release -cs) \
+ stable"</code></li>
+    </ul>
   </li>
-  <li>Close the file and run &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>apt-get update</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Update apt resource list:
+    <ul>
+      <li><code>apt-get update</code></li>
+    </ul>
   </li>
-  <li>Install the following package (it usually would be already installed) &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>apt-get install linux-image-extra-$(uname -r)</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
-  </li>
-  <li>Install Docker &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>apt-get install docker-engine</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Install Docker Community Edition
+    <ul>
+      <li><code>apt-get install docker-ce</code></li>
+    </ul>
   </li>
 </ol>
 
@@ -396,45 +375,33 @@
 <h4 id="running-docker">Running Docker</h4>
 
 <ol>
-  <li>Start Docker and test if it installed correctly. The second command will download the “hello-world” image form DockerHub, creates a container and runs it. &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>service docker start</code>
- </li>
-    <li>
-   <code>docker run hello-world</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Start Docker and test if it installed correctly. The second command will download the “hello-world” image form DockerHub, create a container and run it.
+    <ul>
+      <li><code>service docker start</code></li>
+      <li><code>docker run hello-world</code></li>
+    </ul>
   </li>
-  <li>To view all the containers on the system, type &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker ps -a</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>To view all the containers on the system, type:
+    <ul>
+      <li><code>docker ps -a</code></li>
+    </ul>
   </li>
-  <li>Try downloading and running the whalesay image from DockerHub. In order to do this, first create an account on <a href="https://hub.docker.com/">DockerHub</a> and search for the image docker/whalesay. On the image page, you’ll find instructions on usage. For whalesay, use the following command &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker run docker/whalesay cowsay boo</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Try downloading and running the whalesay image from DockerHub. In order to do this, first create an account on <a href="https://hub.docker.com/">DockerHub</a> and search for the image docker/whalesay. On the image page, you’ll find instructions on usage. For whalesay, use the following command
+    <ul>
+      <li><code>docker run docker/whalesay cowsay boo</code></li>
+    </ul>
   </li>
-  <li>After the image downloads and runs, you’ll see the input in the form of a ASCII whale with a “boo” caption. Not very profound, I know. You can play around with the image by passing different parameters. Say &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker run docker/whalesay cowsay skywide!</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>After the image downloads and runs, you’ll see the input in the form of a ASCII whale with a “boo” caption. Not very profound, I know. You can play around with the image by passing different parameters. Say:
+    <ul>
+      <li><code>docker run docker/whalesay cowsay skywide!</code></li>
+    </ul>
   </li>
-  <li>In order to view all the images on the system, type &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker images</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>In order to view all the images on the system, type:
+    <ul>
+      <li><code>docker images</code></li>
+    </ul>
   </li>
-  <li>We’ll next learn how to build your own images. For now, we’ll use the above whalesay image and modify it to create our new image</li>
+  <li>We’ll next learn how to build your own images. For now, use the above whalesay image and modify it to create our new image</li>
 </ol>
 
 <hr />
@@ -444,42 +411,32 @@
 <ol>
   <li>Create a directory skywide.</li>
   <li>CD into the directory</li>
-  <li>Create a file Dockerfile &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>touch Dockerfile</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Create a file Dockerfile
+    <ul>
+      <li><code>touch Dockerfile</code></li>
+    </ul>
   </li>
-  <li>Open Dockerfile in an editor and add the following. &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>&lt;span class="hljs-keyword"&gt;FROM&lt;/span&gt; docker/whalesay:latest</code>
- </li>
-    <li>
-   <code>&lt;span class="hljs-keyword"&gt;RUN&lt;/span&gt; &lt;span class="bash"&gt;apt-get -y update &amp;&amp; apt-get install -y fortunes &lt;/span&gt;</code>
- </li>
-    <li>
-   <code>&lt;span class="hljs-keyword"&gt;CMD&lt;/span&gt; &lt;span class="bash"&gt;/usr/games/fortune &lt;span class="hljs-_"&gt;-a&lt;/span&gt; | cowsay&lt;/span&gt;</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Open Dockerfile in an editor and add the following.:
+    <ul>
+      <li><code>FROM: docker/whalesay:latest</code></li>
+      <li><code>RUN: apt-get -y update &amp;&amp; apt-get install -y fortunes</code></li>
+      <li><code>CMD: /usr/games/fortune -a | cowsay </code></li>
+    </ul>
   </li>
   <li>The FROM command tells Docker which image your image is based on. RUN command tells Docker to install the required programs/libraries on your image. CMD tells Docker to run the specified command when the image is run inside a container.</li>
-  <li>Next, build your image by running &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker build -t docker-whale .</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Next, build your image by running:
+    <ul>
+      <li><code>docker build -t docker-whale .</code></li>
+    </ul>
+
+    <p>The docker build command requires a Dockerfile to be present in the current directory. The “-t” option gives a name to the image being built (in this case, it is “docker-whale”)</p>
   </li>
   <li>Docker will build a new image by using the whalesay image that it downloaded earlier and on this new image it will update the apt-get cache and install the software fortunes.</li>
   <li>You can then verify that a new image has been built by running docker images. You should now see three images including “docker-whale”.</li>
-  <li>Finally, see your own image in action! Go ahead and run &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker run docker-whale</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Finally, see your own image in action! Go ahead and run:
+    <ul>
+      <li><code>docker run docker-whale</code></li>
+    </ul>
   </li>
 </ol>
 
@@ -489,39 +446,30 @@
 
 <ol>
   <li>Create a new repository to upload your docker image to. Make sure the repository is public</li>
-  <li>Note down the image ID from &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker images</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Note down the image ID from
+    <ul>
+      <li><code>docker images</code></li>
+    </ul>
   </li>
-  <li>Tag your image with your username &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker tag &lt;image-id&gt; &lt;dockerhub-username&gt;/&lt;repository-name&gt;:latest</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>Tag your image with your username
+    <ul>
+      <li><code>docker tag (image-id) (dockerhub-username) (repository-name):latest</code></li>
+    </ul>
   </li>
   <li>Type docker images again to see your new tagged image</li>
-  <li>You will need to login to Docker from the terminal before you can push it. To login &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker login --username=&lt;username&gt; --email=&lt;docker-email&gt;</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>You will need to login to Docker from the terminal before you can push it. To login
+    <ul>
+      <li><code>docker login --username=(username) --email=(docker-email)</code></li>
+    </ul>
   </li>
-  <li>To push the image to your repo, type &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>docker push &lt;username&gt;/&lt;image-name&gt;</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>To push the image to your repo, type
+    <ul>
+      <li><code>docker push (username)/(image-name)</code></li>
+    </ul>
   </li>
   <li>Finally, after the command finishes running, go to your DockerHub repository page to find your uploaded image.</li>
 </ol>
 
-<p> </p>
 
     
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-21T20:30:47+02:00</updated><id>http://localhost:4000/</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Suppressing Fires using Gas: An IoT Experiment</title><link href="http://localhost:4000/fire-suppression-using-smart-sensors-iot/" rel="alternate" type="text/html" title="Suppressing Fires using Gas: An IoT Experiment" /><published>2018-03-17T22:03:52+01:00</published><updated>2018-03-17T22:03:52+01:00</updated><id>http://localhost:4000/fire-suppression-using-smart-sensors-iot</id><content type="html" xml:base="http://localhost:4000/fire-suppression-using-smart-sensors-iot/">&lt;p&gt;An IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. We make use of Arduino microcontrollers and several sensors to create this system.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-06T19:11:22+02:00</updated><id>http://localhost:4000/</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Suppressing Fires using Gas: An IoT Experiment</title><link href="http://localhost:4000/fire-suppression-using-smart-sensors-iot/" rel="alternate" type="text/html" title="Suppressing Fires using Gas: An IoT Experiment" /><published>2018-03-17T22:03:52+01:00</published><updated>2018-03-17T22:03:52+01:00</updated><id>http://localhost:4000/fire-suppression-using-smart-sensors-iot</id><content type="html" xml:base="http://localhost:4000/fire-suppression-using-smart-sensors-iot/">&lt;p&gt;An IoT experiment to create a gas based suppression system that can be used to extinguish fires inside water sensitive enclosures such as data centers. We make use of Arduino microcontrollers and several sensors to create this system.&lt;/p&gt;
 
 &lt;center&gt;&lt;img src=&quot;/assets/images/arduino-logo.svg&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/center&gt;
 &lt;!--more--&gt;
@@ -280,7 +280,9 @@
   &lt;li&gt;Finally, run SHOW SLAVE STATUS command on the replica and check &lt;strong&gt;Seconds behind master.&lt;/strong&gt; If the value is 0, it means there is no replica lag. When the replica lag is 0, reduce the retention period by setting the parameter binlog &lt;em&gt;retention hours&lt;/em&gt; to a smaller time frame.&lt;/li&gt;
 &lt;/ol&gt;</content><author><name>Akash</name></author><category term="aurora" /><category term="aws" /><category term="devops" /><category term="mysql" /><category term="rds" /><summary type="html">About AWS Read Replica Default Read Replicas provided by AWS are instances which should be of the same instance-type as the master DB or higher. This might not always be an ideal solution since read replica servers do not require significant computing power. As an alternative, one can create a read replica on a standalone EC2 instance or a RDS DB instance. In the following scenario, we’ll create a read replica running on MySQL for a master DB running on Amazon Aurora. The replica instance type can be any type as seen fit by the user.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/wp-content/uploads/2016/09/2000px-AWS_Simple_Icons_Database_Amazon_RDS_DB_Instance_Read_Replica.svg_.png" /></entry><entry><title type="html">Docker: Install, Build an Image and Publish to DockerHub</title><link href="http://localhost:4000/docker/" rel="alternate" type="text/html" title="Docker: Install, Build an Image and Publish to DockerHub" /><published>2016-07-20T13:34:36+02:00</published><updated>2016-07-20T13:34:36+02:00</updated><id>http://localhost:4000/docker</id><content type="html" xml:base="http://localhost:4000/docker/">&lt;h4 id=&quot;about-docker&quot;&gt;About Docker&lt;/h4&gt;
 
-&lt;p&gt;Docker is a &lt;a href=&quot;https://en.wikipedia.org/wiki/Operating-system-level_virtualization&quot;&gt;container technology&lt;/a&gt; that provides a &lt;strong&gt;layer of abstraction&lt;/strong&gt; on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a &lt;strong&gt;image&lt;/strong&gt; which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the “layer of abstraction” defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the &lt;strong&gt;container&lt;/strong&gt;) across any infrastructure or environment.
+&lt;p&gt;Docker is a &lt;a href=&quot;https://en.wikipedia.org/wiki/Operating-system-level_virtualization&quot;&gt;container technology&lt;/a&gt; that provides a &lt;strong&gt;layer of abstraction&lt;/strong&gt; on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a &lt;strong&gt;image&lt;/strong&gt; which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the common &lt;strong&gt;layer of abstraction&lt;/strong&gt; defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the &lt;strong&gt;container&lt;/strong&gt;) across any infrastructure or environment.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Updated: August, 2018&lt;/em&gt;&lt;/strong&gt;
 &lt;!--more--&gt;&lt;/p&gt;
 &lt;hr /&gt;
 
@@ -297,68 +299,45 @@
 
 &lt;h5 id=&quot;the-easy-way&quot;&gt;The Easy Way&lt;/h5&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;wget -qO- https://get.docker.com/&lt;/td&gt;
-          &lt;td&gt;sh&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;wget -qO- https://get.docker.com/ | sh&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;OR&lt;/p&gt;
 
 &lt;h5 id=&quot;the-longer-way-in-case-the-easy-way-doesnt-work-out&quot;&gt;The Longer Way (in case the easy way doesn’t work out)&lt;/h5&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Update APT sources &amp;amp; enable APT to work with HTTPS: &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;apt-get update&lt;/code&gt;
- &lt;/li&gt;
-    &lt;li&gt;
-   &lt;code&gt;apt-&amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;get&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;install&amp;lt;/span&amp;gt; apt-transport-https ca-certificates&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Update APT sources &amp;amp; enable APT to work with HTTPS:
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;code&gt;apt-get update&lt;/code&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;code&gt;sudo apt-get install apt-transport-https ca-certificates curl software-properties-common&lt;/code&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Add the GPG keys: &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;apt-key adv --keyserver hkp:&amp;lt;span class=&quot;hljs-regexp&quot;&amp;gt;//p&amp;lt;/span&amp;gt;8&amp;lt;span class=&quot;hljs-number&quot;&amp;gt;0&amp;lt;/span&amp;gt;.pool.sks-keyservers.net:&amp;lt;span class=&quot;hljs-number&quot;&amp;gt;80&amp;lt;/span&amp;gt; --&amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;recv&amp;lt;/span&amp;gt;-&amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;keys&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;hljs-number&quot;&amp;gt;58118&amp;lt;/span&amp;gt;E89F3A912897C070ADBF76221572C52609D&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Add the GPG keys:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt; curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Create a file&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/apt/sources.list.d/docker.list&lt;/code&gt; and add the following &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;deb https://apt.dockerproject.org/repo ubuntu-xenial main&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Add the stable repository to the apt sources list:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;sudo add-apt-repository \   
+ &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+ $(lsb_release -cs) \
+ stable&quot;&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Close the file and run &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;apt-get update&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Update apt resource list:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;apt-get update&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Install the following package (it usually would be already installed) &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;apt-get install linux-image-extra-$(uname -r)&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Install Docker &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;apt-get install docker-engine&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Install Docker Community Edition
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;apt-get install docker-ce&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -367,45 +346,33 @@
 &lt;h4 id=&quot;running-docker&quot;&gt;Running Docker&lt;/h4&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Start Docker and test if it installed correctly. The second command will download the “hello-world” image form DockerHub, creates a container and runs it. &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;service docker start&lt;/code&gt;
- &lt;/li&gt;
-    &lt;li&gt;
-   &lt;code&gt;docker run hello-world&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Start Docker and test if it installed correctly. The second command will download the “hello-world” image form DockerHub, create a container and run it.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;service docker start&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;docker run hello-world&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;To view all the containers on the system, type &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker ps -a&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;To view all the containers on the system, type:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker ps -a&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Try downloading and running the whalesay image from DockerHub. In order to do this, first create an account on &lt;a href=&quot;https://hub.docker.com/&quot;&gt;DockerHub&lt;/a&gt; and search for the image docker/whalesay. On the image page, you’ll find instructions on usage. For whalesay, use the following command &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker run docker/whalesay cowsay boo&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Try downloading and running the whalesay image from DockerHub. In order to do this, first create an account on &lt;a href=&quot;https://hub.docker.com/&quot;&gt;DockerHub&lt;/a&gt; and search for the image docker/whalesay. On the image page, you’ll find instructions on usage. For whalesay, use the following command
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker run docker/whalesay cowsay boo&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;After the image downloads and runs, you’ll see the input in the form of a ASCII whale with a “boo” caption. Not very profound, I know. You can play around with the image by passing different parameters. Say &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker run docker/whalesay cowsay skywide!&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;After the image downloads and runs, you’ll see the input in the form of a ASCII whale with a “boo” caption. Not very profound, I know. You can play around with the image by passing different parameters. Say:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker run docker/whalesay cowsay skywide!&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;In order to view all the images on the system, type &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker images&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;In order to view all the images on the system, type:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker images&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;We’ll next learn how to build your own images. For now, we’ll use the above whalesay image and modify it to create our new image&lt;/li&gt;
+  &lt;li&gt;We’ll next learn how to build your own images. For now, use the above whalesay image and modify it to create our new image&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;hr /&gt;
@@ -415,42 +382,32 @@
 &lt;ol&gt;
   &lt;li&gt;Create a directory skywide.&lt;/li&gt;
   &lt;li&gt;CD into the directory&lt;/li&gt;
-  &lt;li&gt;Create a file Dockerfile &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;touch Dockerfile&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Create a file Dockerfile
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;touch Dockerfile&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Open Dockerfile in an editor and add the following. &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;&amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;FROM&amp;lt;/span&amp;gt; docker/whalesay:latest&lt;/code&gt;
- &lt;/li&gt;
-    &lt;li&gt;
-   &lt;code&gt;&amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;RUN&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;bash&quot;&amp;gt;apt-get -y update &amp;amp;&amp;amp; apt-get install -y fortunes &amp;lt;/span&amp;gt;&lt;/code&gt;
- &lt;/li&gt;
-    &lt;li&gt;
-   &lt;code&gt;&amp;lt;span class=&quot;hljs-keyword&quot;&amp;gt;CMD&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;bash&quot;&amp;gt;/usr/games/fortune &amp;lt;span class=&quot;hljs-_&quot;&amp;gt;-a&amp;lt;/span&amp;gt; | cowsay&amp;lt;/span&amp;gt;&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Open Dockerfile in an editor and add the following.:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;FROM: docker/whalesay:latest&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;RUN: apt-get -y update &amp;amp;&amp;amp; apt-get install -y fortunes&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;CMD: /usr/games/fortune -a | cowsay &lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;The FROM command tells Docker which image your image is based on. RUN command tells Docker to install the required programs/libraries on your image. CMD tells Docker to run the specified command when the image is run inside a container.&lt;/li&gt;
-  &lt;li&gt;Next, build your image by running &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker build -t docker-whale .&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Next, build your image by running:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker build -t docker-whale .&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;The docker build command requires a Dockerfile to be present in the current directory. The “-t” option gives a name to the image being built (in this case, it is “docker-whale”)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;Docker will build a new image by using the whalesay image that it downloaded earlier and on this new image it will update the apt-get cache and install the software fortunes.&lt;/li&gt;
   &lt;li&gt;You can then verify that a new image has been built by running docker images. You should now see three images including “docker-whale”.&lt;/li&gt;
-  &lt;li&gt;Finally, see your own image in action! Go ahead and run &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker run docker-whale&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Finally, see your own image in action! Go ahead and run:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker run docker-whale&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -460,39 +417,29 @@
 
 &lt;ol&gt;
   &lt;li&gt;Create a new repository to upload your docker image to. Make sure the repository is public&lt;/li&gt;
-  &lt;li&gt;Note down the image ID from &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker images&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Note down the image ID from
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker images&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Tag your image with your username &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker tag &amp;lt;image-id&amp;gt; &amp;lt;dockerhub-username&amp;gt;/&amp;lt;repository-name&amp;gt;:latest&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;Tag your image with your username
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker tag (image-id) (dockerhub-username) (repository-name):latest&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Type docker images again to see your new tagged image&lt;/li&gt;
-  &lt;li&gt;You will need to login to Docker from the terminal before you can push it. To login &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker login --username=&amp;lt;username&amp;gt; --email=&amp;lt;docker-email&amp;gt;&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;You will need to login to Docker from the terminal before you can push it. To login
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker login --username=(username) --email=(docker-email)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;To push the image to your repo, type &amp;lt;ul style=&quot;list-style-type: square;&quot;&amp;gt;
-    &lt;li&gt;
-   &lt;code&gt;docker push &amp;lt;username&amp;gt;/&amp;lt;image-name&amp;gt;&lt;/code&gt;
- &lt;/li&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;/ul&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;li&gt;To push the image to your repo, type
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;docker push (username)/(image-name)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Finally, after the command finishes running, go to your DockerHub repository page to find your uploaded image.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt; &lt;/p&gt;</content><author><name>Akash</name></author><category term="automation" /><category term="container" /><category term="devops" /><category term="docker" /><summary type="html">About Docker Docker is a container technology that provides a layer of abstraction on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a image which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the “layer of abstraction” defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the container) across any infrastructure or environment.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/wp-content/uploads/2016/07/large_v-trans.png" /></entry><entry><title type="html">Ansible Playbook to Create a Load-Balanced Tomcat Cluster</title><link href="http://localhost:4000/ansible-playbook-tomcat-cluster/" rel="alternate" type="text/html" title="Ansible Playbook to Create a Load-Balanced Tomcat Cluster" /><published>2016-07-13T09:35:26+02:00</published><updated>2016-07-13T09:35:26+02:00</updated><id>http://localhost:4000/ansible-playbook-tomcat-cluster</id><content type="html" xml:base="http://localhost:4000/ansible-playbook-tomcat-cluster/">&lt;h4 id=&quot;overview&quot;&gt;Overview&lt;/h4&gt;
+&lt;/ol&gt;</content><author><name>Akash</name></author><category term="automation" /><category term="container" /><category term="devops" /><category term="docker" /><summary type="html">About Docker Docker is a container technology that provides a layer of abstraction on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a image which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the common layer of abstraction defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the container) across any infrastructure or environment. Updated: August, 2018</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/wp-content/uploads/2016/07/large_v-trans.png" /></entry><entry><title type="html">Ansible Playbook to Create a Load-Balanced Tomcat Cluster</title><link href="http://localhost:4000/ansible-playbook-tomcat-cluster/" rel="alternate" type="text/html" title="Ansible Playbook to Create a Load-Balanced Tomcat Cluster" /><published>2016-07-13T09:35:26+02:00</published><updated>2016-07-13T09:35:26+02:00</updated><id>http://localhost:4000/ansible-playbook-tomcat-cluster</id><content type="html" xml:base="http://localhost:4000/ansible-playbook-tomcat-cluster/">&lt;h4 id=&quot;overview&quot;&gt;Overview&lt;/h4&gt;
 
 &lt;p&gt;The following Ansible playbook should give an idea about the configuration management prowess of Ansible. This playbook setups up a group of Tomcat nodes which are load-balanced by Apache using the Mod-jk module. In addition to this, it also sets up all other dependencies and also configures the installed services to run on startup.
 &lt;!--more--&gt;
