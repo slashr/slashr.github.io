@@ -307,9 +307,7 @@
 
 
   <div class="post-body">
-    <h3 id="about-aws-read-replica">About AWS Read Replica</h3>
-
-<p>Default Read Replicas provided by AWS are instances which should be of the same instance-type as the master DB or higher. This might not always be an ideal solution since read replica servers do not require significant computing power. As an alternative, one can create a read replica on a standalone EC2 instance or a RDS DB instance. In the following scenario, we’ll create a read replica running on MySQL for a master DB running on Amazon Aurora. The replica instance type can be any type as seen fit by the user.
+    <p>Default Read Replicas provided by AWS are instances which should be of the same instance type as the master DB or higher. This might not always be an ideal solution since read replica servers do not require significant computing power. As an alternative, one can create a read replica on a standalone EC2 instance or a RDS DB instance. In the following scenario, we’ll create a read replica running on MySQL syncing with a master DB running on Amazon Aurora. The replica instance type can be any type as seen fit by the user.
 <!--more--></p>
 <hr />
 
@@ -319,46 +317,38 @@
   <li>
     <h4 id="enable-binary-logging-on-master">Enable Binary Logging on master</h4>
 
-    <ol>
-      <li>On the RDS Dashboard, click on <strong>Parameter Groups</strong> on the left and then click on <strong>Create Parameter Group</strong>. Under <strong>Type,</strong> select DB Cluster Parameter Group. Enter a relevant <strong>Group Name</strong> and <strong>Description</strong>and click<strong>Create</strong>.</li>
-      <li>Next, select the Parameter Group just created and click on <strong>Edit Parameters.</strong>Then, under <strong>binlog_format</strong>, change from <strong>OFF</strong> to <strong>MIXED.</strong>Click <strong>Save Changes</strong></li>
-      <li>Click on <strong>Clusters</strong> on the RDS Dashboard, select the (master DB) cluster and click on <strong>Modify Cluster.</strong> Under DB Cluster Parameter Group, select the Parameter Group just created. Click on <strong>Continue</strong>and then on <strong>Modify Cluster.</strong> The instance may reboot or become briefly inaccessible.</li>
-    </ol>
+    <ul>
+      <li>On the RDS Dashboard, click on <strong>Parameter Groups</strong> on the left and then click on <strong>Create Parameter Group</strong>. Under <strong>Type,</strong> select DB Cluster Parameter Group. Enter a relevant <strong>Group Name</strong> and <strong>Description</strong> and click <strong>Create</strong>.</li>
+      <li>Next, select the Parameter Group just created and click on <strong>Edit Parameters.</strong> Then, under <strong>binlog_format</strong>, change from <strong>OFF</strong> to <strong>MIXED.</strong>Click <strong>Save Changes</strong></li>
+      <li>Click on <strong>Clusters</strong> on the RDS Dashboard, select the (master DB) cluster and click on <strong>Modify Cluster.</strong> Under DB Cluster Parameter Group, select the Parameter Group just created. Click on <strong>Continue</strong> and then on <strong>Modify Cluster.</strong> The instance may reboot or become briefly inaccessible.</li>
+    </ul>
   </li>
   <li>
     <h4 id="retain-binary-logs-set-retention-period">Retain binary logs. Set retention period</h4>
 
-    <ol>
-      <li>To do this, login to the master DB and run the following command: &lt;ul style="list-style-type: square;"&gt;
-        <li>
-   CALL mysql.rds_set_configuration(&#8216;binlog retention hours&#8217;, 144);
- </li>
-      </li>
-    </ol>
-    <p>&lt;/ul&gt;</p>
+    <ul>
+      <li>
+        <p>To do this, login to the master DB and run the following command:</p>
 
-    <ol>
-      <li>Run <code class="highlighter-rouge">SHOW BINARY LOGS</code> to ensure that logs are being retained.</li>
-    </ol>
+        <p><code> CALL mysql.rds_set_configuration('binlog retention hours', 144); </code></p>
+      </li>
+      <li>
+        <p>Run <code class="highlighter-rouge">SHOW BINARY LOGS</code> to ensure that logs are being retained.</p>
+      </li>
+    </ul>
   </li>
   <li>
     <h4 id="create-snapshot-of-master-and-restore-from-snapshot">Create snapshot of master and restore from snapshot.</h4>
-
-    <ol>
+    <ul>
       <li>Create a snapshot of the master DB cluster. Restore from the snapshot a new RDS instance having the same parameter group as the master DB cluster (so that binary logging is enabled).</li>
-      <li>Connect to the newly created cluster and run <code class="highlighter-rouge">SHOW MASTER STATUS</code> command. Retrieve the current binary log file name from the <code class="code">File</code> field and the log file position from the<code class="code">Position</code> field. Save these values for when you start replication.</li>
-      <li>Create a dump of the database. Use the following command &lt;ul style="list-style-type: square;"&gt;
-        <li>
-   mysqldump &#8211;databases <database-name> &#8211;single-transaction &#8211;order-by-primary -r backup.sql -u <database-username> &#8211;host=<database-address> -p
- &lt;/li&gt;
-</database-address></database-username></database-name></li>
-      </li>
-    </ol>
-    <p>&lt;/ul&gt;</p>
+      <li>Connect to the newly created cluster and run <code class="highlighter-rouge">SHOW MASTER STATUS</code> command. Retrieve the current binary log file name from the <code>File</code> field and the log file position from the<code>Position</code> field. Save these values for when you start replication.</li>
+      <li>
+        <p>Create a dump of the database. Use the following command:</p>
 
-    <ol>
+        <p><code> mysqldump -databases (database-name) -single-transaction -order-by-primary -r backup.sql -u (database-username) -host=(database-address) -p </code></p>
+      </li>
       <li>After the dump is created, delete the restored DB cluster.</li>
-    </ol>
+    </ul>
   </li>
 </ol>
 
@@ -369,16 +359,14 @@
 <ol>
   <li>Launch a MySQL RDS instance.</li>
   <li>Connect to this MySQL RDS instance (slave DB) and restore the dump (source backup.sql)</li>
-  <li>Enable replication by running the following queries (given in the <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AuroraMySQL.Replication.MySQL.html">AWS documentation</a>) on the master DB. &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   CALL mysql.rds_set_external_master (&#8216;<master-db-endpoint>&#8217;, 3306,'<username>&#8217;, &#8216;<password>&#8217;, &#8216;&lt;binary-log-file-name from step 3.2&gt;&#8217;, &lt;log-file-position from step 3.2&gt;, 0);CALL mysql.rds_start_replication;
- &lt;/li&gt;
- <li>
-   CALL mysql.rds_start_replication;
- </li>
-    &lt;/ul&gt;
+  <li>
+    <p>Enable replication by running the following queries (given in the <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AuroraMySQL.Replication.MySQL.html">AWS documentation</a>) on the master DB.</p>
 
-</password></username></master-db-endpoint></li>
+    <p><code> 
+        CALL mysql.rds_set_external_master ("(master-db-endpoint)", 3306,"(username)", "(password)", "(binary-log-file-name-from-step-3)", (log-file-position-from-step-3), 0); 
+        CALL mysql.rds_start_replication;
+        CALL mysql.rds_start_replication;
+ </code></p>
   </li>
   <li>Finally, run SHOW SLAVE STATUS command on the replica and check <strong>Seconds behind master.</strong> If the value is 0, it means there is no replica lag. When the replica lag is 0, reduce the retention period by setting the parameter binlog <em>retention hours</em> to a smaller time frame.</li>
 </ol>
