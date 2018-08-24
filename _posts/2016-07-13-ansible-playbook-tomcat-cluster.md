@@ -17,9 +17,8 @@ tags:
   - devops
   - ec2
 ---
-#### Overview
 
-The following Ansible playbook should give an idea about the configuration management prowess of Ansible. This playbook setups up a group of Tomcat nodes which are load-balanced by Apache using the Mod-jk module. In addition to this, it also sets up all other dependencies and also configures the installed services to run on startup.
+This Ansible playbook should give an idea about the configuration management capabilities of Ansible. It sets up a group of Tomcat nodes which are load-balanced by Apache using the Mod-jk module. In addition to this, it also sets up all other dependencies and also configures the installed services to run on startup.
 <!--more-->
 Overview of actions performed:
 
@@ -29,9 +28,10 @@ Overview of actions performed:
   * Install MySQL
   * Install Java
   * Download Tomcat and setup nodes
-  * Edits and configures Tomcat configuration files
-  * Edits and configures Apache and Mod-jk configuration files
-  * Restarts Apache
-  * Starts Tomcat nodes
+  * Edit and configures Tomcat configuration files
+  * Edit and configures Apache and Mod-jk configuration files
+  * Restart Apache
+  * Start Tomcat nodes
 
-Find the playbook in the repo here: https://github.com/slashr/Tomcat-Cluster-Load-Balancing
+Find the playbook in the repo here:
+<https://github.com/slashr/Tomcat-Cluster-Load-Balancing>
