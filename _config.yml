@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 title:            Akash Nair
 tagline:          'Sky Wide '
 description:	  'I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud'
-url:              https://slashr.github.io
+url:              https://akashnair.com
 baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
                   # NB: This applies to all pages in your Jekyll site.
@@ -17,7 +17,7 @@ baseurl:          ''
 
 author:
   name:           'Akash Nair'
-  url:            https://skywide.in
+  url:            https://akashnair.com
 
 paginate:         5
 paginate_path:    '/page:num'
