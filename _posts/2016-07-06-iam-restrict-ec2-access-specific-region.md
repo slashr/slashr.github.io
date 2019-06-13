@@ -15,6 +15,8 @@ tags:
   - ec2
   - iam
 ---
-Restrict user activity to a specific region in order to minimize resource wastage. This policy will ensure that all of the resources are being created only in the region of your choice so that when it comes down to resource cleanup and housekeeping, you&#8217;ll be able to save quite a lot of time.
+Restrict user activity to a specific region in order to minimize resource wastage. This policy will ensure that all of the resources are being created only in the region of your choice so that when it comes down to resource cleanup and housekeeping, you'll be able to save quite a lot of time.
 
 Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.
+
+<script src="https://gist.github.com/slashr/f17eb97ac86e94160ce03cc920373143.js"></script>
