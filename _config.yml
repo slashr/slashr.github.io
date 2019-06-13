@@ -27,6 +27,7 @@ plugins:
   - jekyll-feed
   - jekyll-gist
   - jekyll-paginate
+  - jekyll-sitemap
 
 # Custom vars
 #version:            3.7.0
