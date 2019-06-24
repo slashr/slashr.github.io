@@ -145,6 +145,10 @@
   
 
   
+    
+  
+
+  
 
   
     
@@ -188,6 +192,10 @@
     
   
 
+  
+
+  
+    
   
 
   
@@ -295,6 +303,116 @@
 
   
 
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/using-openvas-perform-security-scan-ec2/">
+        Using OpenVas to Perform a Security Scan on EC2
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">22 Apr 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <h3 id="scan-ec2-using-openvas">Scan EC2 using OpenVAS</h3>
+
+<p>It’s a recommended approach to scan your EC2 instances periodically to check for vulnerabilities and security loopholes. There are several scanning tools available for these purposes but very few free ones. OpenVAS is a opensource and free tool which originated as a fork of the now commercial Nessus scanning tool. Follow these steps to quickly get started with OpenVAS</p>
+
+<ol>
+  <li>Launch an Ubuntu EC2 instance. [<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-launch-instance_linux">how-to</a>]</li>
+  <li>Add the following PPA: <code class="highlighter-rouge">sudo add-apt-repository ppa:mrazavi/openvas&lt;br /&gt;
+</code></li>
+  <li>Update apt-get: <code class="highlighter-rouge">sudo apt-get update</code></li>
+  <li>Install OpenVAS : <code class="highlighter-rouge">sudo apt-get install openvas</code></li>
+  <li>Run the following commands to update OpenVAS scripts and data &lt;ul style="list-style-type: disc;"&gt;
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code>sudo apt-get install sqlite3 </code>
+   </p>
+ </li>
+
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code>sudo openvas-nvt-sync </code>
+   </p>
+ </li>
+
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code>sudo openvas-&lt;wbr /&gt;scapdata-&lt;wbr /&gt;sync</code>
+   </p>
+ </li>
+
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code></code><code>sudo openvas-&lt;wbr /&gt;certdata-&lt;wbr /&gt;sync</code>
+   </p>
+ </li>
+
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code></code><code>sudo service openvas-scanner restart</code>
+   </p>
+ </li>
+
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code></code><code>sudo service openvas-manager restart</code>
+   </p>
+ </li>
+
+    <li>
+   <p id="yui_3_10_3_1_1461302992231_272">
+     <code></code><code>sudo openvasmd --rebuild --progress</code>
+   </p>
+        
+   <p>
+     The above commands will be downloading large amounts of data from the internet. It might take several minutes to complete depending on the internet speed.&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; 
+          
+     <li>
+       <p id="yui_3_10_3_1_1461319488626_72">
+         <code>Goto https:/&lt;wbr /&gt;/&lt;instance-public-ip&gt;:&lt;wbr /&gt;443</code> and login. The default username and password is &#8220;admin&#8221;.
+       </p>
+     </li>&lt;/ol&gt;
+</p></li>
+  </li>
+</ol>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -832,56 +950,6 @@
 <hr />
 
 <p>Note: This guide is written for a *nix environment. The steps are similar for Windows based environments.</p>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/iam-restrict-user-specific-instance/">
-        IAM: Restrict User to Specific Instance
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">28 Dec 2015</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Custom IAM Policies
-      
-    
-  </span>
-</div>
-
-
-    
-      <p>This policy restricts an IAM user to perform start and stop actions only on instances having their IDs specified in the Resource attribute of the policy.</p>
-
-<p>In order to further restrict the actions that can be performed, additional actions like “<strong>ec2:TerminateInstances</strong>” can be added.</p>
 
     
 
