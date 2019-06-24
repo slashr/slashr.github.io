@@ -318,75 +318,8 @@
 
     
       <p>Running Jenkins on Kubernetes unleashes the scalability powers of Jenkins and makes it easier to replicate and set it up. It involves running a Jenkins Master server (<a href="https://hub.docker.com/r/jenkinsci/blueocean">jenkinsci/blueocean</a>) as a StatefulSet and connecting it with the Kubernetes cluster so that the master can spawn “jenkins slaves” on the K8S cluster whenever a build job is triggered. These slaves are nothing but K8S pods consisting of containers based on the <a href="https://hub.docker.com/r/jenkinsci/jnlp-slave">jenkinsci/jnlp-slave</a> docker image from Docker Hub.</p>
+<center><img src="/assets/images/jenkins-kubernetes-logo.svg" height="400" width="400" /></center>
 
-<p>Without further ado, here’s how you can run Jenkins on Kubernetes:</p>
-<ol>
-  <li>Create a Dockerfile for Jenkins master based on <code class="highlighter-rouge">jenkinsci/blueocean</code> and install the Kuberentes plug in inside it along with any other optional plug-ins.
-    <ul>
-      <li>Example: <a href="https://github.com/slashr/jenkins-on-kubernetes/blob/master/Dockerfile.jenkins.master">Dockerfile.jenkins.master</a></li>
-    </ul>
-  </li>
-</ol>
-
-<p>Build this image and push it to a docker registry</p>
-
-<ol>
-  <li>
-    <p>Next deploy the Jenkins master image on a pod on Kubernetes. Note that although you can create a normal kuberentes <code class="highlighter-rouge">Deployment</code> for this, it is recommended that you create a <code class="highlighter-rouge">StatefulSet</code> instead. This ensures the state and configuration of the pod is maintained. In addition to it being a StatefulSet a <code class="highlighter-rouge">PersistentVolume</code> and a <code class="highlighter-rouge">PersistentVolumeClaim</code> is required to maintain the data stored inside the Jenkins master. With the above setup, even if we terminate the pods running Jenkins master, the state and data will persist and the new pod will launch with the existing settings in place. 
-PersistentVolume can be created and mounted in the following way: 
-Refer to this manifest to understand how to setup a PV and PVC: <a href="https://github.com/slashr/jenkins-on-kubernetes/blob/master/persistent-volume.yaml">persistent-volume.yaml</a>
-Make sure to replace <code class="highlighter-rouge">spec.awsElasticBlockStore.volumeID</code> with your own EBS volume ID.</p>
-  </li>
-  <li>Next, create a service for the master Jenkins server and the slaves. Service type for master should be <code class="highlighter-rouge">LoadBalancer</code> and for slaves should be <code class="highlighter-rouge">ClusterIP</code>. The ports required on the master are 80 (optionally 443) and on the slaves port 50000 (default JNLP port for communication between master and the slave). Refer the following file: <a href="https://github.com/slashr/jenkins-on-kubernetes/blob/master/jenkins-service.yml">jenkins-service.yml</a></li>
-  <li>Open the Jenkins dashboard using the LoadBalancer URL of the master Jenkins pod and go to system configuration. At the end of the page, click on <code class="highlighter-rouge">Add a New Cloud</code> and click on Kubernetes.</li>
-  <li>Enter the Kubernetes <code class="highlighter-rouge">Cluster API</code> in <code class="highlighter-rouge">Kubernetes URL</code>, username/password of the cluster in the <code class="highlighter-rouge">credentials</code> section, and <code class="highlighter-rouge">ClusterIP</code> of the slave service in <code class="highlighter-rouge">Jenkins Tunnel</code>. This integrates our Jenkins server with the Kubernetes cluster and enables it to launch slave pods on it</li>
-  <li>Next, we need to define the pod template for the slaves that will build our application. This is best done from inside the Jenkinsfile. You can find the Jenkinsfile template here: <a href="https://github.com/slashr/jenkins-on-kubernetes/blob/master/Jenkinsfile">Jenkinsfile</a> 
-As you can see, we have three containers running in the pod.
-    <ul>
-      <li>Kaniko: For building our docker images and pushing them to our ECR registry</li>
-      <li>kubectl: To deploy our application on Kubernetes</li>
-      <li>jnlp-slave: The jenkins slave container although not defined in the Jenkinsfile is automatically created inside the pod by Jenkins master.</li>
-    </ul>
-  </li>
-</ol>
-
-<p>We have four volumes:</p>
-<ul>
-  <li>kube-config: It’s the ~/.kube/config file of your Kubernetes cluster and is mounted on the kubectl container for authentication to the K8S cluster</li>
-  <li>aws-secret: It’s the ~/.aws/credentials file required by Kaniko to authenticate with ECR and publish the docker images</li>
-  <li>podlabel: this is a variable we use to uniquely name the pods that will be spawned. If we don’t use it, then there are problems creating pods parallel for each job in the queue.</li>
-  <li>docker-config: It’s a simple JSON file consisting of the ECR registry endpoint. Example: <a href="https://github.com/slashr/jenkins-on-kubernetes/blob/master/docker-registry-config.yaml">https://github.com/slashr/jenkins-on-kubernetes/blob/master/docker-registry-config.yaml</a>
-Note that for registries other an ECR such as GCR, you would need an additional “authentication token” inside this file.</li>
-</ul>
-
-<ol>
-  <li><strong>Connecting Jenkins with the Kubernetes cluster</strong>
-To provide Jenkins access to the Kubernetes cluster so that it can create pods for every build job, perform the following steps
-    <ol>
-      <li>Click on <strong>Manage Jenkins</strong> on the Jenkins homepage and then click on <strong>Configure System</strong></li>
-      <li>Disable the workers on the master Jenkins pod <strong># of executors</strong> to 0. This ensures that build jobs are run solely on slaves and not on the master</li>
-      <li>Scroll down to the end of the page and click on <strong>Add a new cloud</strong> and then click on Kubernetes.</li>
-      <li>Enter
-        <ul>
-          <li><strong>Name</strong> for the cluster</li>
-          <li><strong>Kubernetes URL</strong> E.g https://api.kube-cluster.example.com. You can find your API endpoint by running <code class="highlighter-rouge">kubectl cluster-info</code></li>
-          <li><strong>Kubernetes Namespace</strong>: It’s the namespace where you deployed your Jenkins master pod</li>
-          <li><strong>Credentials</strong>: Enter the username/password of your cluster (located in ~/.kube/config). Click on <strong>Test Connection</strong> to see if the credentials are correct and Jenkins is able to connect to Kubernetes.</li>
-          <li><strong>Jenkins URL</strong>: Enter the endpoint of your Jenkins Master service (could be an ELB URL or a custom domain)</li>
-          <li><strong>Jenkins Tunnel</strong>: Enter the endpoint of your Jenkins Slave service created earlier. It’s usually a cluster IP along with a port (usually 5000). It should look like 100.76.43.23:50000. The Jenkins master connects to the Kubernetes cluster using this endpoint.</li>
-        </ul>
-      </li>
-    </ol>
-  </li>
-</ol>
-
-<p>Leave everything else as it is and then click on <strong>Save</strong>.</p>
-
-<ol>
-  <li>Now that Jenkins and Kubernetes setup is complete, we can create a Multibranch Pipeline and see the pods being spawned for builds in action! Simply click on <strong>New Item</strong> on the Jenkins Homepage, enter a name for the project and click on <strong>Multibranch Pipeline</strong> and click OK.</li>
-  <li>Click on <strong>Add Source</strong> and your git repository. Click on Save and then Jenkins will start scanning your repository and adding all branches which contain a Jenkinsfile in the root directory.</li>
-  <li>That’s it! You will see a few pods being spawned already for the new branches. From now onwards, pods will be spawned on Kubernetes for every build and terminated after the build is finished</li>
-</ol>
 
     
 
@@ -395,6 +328,8 @@ To provide Jenkins access to the Kubernetes cluster so that it can create pods f
       
       
 
+      
+        <a href="/jenkins-kaniko-kubernetes-cloud-ci-cd/"></a>
       
     
   </article>
