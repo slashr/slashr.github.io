@@ -28,6 +28,7 @@ plugins:
   - jekyll-gist
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 # Custom vars
 #version:            3.7.0
