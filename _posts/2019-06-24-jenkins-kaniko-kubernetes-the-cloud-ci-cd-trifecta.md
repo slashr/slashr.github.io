@@ -1,6 +1,7 @@
 ---
 id: 666
 author: Akash
+title: 'Jenkins, Kaniko, Kubernetes: The Cloud CI/CD Trifecta' 
 layout: post
 permalink: /jenkins-kaniko-kubernetes-cloud-ci-cd/
 categories:
