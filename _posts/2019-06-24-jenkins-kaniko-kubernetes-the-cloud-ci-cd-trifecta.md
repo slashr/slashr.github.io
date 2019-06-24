@@ -15,7 +15,7 @@ tags:
 ---
 
 Running Jenkins on Kubernetes unleashes the scalability powers of Jenkins and makes it easier to replicate and set it up. It involves running a Jenkins Master server ([jenkinsci/blueocean](https://hub.docker.com/r/jenkinsci/blueocean)) as a StatefulSet and connecting it with the Kubernetes cluster so that the master can spawn "jenkins slaves" on the K8S cluster whenever a build job is triggered. These slaves are nothing but K8S pods consisting of containers based on the [jenkinsci/jnlp-slave](https://hub.docker.com/r/jenkinsci/jnlp-slave) docker image from Docker Hub. 
-<center><img src="/assets/images/jenkins-kubernetes-logo.svg" height="400" width="400"  alt="jenkins-with-kubernetes-hat""></center>
+<center><img src="/assets/images/jenkins-kubernetes-logo.svg" height="400" width="400"  alt="jenkins-with-kubernetes-hat"></center>
 <!--more-->
 
 Without further ado, here's how you can run Jenkins on Kubernetes: 
