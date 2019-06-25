@@ -13,8 +13,14 @@
       {{ page.title }} &middot; {{ site.title }}
     {% endif %}
   </title>
+ 
+   //enable google analytics
+   {% if site.google_analytics and jekyll.environment == 'production' %}
+   {% include analytics.html %}
+   {% endif %}
 
-  {% include google-analytics.html %}
+   //enable seo optimization
+   {% seo %}
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css" />
