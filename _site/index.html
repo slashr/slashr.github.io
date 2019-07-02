@@ -27,12 +27,12 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud" />
 <meta property="og:description" content="I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud" />
-<link rel="canonical" href="https://akashnair.com/" />
-<meta property="og:url" content="https://akashnair.com/" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="next" href="https://akashnair.com/page2" />
+<link rel="next" href="http://localhost:4000/page2" />
 <script type="application/ld+json">
-{"url":"https://akashnair.com/","headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud","name":"Akash Nair","@type":"WebSite","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/","headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud","name":"Akash Nair","@type":"WebSite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -334,8 +334,10 @@
 
 
     
-      <p>Running Jenkins on Kubernetes unleashes the scalability powers of Jenkins and makes it easier to replicate and set it up. It involves running a Jenkins Master server (<a href="https://hub.docker.com/r/jenkinsci/blueocean">jenkinsci/blueocean</a>) as a StatefulSet and connecting it with the Kubernetes cluster so that the master can spawn “jenkins slaves” on the K8S cluster whenever a build job is triggered. These slaves are nothing but K8S pods consisting of containers based on the <a href="https://hub.docker.com/r/jenkinsci/jnlp-slave">jenkinsci/jnlp-slave</a> docker image from Docker Hub.</p>
-<center><img src="/assets/images/jenkins-kubernetes-logo.svg" height="400" width="400" alt="jenkins-with-kubernetes-hat" /></center>
+      <h3 id="introduction">Introduction</h3>
+<p>Running Jenkins on Kubernetes unleashes the scalability powers of Jenkins and makes it easier to replicate and set it up. It involves running a Jenkins Master server (<a href="https://hub.docker.com/r/jenkinsci/blueocean">jenkinsci/blueocean</a>) as a StatefulSet and connecting it with the Kubernetes cluster so that the master can spawn “jenkins slaves” on the K8S cluster whenever a build job is triggered. These slaves are nothing but K8S pods consisting of containers based on the <a href="https://hub.docker.com/r/jenkinsci/jnlp-slave">jenkinsci/jnlp-slave</a> docker image from Docker Hub.</p>
+
+<center><img src="https://jenkins.io/images/jenkins-x/logo.svg" height="400" width="400" /></center>
 
 
     
