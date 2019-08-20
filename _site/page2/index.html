@@ -27,13 +27,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud" />
 <meta property="og:description" content="I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud" />
-<link rel="canonical" href="http://localhost:4000/page2/" />
-<meta property="og:url" content="http://localhost:4000/page2/" />
+<link rel="canonical" href="https://akashnair.com/page2/" />
+<meta property="og:url" content="https://akashnair.com/page2/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="http://localhost:4000/" />
-<link rel="next" href="http://localhost:4000/page3" />
+<link rel="prev" href="https://akashnair.com/" />
+<link rel="next" href="https://akashnair.com/page3" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/page2/","headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"https://akashnair.com/page2/","headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and an automation extremist. I design, build and implement architectures on the cloud","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -461,14 +461,14 @@
 
 
     
-      <p>Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, I’ll walk you through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, top IPs etc.</p>
+      <p>Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc.</p>
 
 <hr />
 
 <h4 id="setting-up-elasticsearch">Setting Up Elasticsearch</h4>
 
 <ol>
-  <li>Choose a domain name that would be part of the ElasticSearch endpoint. For example, <em>skywide</em>.</li>
+  <li>Choose a domain name that would be part of the ElasticSearch endpoint. For example, <em>mysite</em>.</li>
   <li>Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click <strong>Next</strong>.</li>
   <li>Under <strong>Set up access policy,</strong> select <strong>Allow open access to the domain. </strong>This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click <strong>Next</strong> and then <strong>Confirm and Create. </strong></li>
   <li>The domain will take around 5 to 10 minutes to get created.</li>
@@ -480,78 +480,50 @@
 <h4 id="setting-up-logstash">Setting Up Logstash</h4>
 
 <ol>
-  <li>Configuring Logstash &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>sudo apt-get update &amp;&amp; sudo apt-get upgrade</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Update and upgrade your system packages: 
+ <code class="highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
   </li>
-  <li>Logstash requires Java on the machine. Install Java by &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>sudo apt-get install default-jdk</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Logstash requires Java on the machine. Install Java: 
+ <code class="highlighter-rouge">sudo apt-get install default-jdk</code></p>
   </li>
-  <li>Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories">this page</a> &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list. </code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories">this page</a></p>
+
+    <p>Run: <code class="highlighter-rouge">echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list</code></p>
   </li>
-  <li>Update your packages and install Logstash: &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>sudo apt-get update &amp;&amp; sudo apt-get install logstash</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Finally, update your packages again and install Logstash:
+ <code class="highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get install logstash</code></p>
   </li>
-  <li>Add your AWS IAM Access Key and Secret Key by using environment variables: &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code>
- </li>
-    <li>
-   <code>echo </code><code>WS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Add your AWS IAM Access Key and Secret Key by using environment variables: 
+ <code class="highlighter-rouge">echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code></p>
+
+    <p><code class="highlighter-rouge">echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code></p>
   </li>
-  <li>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>/etc/logstash/conf.d/logstash.conf</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as <code class="highlighter-rouge">/etc/logstash/conf.d/logstash.conf</code></p>
   </li>
-  <li>Run Logstash: &lt;ul style="list-style-type: square;"&gt;
-    <li>
-   <code>/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf</code>
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
-</code></pre></div>    </div>
+  <li>
+    <p>Run Logstash:
+ <code class="highlighter-rouge">/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt;</code></p>
+    <hr />
   </li>
 </ol>
 
-<hr />
-
 <h4 id="setting-up-kibana">Setting Up Kibana</h4>
 
-<ul style="list-style-type: disc;">
-  <li>
-    Open Kibana from the URL provided on the Elasticsearch console.
+<ol>
+  <li>Open Kibana from the URL provided on the Elasticsearch console.
+    <ul>
+      <li>Use the index pattern <em>elb_logs</em></li>
+      <li>Use the timestamp <em>@timestamp</em></li>
+    </ul>
   </li>
-  <li>
-    Use the index pattern <em>elb_logs</em>
-  </li>
-  <li>
-    Use the timestamp <em>@timestamp</em>
-  </li>
-  <li>
-    To get started with visualizing your data, read through the <a href="https://www.elastic.co/guide/en/kibana/current/visualize.html">Visualize section</a> of Elastic&#8217;s official documentation.
-  </li>
-</ul>
+  <li>To get started with visualizing your data, read through the <a href="https://www.elastic.co/guide/en/kibana/current/visualize.html">Visualize section</a> of Elastic’s official documentation.</li>
+</ol>
 
     
 
