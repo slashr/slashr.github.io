@@ -6,7 +6,7 @@ excerpt_separator: <!--more-->
 # Setup
 title:            Akash Nair
 tagline:          'DevOps Engineer · Berlin'
-description:	  'I am a DevOps Engineer and infrastructure nerd. I design, build and implement architectures on the cloud'
+description:	  'I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.'
 url:              https://akashnair.com
 baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
