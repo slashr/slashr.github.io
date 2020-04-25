@@ -359,66 +359,31 @@
     
       <h3 id="scan-ec2-using-openvas">Scan EC2 using OpenVAS</h3>
 
-<p>It’s a recommended approach to scan your EC2 instances periodically to check for vulnerabilities and security loopholes. There are several scanning tools available for these purposes but very few free ones. OpenVAS is a opensource and free tool which originated as a fork of the now commercial Nessus scanning tool. Follow these steps to quickly get started with OpenVAS</p>
+<p>Scanning your EC2 instances periodically to check for vulnerabilities and security loopholes is definitely something that no Systems/DevOps engineer should miss out on. There are several scanning tools available for these purposes but very few free ones. OpenVAS is an opensource and free tool which originated as a fork of the now commercial Nessus scanning tool.</p>
+
+<p>Follow these steps to quickly get started with OpenVAS</p>
 
 <ol>
-  <li>Launch an Ubuntu EC2 instance. [<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-launch-instance_linux">how-to</a>]</li>
-  <li>Add the following PPA: <code class="highlighter-rouge">sudo add-apt-repository ppa:mrazavi/openvas&lt;br /&gt;
-</code></li>
+  <li>Launch an Ubuntu EC2 instance. <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-launch-instance_linux">how-to</a></li>
+  <li>Add the following PPA: <code class="highlighter-rouge">sudo add-apt-repository ppa:mrazavi/openvas</code></li>
   <li>Update apt-get: <code class="highlighter-rouge">sudo apt-get update</code></li>
-  <li>Install OpenVAS : <code class="highlighter-rouge">sudo apt-get install openvas</code></li>
-  <li>Run the following commands to update OpenVAS scripts and data &lt;ul style="list-style-type: disc;"&gt;
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code>sudo apt-get install sqlite3 </code>
-   </p>
- </li>
-
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code>sudo openvas-nvt-sync </code>
-   </p>
- </li>
-
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code>sudo openvas-&lt;wbr /&gt;scapdata-&lt;wbr /&gt;sync</code>
-   </p>
- </li>
-
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code></code><code>sudo openvas-&lt;wbr /&gt;certdata-&lt;wbr /&gt;sync</code>
-   </p>
- </li>
-
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code></code><code>sudo service openvas-scanner restart</code>
-   </p>
- </li>
-
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code></code><code>sudo service openvas-manager restart</code>
-   </p>
- </li>
-
-    <li>
-   <p id="yui_3_10_3_1_1461302992231_272">
-     <code></code><code>sudo openvasmd --rebuild --progress</code>
-   </p>
-        
-   <p>
-     The above commands will be downloading large amounts of data from the internet. It might take several minutes to complete depending on the internet speed.&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; 
-          
-     <li>
-       <p id="yui_3_10_3_1_1461319488626_72">
-         <code>Goto https:/&lt;wbr /&gt;/&lt;instance-public-ip&gt;:&lt;wbr /&gt;443</code> and login. The default username and password is &#8220;admin&#8221;.
-       </p>
-     </li>&lt;/ol&gt;
-</p></li>
+  <li>Install OpenVAS: <code class="highlighter-rouge">sudo apt-get install openvas</code></li>
+  <li>Run the following commands to update OpenVAS scripts and data:
+    <ul>
+      <li><code class="highlighter-rouge">sudo apt-get install sqlite3</code></li>
+      <li><code class="highlighter-rouge">sudo openvas-nvt-sync</code></li>
+      <li><code class="highlighter-rouge">sudo openvas-scapdata-sync</code></li>
+      <li><code class="highlighter-rouge">sudo openvas-certdata-sync</code></li>
+      <li><code class="highlighter-rouge">sudo service openvas-scanner restart</code></li>
+      <li><code class="highlighter-rouge">sudo service openvas-manager restart</code></li>
+      <li><code class="highlighter-rouge">sudo openvasmd --rebuild --progress</code>
+        <blockquote>
+          <p>The above commands will download large amounts of data from the internet. It might take several minutes to complete depending on the internet speed.</p>
+        </blockquote>
+      </li>
+    </ul>
   </li>
+  <li>After the downloads have finished, Goto <code class="highlighter-rouge">https:&lt;instance-public-ip&gt;:443</code> and login. The default username and password is <code class="highlighter-rouge">admin</code></li>
 </ol>
 
     
