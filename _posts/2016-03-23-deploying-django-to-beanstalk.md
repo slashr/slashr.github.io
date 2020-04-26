@@ -47,7 +47,7 @@ Awsebcli: `pip install awsebcli`
 
 You can now see the following page by hitting the public IP of your instance in your browser. Example: 54.255.233.22:8000
 
-![django](/assets/Images/Django.png)
+![django](/assets/images/Django.png)
 
 Now that Django is up and running on your EC2 instance, we can proceed to prepare it to be deployed on Elastic Beanstalk.
 
