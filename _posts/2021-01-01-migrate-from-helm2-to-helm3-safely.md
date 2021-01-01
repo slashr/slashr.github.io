@@ -16,7 +16,7 @@ tags:
 
 As you have probably already read, Helm 2 has been replaced by Helm 3 which comes with a lot of major changes, the biggest being that the Tiller pod has been removed. This is a great security improvement since Tiller was a pod running with a lot of privileges on the cluster and was major point of vulnerability. 
 
-Also, support and upgrades to Helm 2 stopped since November 13, 2020. More information can be found [here](/https://helm.sh/blog/helm-v2-deprecation-timeline/). So now is a good time, to finally make that move to Helm 3.
+Also, support and upgrades to Helm 2 stopped since November 13, 2020. More information can be found [here](https://helm.sh/blog/helm-v2-deprecation-timeline/). So now is a good time, to finally make that move to Helm 3.
 
 
 <center><img src="../assets/images/helm.png" height="400" width="400"></center>
