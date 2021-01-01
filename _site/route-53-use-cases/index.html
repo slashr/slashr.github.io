@@ -21,20 +21,20 @@
    <!-- enable seo optimization-->
    <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Moving your DNS to Route 53 | Akash Nair</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Moving your DNS to Route 53" />
 <meta name="author" content="Akash" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="About Route 53 Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Since it is a native AWS service, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment. Here are a few common use-cases along with a broad overview of the process steps: Migrating an existing domain&#8217;s DNS to Route 53 Create a Hosted Zone and enter the existing domain name (www.skywide.in) Add a Record Set to the Hosted Zone and add the IP of the server as a A record (also create MX, CNAME and other records depending on your requirement) Copy the four name servers provided by the Hosted Zone Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53. The DNS propagation from your domain registrar to Route 53 will take 48 hours or more. Migrating the sub-domain DNS to Route 53 without migrating the parent domain Create a Hosted Zone and enter the sub domain name (www.aws.skywide.in) Add a Record Set to the hosted zone and add the IP of the server as a A record (similarly add MX, CNAME records if required) Copy the four name servers provided by the Hosted Zone. Replace the NS Records of the registrar with these name servers Important: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain. Private Hosted Zone Private Hosted Zone is a Hosted Zone for managing domains within an AWS VPC First step is to Amazon VPC settings to true: &lt;div class=&quot;itemizedlist&quot;&gt; enableDnsHostnames enableDnsSupport &lt;/div&gt; On the Route 53 page, click on Create Hosted Zone. Next, in the Create Private Hosted Zone pane, enter your domain name. Select Private Hosted Zone for Amazon VPC in the Type list. Finally, in the VPC ID list, select the VPC you want to associate with Route 53. Click on Create. Your VPC should get linked with Route 53 within a few minutes. * * * Integration with other AWS Services Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services. EC2 Create an A record with the Elastic IP of the instance ELB Add public DNS of the load balancer to a CNAME record CloudFront Add Distribution URL to a CNAME record S3 Add the Bucket URL to a CNAME record RDS Add the RDS endpoint to a CNAME record" />
-<meta property="og:description" content="About Route 53 Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Since it is a native AWS service, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment. Here are a few common use-cases along with a broad overview of the process steps: Migrating an existing domain&#8217;s DNS to Route 53 Create a Hosted Zone and enter the existing domain name (www.skywide.in) Add a Record Set to the Hosted Zone and add the IP of the server as a A record (also create MX, CNAME and other records depending on your requirement) Copy the four name servers provided by the Hosted Zone Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53. The DNS propagation from your domain registrar to Route 53 will take 48 hours or more. Migrating the sub-domain DNS to Route 53 without migrating the parent domain Create a Hosted Zone and enter the sub domain name (www.aws.skywide.in) Add a Record Set to the hosted zone and add the IP of the server as a A record (similarly add MX, CNAME records if required) Copy the four name servers provided by the Hosted Zone. Replace the NS Records of the registrar with these name servers Important: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain. Private Hosted Zone Private Hosted Zone is a Hosted Zone for managing domains within an AWS VPC First step is to Amazon VPC settings to true: &lt;div class=&quot;itemizedlist&quot;&gt; enableDnsHostnames enableDnsSupport &lt;/div&gt; On the Route 53 page, click on Create Hosted Zone. Next, in the Create Private Hosted Zone pane, enter your domain name. Select Private Hosted Zone for Amazon VPC in the Type list. Finally, in the VPC ID list, select the VPC you want to associate with Route 53. Click on Create. Your VPC should get linked with Route 53 within a few minutes. * * * Integration with other AWS Services Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services. EC2 Create an A record with the Elastic IP of the instance ELB Add public DNS of the load balancer to a CNAME record CloudFront Add Distribution URL to a CNAME record S3 Add the Bucket URL to a CNAME record RDS Add the RDS endpoint to a CNAME record" />
-<link rel="canonical" href="http://localhost:4000/route-53-use-cases/" />
-<meta property="og:url" content="http://localhost:4000/route-53-use-cases/" />
+<meta name="description" content="About Route 53 Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment. Here are a few common use-cases along with a broad overview of the process steps: Migrating an existing domain’s DNS to Route 53 Create a Hosted Zone and enter the existing domain name (www.example.com) Add a Record Set to the Hosted Zone and add the IP of the server as a A record (also create MX, CNAME and other records depending on your requirement) Copy the four name servers provided by the Hosted Zone Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53. The DNS propagation from your domain registrar to Route 53 will take 48 hours or more. Migrating the sub-domain DNS to Route 53 without migrating the parent domain Create a Hosted Zone and enter the sub domain name (www.aws.example.com) Add a Record Set to the hosted zone and add the IP of the server as a A record (similarly add MX, CNAME records if required) Copy the four name servers provided by the Hosted Zone. Replace the NS Records of the registrar with these name servers Important: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain. Private Hosted Zone Private Hosted Zone is a Hosted Zone for managing domains within an AWS VPC First step is to set the following Amazon VPC settings to true: enableDnsHostnames enableDnsSupport On the Route 53 page, click on Create Hosted Zone. Next, in the Create Private Hosted Zone pane, enter your domain name. Select Private Hosted Zone for Amazon VPC in the Type list. Finally, in the VPC ID list, select the VPC you want to associate with Route 53. Click on Create. Your VPC should get linked with Route 53 within a few minutes. Integration with other AWS Services Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services. EC2: Create an A record with the Elastic IP of the instance ELB: Add public DNS of the load balancer to a CNAME record CloudFront: Add Distribution URL to a CNAME record S3: Add the Bucket URL to a CNAME record RDS: Add the RDS endpoint to a CNAME record" />
+<meta property="og:description" content="About Route 53 Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment. Here are a few common use-cases along with a broad overview of the process steps: Migrating an existing domain’s DNS to Route 53 Create a Hosted Zone and enter the existing domain name (www.example.com) Add a Record Set to the Hosted Zone and add the IP of the server as a A record (also create MX, CNAME and other records depending on your requirement) Copy the four name servers provided by the Hosted Zone Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53. The DNS propagation from your domain registrar to Route 53 will take 48 hours or more. Migrating the sub-domain DNS to Route 53 without migrating the parent domain Create a Hosted Zone and enter the sub domain name (www.aws.example.com) Add a Record Set to the hosted zone and add the IP of the server as a A record (similarly add MX, CNAME records if required) Copy the four name servers provided by the Hosted Zone. Replace the NS Records of the registrar with these name servers Important: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain. Private Hosted Zone Private Hosted Zone is a Hosted Zone for managing domains within an AWS VPC First step is to set the following Amazon VPC settings to true: enableDnsHostnames enableDnsSupport On the Route 53 page, click on Create Hosted Zone. Next, in the Create Private Hosted Zone pane, enter your domain name. Select Private Hosted Zone for Amazon VPC in the Type list. Finally, in the VPC ID list, select the VPC you want to associate with Route 53. Click on Create. Your VPC should get linked with Route 53 within a few minutes. Integration with other AWS Services Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services. EC2: Create an A record with the Elastic IP of the instance ELB: Add public DNS of the load balancer to a CNAME record CloudFront: Add Distribution URL to a CNAME record S3: Add the Bucket URL to a CNAME record RDS: Add the RDS endpoint to a CNAME record" />
+<link rel="canonical" href="https://akashnair.com/route-53-use-cases/" />
+<meta property="og:url" content="https://akashnair.com/route-53-use-cases/" />
 <meta property="og:site_name" content="Akash Nair" />
-<meta property="og:image" content="http://localhost:4000/wp-content/uploads/2016/02/Route53-e1456448466184.png" />
+<meta property="og:image" content="https://akashnair.com/wp-content/uploads/2016/02/Route53-e1456448466184.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2016-02-24T20:21:56+01:00" />
+<meta property="article:published_time" content="2016-02-25T00:51:56+05:30" />
 <script type="application/ld+json">
-{"headline":"Moving your DNS to Route 53","dateModified":"2016-02-24T20:21:56+01:00","datePublished":"2016-02-24T20:21:56+01:00","@type":"BlogPosting","image":"http://localhost:4000/wp-content/uploads/2016/02/Route53-e1456448466184.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/route-53-use-cases/"},"url":"http://localhost:4000/route-53-use-cases/","author":{"@type":"Person","name":"Akash"},"description":"About Route 53 Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Since it is a native AWS service, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment. Here are a few common use-cases along with a broad overview of the process steps: Migrating an existing domain&#8217;s DNS to Route 53 Create a Hosted Zone and enter the existing domain name (www.skywide.in) Add a Record Set to the Hosted Zone and add the IP of the server as a A record (also create MX, CNAME and other records depending on your requirement) Copy the four name servers provided by the Hosted Zone Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53. The DNS propagation from your domain registrar to Route 53 will take 48 hours or more. Migrating the sub-domain DNS to Route 53 without migrating the parent domain Create a Hosted Zone and enter the sub domain name (www.aws.skywide.in) Add a Record Set to the hosted zone and add the IP of the server as a A record (similarly add MX, CNAME records if required) Copy the four name servers provided by the Hosted Zone. Replace the NS Records of the registrar with these name servers Important: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain. Private Hosted Zone Private Hosted Zone is a Hosted Zone for managing domains within an AWS VPC First step is to Amazon VPC settings to true: &lt;div class=&quot;itemizedlist&quot;&gt; enableDnsHostnames enableDnsSupport &lt;/div&gt; On the Route 53 page, click on Create Hosted Zone. Next, in the Create Private Hosted Zone pane, enter your domain name. Select Private Hosted Zone for Amazon VPC in the Type list. Finally, in the VPC ID list, select the VPC you want to associate with Route 53. Click on Create. Your VPC should get linked with Route 53 within a few minutes. * * * Integration with other AWS Services Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services. EC2 Create an A record with the Elastic IP of the instance ELB Add public DNS of the load balancer to a CNAME record CloudFront Add Distribution URL to a CNAME record S3 Add the Bucket URL to a CNAME record RDS Add the RDS endpoint to a CNAME record","@context":"https://schema.org"}</script>
+{"image":"https://akashnair.com/wp-content/uploads/2016/02/Route53-e1456448466184.png","author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","description":"About Route 53 Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment. Here are a few common use-cases along with a broad overview of the process steps: Migrating an existing domain’s DNS to Route 53 Create a Hosted Zone and enter the existing domain name (www.example.com) Add a Record Set to the Hosted Zone and add the IP of the server as a A record (also create MX, CNAME and other records depending on your requirement) Copy the four name servers provided by the Hosted Zone Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53. The DNS propagation from your domain registrar to Route 53 will take 48 hours or more. Migrating the sub-domain DNS to Route 53 without migrating the parent domain Create a Hosted Zone and enter the sub domain name (www.aws.example.com) Add a Record Set to the hosted zone and add the IP of the server as a A record (similarly add MX, CNAME records if required) Copy the four name servers provided by the Hosted Zone. Replace the NS Records of the registrar with these name servers Important: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain. Private Hosted Zone Private Hosted Zone is a Hosted Zone for managing domains within an AWS VPC First step is to set the following Amazon VPC settings to true: enableDnsHostnames enableDnsSupport On the Route 53 page, click on Create Hosted Zone. Next, in the Create Private Hosted Zone pane, enter your domain name. Select Private Hosted Zone for Amazon VPC in the Type list. Finally, in the VPC ID list, select the VPC you want to associate with Route 53. Click on Create. Your VPC should get linked with Route 53 within a few minutes. Integration with other AWS Services Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services. EC2: Create an A record with the Elastic IP of the instance ELB: Add public DNS of the load balancer to a CNAME record CloudFront: Add Distribution URL to a CNAME record S3: Add the Bucket URL to a CNAME record RDS: Add the RDS endpoint to a CNAME record","headline":"Moving your DNS to Route 53","dateModified":"2016-02-25T00:51:56+05:30","datePublished":"2016-02-25T00:51:56+05:30","url":"https://akashnair.com/route-53-use-cases/","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/route-53-use-cases/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -301,7 +301,7 @@
 </nav>
 
  <!-- <p>
- <!--font size="1"> &copy; 2020 All rights reserved.</font-->
+ <!--font size="1"> &copy; 2021 All rights reserved.</font-->
   <!--<a href="/LICENSE.md">MIT License.</a>-->
 </p>
  
@@ -314,7 +314,7 @@
 </header>
 <div class="content">
   <div class="post-meta">
-  <span class="post-date">24 Feb 2016</span>
+  <span class="post-date">25 Feb 2016</span>
   <span class="post-categories">
     
       &bull;
@@ -332,22 +332,17 @@
 
 
   <div class="post-body">
-    <h4 id="about-route-53">About Route 53</h4>
+    <h3 id="about-route-53">About Route 53</h3>
 
-<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Since it is a native AWS service, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
+<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
 
 <hr />
-
 <p>Here are a few common use-cases along with a broad overview of the process steps:</p>
 
-<ul style="list-style-type: square;">
-  <li>
-    Migrating an existing domain&#8217;s DNS to Route 53
-  </li>
-</ul>
+<h4 id="migrating-an-existing-domains-dns-to-route-53">Migrating an existing domain’s DNS to Route 53</h4>
 
 <ol>
-  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.skywide.in)</li>
+  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.example.com)</li>
   <li>Add a <strong>Record Set</strong> to the <strong>Hosted Zone</strong> and add the IP of the server as a <strong>A record</strong> (also create MX, CNAME and other records depending on your requirement)</li>
   <li>Copy the four name servers provided by the <strong>Hosted Zone</strong></li>
   <li>Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53.</li>
@@ -355,42 +350,27 @@
 </ol>
 
 <hr />
-
-<ul style="list-style-type: square;">
-  <li>
-    Migrating the sub-domain DNS to Route 53 without migrating the parent domain
-  </li>
-</ul>
+<h4 id="migrating-the-sub-domain-dns-to-route-53-without-migrating-the-parent-domain">Migrating the sub-domain DNS to Route 53 without migrating the parent domain</h4>
 
 <ol>
-  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.skywide.in)</li>
+  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.example.com)</li>
   <li>Add a <strong>Record Set</strong> to the hosted zone and add the IP of the server as a <strong>A record</strong> (similarly add MX, CNAME records if required)</li>
   <li>Copy the four name servers provided by the <strong>Hosted Zone</strong>. Replace the NS Records of the registrar with these name servers</li>
 </ol>
 
-<p><em>Important:</em> Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
+<p><strong>Important</strong>: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
 
 <hr />
 
-<ul style="list-style-type: square;">
-  <li>
-    Private Hosted Zone
-  </li>
-</ul>
+<h4 id="private-hosted-zone">Private Hosted Zone</h4>
 
 <ol>
   <li><strong>Private Hosted Zone</strong> is a <strong>Hosted Zone</strong> for managing domains within an AWS VPC</li>
-  <li>First step is to Amazon VPC settings to <code class="highlighter-rouge">true</code>: &lt;div class="itemizedlist"&gt;
-    <ul class="itemizedlist" type="disc">
-   <li class="listitem">
-     <code class="code">enableDnsHostnames</code>
-   </li>
-   <li class="listitem">
-     <code class="code">enableDnsSupport</code>
-   </li>
- </ul>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/div&gt;
-</code></pre></div>    </div>
+  <li>First step is to set the following Amazon VPC settings to <code class="language-plaintext highlighter-rouge">true</code>:
+    <ul>
+      <li>enableDnsHostnames</li>
+      <li>enableDnsSupport</li>
+    </ul>
   </li>
   <li>On the Route 53 page, click on <strong>Create Hosted Zone</strong>.</li>
   <li>Next, in the <strong>Create Private Hosted Zone</strong> pane, enter your domain name. Select <strong>Private Hosted Zone for Amazon VPC</strong> in the <strong>Type</strong> list.</li>
@@ -398,68 +378,18 @@
   <li>Click on <strong>Create</strong>. Your VPC should get linked with Route 53 within a few minutes.</li>
 </ol>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * *
-</code></pre></div></div>
-
-<ul style="list-style-type: square;">
-  <li>
-    <em>Inte</em>gration with other AWS Services
-  </li>
-</ul>
+<hr />
+<h4 id="integration-with-other-aws-services">Integration with other AWS Services</h4>
 
 <p>Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services.</p>
 
-<table style="width: 571px;">
-  <tr>
-    <td style="width: 90px;">
-      EC2
-    </td>
-    
-    <td style="width: 469px;">
-      Create an <strong>A record</strong> with the <strong>Elastic IP</strong> of the instance
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      ELB
-    </td>
-    
-    <td style="width: 469px;">
-      Add <strong>public DNS</strong> of the load balancer to a <strong>CNAME record</strong>
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      CloudFront
-    </td>
-    
-    <td style="width: 469px;">
-      Add <strong>Distribution URL</strong> to a <strong>CNAME</strong> record
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      S3
-    </td>
-    
-    <td style="width: 469px;">
-      Add the <strong>Bucket URL</strong> to a <strong>CNAME</strong> record
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      RDS
-    </td>
-    
-    <td style="width: 469px;">
-      Add the <strong>RDS endpoint</strong> to a <strong>CNAME</strong> record
-    </td>
-  </tr>
-</table>
+<ol>
+  <li>EC2: Create an A record with the Elastic IP of the instance</li>
+  <li>ELB: Add public DNS of the load balancer to a CNAME record</li>
+  <li>CloudFront: Add Distribution URL to a CNAME record</li>
+  <li>S3: Add the Bucket URL to a CNAME record</li>
+  <li>RDS: Add the RDS endpoint to a CNAME record</li>
+</ol>
 
     
 
@@ -521,9 +451,9 @@
   *  https://disqus.com/admin/universalcode/#configuration-variables
   */
   var disqus_config = function () {
-    this.page.url = "http://localhost:4000/route-53-use-cases/";
-    this.page.identifier = "http://skywide.in/?p=452" ||
-                           "http://localhost:4000/route-53-use-cases/";
+    this.page.url = "https://akashnair.com/route-53-use-cases/";
+    this.page.identifier = "" ||
+                           "https://akashnair.com/route-53-use-cases/";
   }
   function loadDisqusComments() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
@@ -547,6 +477,15 @@
     
       <li>
         <h3>
+          <a href="/migrate-helm2-to-helm3/">
+            Migrate from Helm 2 to Helm 3 Safely
+            <small>01 Jan 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/jenkins-kaniko-kubernetes-cloud-ci-cd/">
             Jenkins, Kaniko, Kubernetes: The Cloud CI/CD Trifecta
             <small>24 Jun 2019</small>
@@ -558,16 +497,7 @@
         <h3>
           <a href="/fire-suppression-using-smart-sensors-iot/">
             Suppressing Fires using Gas: An IoT Experiment
-            <small>17 Mar 2018</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/using-lambda-turn-off-ec2-instances/">
-            Using Lambda to Turn Off EC2 Instances During Off Hours
-            <small>24 Nov 2016</small>
+            <small>18 Mar 2018</small>
           </a>
         </h3>
       </li>

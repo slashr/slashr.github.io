@@ -21,19 +21,19 @@
    <!-- enable seo optimization-->
    <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Page 4 of 5 for Home | Akash Nair</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Home" />
 <meta name="author" content="Akash Nair" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
 <meta property="og:description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
-<link rel="canonical" href="http://localhost:4000/page4/" />
-<meta property="og:url" content="http://localhost:4000/page4/" />
+<link rel="canonical" href="https://akashnair.com/page4/" />
+<meta property="og:url" content="https://akashnair.com/page4/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="http://localhost:4000/page3" />
-<link rel="next" href="http://localhost:4000/page5" />
+<link rel="prev" href="https://akashnair.com/page3" />
+<link rel="next" href="https://akashnair.com/page5" />
 <script type="application/ld+json">
-{"headline":"Home","@type":"WebPage","url":"http://localhost:4000/page4/","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","headline":"Home","url":"https://akashnair.com/page4/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -300,7 +300,7 @@
 </nav>
 
  <!-- <p>
- <!--font size="1"> &copy; 2020 All rights reserved.</font-->
+ <!--font size="1"> &copy; 2021 All rights reserved.</font-->
   <!--<a href="/LICENSE.md">MIT License.</a>-->
 </p>
  
@@ -321,6 +321,219 @@
 
   
 
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/launching-ec2-instances-using-vagrant/">
+        EC2 Instances Automated Deployment using Vagrant
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">12 Feb 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <h2 style="text-align: left;">
+  Why use Vagrant to launch EC2 instance?
+</h2>
+
+<p style="text-align: left;">
+  EC2 instances can be deployed seamlessly using Vagrant. Once you setup Vagrant and configure it, launching an EC2 instance becomes as easy as running the command <em>vagrant up. </em>Such automation is especially useful when you have to launch a large fleet of EC2 instances quickly.
+</p>
+
+<h4 style="text-align: left;">
+  Setting up Vagrant on your machine
+</h4>
+
+<ol>
+  <li>Install vagrant:</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`sudo apt-get install vagrant`   2. Initialize vagrant:
+  
+`vagrant init hashicorp/precise32`
+  
+`vagrant up`
+  
+(This will download the example virtualbox image from vagrant servers. It might take a few minutes)   3. Install vagrant aws plugin:
+  
+`sudo vagrant plugin install vagrant-aws`   4. Get the AWS Box image:
+  
+`vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
+</code></pre></div></div>
+
+<hr />
+
+<h4 style="text-align: left;">
+  Launching the instance
+</h4>
+
+<ol>
+  <li>Create a directory in your home folder and from inside the directory, run</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`vagrant init hashicorp/precise32`
+  
+(This will create a &amp;#8220;Vagrantfile&amp;#8221; in your directory)   2. Open your Vagrantfile, clear all contents and add the following. Please modify the values wherever necessary.
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Save the file and run:</p>
+
+    <p><code class="language-plaintext highlighter-rouge">vagrant up --provider=aws</code></p>
+  </li>
+  <li>
+    <p>Your instance should be up and running in a few minutes.</p>
+  </li>
+</ol>
+
+<hr />
+
+<p>The above configuration only contains the bare essential configurations. Here are some more configuration parameters.</p>
+
+<table style="height: 258px; width: 675px;">
+  <tr>
+    <td style="width: 253px;">
+      availability_zone
+    </td>
+    
+    <td style="width: 408px;">
+      Specify the desired availability zone. (ap-southeast-1a)
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      instance_type
+    </td>
+    
+    <td style="width: 408px;">
+      The default value of this if not specified is &#8220;m3.medium&#8221;
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      private_ip_address
+    </td>
+    
+    <td style="width: 408px;">
+      The private IP address to assign to an instance within a VPC
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      instance_ready_timeout
+    </td>
+    
+    <td style="width: 408px;">
+      The number of seconds to wait for the instance to become &#8220;ready&#8221; in AWS. Defaults to 120 seconds
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      instance_package_timeout
+    </td>
+    
+    <td style="width: 408px;">
+      The number of seconds to wait for the instance to be burnt into an AMI during packaging. Defaults to 600 seconds
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      elastic_ip
+    </td>
+    
+    <td style="width: 408px;">
+      Can be set to &#8216;true&#8217;, or to an existing Elastic IP address
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      security_groups
+    </td>
+    
+    <td style="width: 408px;">
+      An array of security groups for the instance. If this instance will be launched in VPC, this must be a list of security group Name. For a non-default VPC, you must use security group IDs instead
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      subnet_id
+    </td>
+    
+    <td style="width: 408px;">
+      The subnet to launch the instance inside
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 253px;">
+      associate_public_ip
+    </td>
+    
+    <td style="width: 408px;">
+      true/false. If true, will associate a public IP address to an instance in a VPC
+    </td>
+  </tr>
+</table>
+
+<p>The full list of options can be found here: <a href="https://github.com/mitchellh/vagrant-aws#configuration" target="_blank">https://github.com/mitchellh/vagrant-aws#configuration</a></p>
+
+<hr />
+
+<p>Note: This guide is written for a *nix environment. The steps are similar for Windows based environments.</p>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -439,7 +652,7 @@
     <li>
    This will generate two files:  The private key file <em>code_commit</em> and the public key file <em>code_commit.pub</em>. Copy the contents of the public key and save it (we&#8217;ll require it in the following steps)
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Go to the IAM console, choose Policies and then select IAMUserSSHKeys. Click on Attach and then select the IAM user we created/chose in the first step. Click on Attach Policy</li>
@@ -452,14 +665,14 @@
     <li>
    <code>chmod 600 config</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Test the SSH connection to CodeCommit &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code class="${guide.default.syntax.language} hljs css">&lt;span class="hljs-tag"&gt;ssh&lt;/span&gt; &lt;span class="hljs-tag"&gt;git-codecommit&lt;/span&gt;&lt;span class="hljs-class"&gt;.us-east-1&lt;/span&gt;&lt;span class="hljs-class"&gt;.amazonaws&lt;/span&gt;&lt;span class="hljs-class"&gt;.com&lt;/span&gt;</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>If you get a public key denied error, try moving your config and key files to the .ssh directory of the root user.</li>
@@ -475,56 +688,56 @@
     <li>
    <code>mkdir skywide</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Add the directory to git by running &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>git init skywide</code> (This will create a .git directory inside skywide)
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Make a simple file inside the directory in order to test if the implementation is working, say index.html &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>sudo nano index.html</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Add the index.html file to git &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>git add index.html</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Run git status &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>git status</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>To connect the instance to the repo you created on CodeCommit &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>git remote add origin ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/SkyWide</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>In order to commit the file to the repo, run &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>git commit -m "First Commit"Where -m is a message flag that adds a comment to the commit.</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>In order to push the commit to CodeCommit, run &lt;ul style="list-style-type: disc;"&gt;
     <li>
    <code>git push origin master</code><br /> This pushes the master (your local repo) to origin (the CodeCommit repo set in step 7).
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
 </ol>
@@ -595,42 +808,42 @@
     <li>
    <code>sudo apt-get install unzip &amp;&amp; apt-get install libwww-perl &amp;&amp; apt-get install libcrypt-ssleay-perl apt-get install libswitch-perl</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Download the monitoring scripts: &lt;ul style="list-style-type: square;"&gt;
     <li>
    <code>wget http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Extract the contents and remove the zip file: &lt;ul style="list-style-type: square;"&gt;
     <li>
    <code>unzip CloudWatchMonitoringScripts-v1.1.0.zip</code><br /> <code>rm CloudWatchMonitoringScripts-v1.1.0.zip</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Add access key and secret key to the configuration file. Edit the awscreds.template located inside aws-scripts-mon directory file to add your Access Key and Secret Key. &lt;ul style="list-style-type: square;"&gt;
     <li>
    <code>cd aws-scripts-mon</code><code>echo "AWSAccessKeyId=****" &gt; awscreds.template</code><br /> <code>echo "AWSSecretKey=****" &gt;&gt; awscreds.template</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Set environment variable &amp; export the path of the credential file &lt;ul style="list-style-type: square;"&gt;
     <li>
    <code>path=$(pwd) ; export AWS_CREDENTIAL_FILE=${path}/awscreds.template</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Create a cronjob. Add the monitoring script to the crontab. Run it every 5 minutes or choose a time cycle according to your requirements. &lt;ul style="list-style-type: square;"&gt;
     <li>
    <code>echo "*/5 * * * * ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --mem-used --mem-avail --swap-util --swap-used --disk-path=/ --disk-space-util --disk-space-used --disk-space-avail" &gt;&gt; /etc/crontab</code>
  </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
 </code></pre></div>    </div>
   </li>
   <li>Check the metrics on the AWS console</li>
@@ -778,746 +991,6 @@
 <p>In this way, you are ready to exploit the cloud and fully leverage the benefits it has to offer.</p>
 
 <p><sub>Reference: http://media.amazonwebservices.com/architecturecenter/AWS_ac_ra_web_01.pdf</sub></p>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/unix-fundamentals/">
-        Fundamentals and Architecture of Unix
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">25 Jun 2015</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Nix
-      
-    
-  </span>
-</div>
-
-
-    
-      <hr />
-
-<p><a href="#filesystem">File System</a></p>
-
-<p><a href="#shells">Shells</a></p>
-
-<p><a href="#packagemanagement">Package Management</a></p>
-
-<p><a href="#bootprocess">Boot Process</a></p>
-
-<p><a href="#shelltools">Shell Tools</a></p>
-
-<hr />
-
-<p> </p>
-
-<h2 id="file-system">File System</h2>
-
-<p><strong>How to view devices/partitions</strong></p>
-
-<p><code class="highlighter-rouge">ls -la /dev/sd*</code></p>
-
-<p>(l = long description, a = all files including the ones starting with “.”)</p>
-
-<p><strong>How to create partition on a device</strong></p>
-
-<p><code class="highlighter-rouge">parted /dev/sdb</code> (select device)</p>
-
-<p><code class="highlighter-rouge">print</code> (view existing partitions on device)</p>
-
-<p><code class="highlighter-rouge">rm</code> (deletes selected partition)</p>
-
-<p><code class="highlighter-rouge">mklabel msdos</code> (assigns “msdos” label to un-labelled partitions)</p>
-
-<p><code class="highlighter-rouge">mkpart primary 1G 2G</code></p>
-
-<p>(creates a primary partition of size 1GB from block 1GB to 2GB)</p>
-
-<p><strong>View newly created partitions</strong></p>
-
-<p><code class="highlighter-rouge">fdisk -l /dev/sdb</code></p>
-
-<p><strong>Format partition with preferred filesystem</strong></p>
-
-<p><code class="highlighter-rouge">mkfs.ext2 /dev/sdb1&lt;br /&gt;
-mkfs.ext4 /dev/sdb2</code></p>
-
-<p><strong>Mounting filesystems</strong></p>
-
-<p><code class="highlighter-rouge">mount -o noatime /dev/sdb1 /mnt</code></p>
-
-<p>(where, -o is options, ‘noatime’ is “no access times” which prevents access times from being written to the inode which results in better performance. /dev/sdb1 is the partition and /mnt is the mount point)</p>
-
-<p>In addition to ‘noatime’ other options include</p>
-
-<ul>
-  <li>async      : File operations take place asynchronoulsy</li>
-  <li>ro            : Partition mounted in read-only mode</li>
-  <li>noexec    : Ignores any “execute bits” on the filesystem. Used for security purposes.</li>
-  <li>nosuid    : Ignores any setuserid bits on the filesystem. Used for security purposes.</li>
-  <li>remount : Remounts in preferred mode. Example mount -o remount, rw /boot</li>
-</ul>
-
-<hr />
-
-<p> </p>
-
-<h2 id="shells">Shells</h2>
-
-<p><strong>Editor Shortcuts</strong></p>
-
-<ul>
-  <li>Ctrl-b: Move backward by one character</li>
-  <li>Ctrl-f: Move forward by one character</li>
-  <li>Ctrl-a: Move to the beginning of the line</li>
-  <li>Ctrl-e: Move to the end of the line</li>
-  <li>Ctrl-k: Delete from the cursor forward</li>
-  <li>Ctrl-u: Delete from the cursor backward</li>
-  <li>Ctrl-r: Search the command history</li>
-</ul>
-
-<p><strong>Environment Variables</strong></p>
-
-<p>Environment variables are used to define often-used attributes by the shell. Most common environment variables are</p>
-
-<p>$PATH: Specifies the set of directories the shell will search for commands</p>
-
-<p>To list all environment variables</p>
-
-<p><code class="highlighter-rouge">env</code></p>
-
-<p><strong>Shell Profiles</strong></p>
-
-<p>Shell profiles define a user’s environment. Environment variables can be set in a profile. There are two types of profiles.</p>
-
-<p>/etc/profile: Global profile. This is the default profile.</p>
-
-<p>~/.profile   : This is a user specific profile. Any environment variable set in this profile applies to only that specific user.</p>
-
-<p>Note: ~/.profile is executed after /etc/profile. It is possible to override this.</p>
-
-<p><strong>Special Environment Variables</strong></p>
-
-<table style="height: 302px;" width="389">
-  <tr>
-    <td>
-      <strong>Command</strong>
-    </td>
-    
-    <td>
-      <strong>Description</strong>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      $$
-    </td>
-    
-    <td>
-      Process ID of current shell
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      $!
-    </td>
-    
-    <td>
-      Background process ID
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      $?
-    </td>
-    
-    <td>
-      Exit status. &#8216;0&#8217; means success. Any non-zero number indicates an error.
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      history
-    </td>
-    
-    <td>
-      Provides history of commands executed on shell
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      !!
-    </td>
-    
-    <td>
-      Re-executes previous command
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      ctrl+R
-    </td>
-    
-    <td>
-      Searches the command history
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      jobs
-    </td>
-    
-    <td>
-      List background jobs
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      &amp;
-    </td>
-    
-    <td>
-      Executes job in background. Ex: sleep 50 &amp;
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      fg
-    </td>
-    
-    <td>
-      Brings background job to foreground.
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      bg
-    </td>
-    
-    <td>
-      Sends the job to the background
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      fg %d
-    </td>
-    
-    <td>
-      Brings the job specified by the job ID (&#8216;d&#8217;) to the foreground
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      kill %d
-    </td>
-    
-    <td>
-      Kills the specified job ID
-    </td>
-  </tr>
-</table>
-
-<hr />
-
-<p> </p>
-
-<h2 id="package-management">Package Management</h2>
-
-<p><strong>Package Managers</strong></p>
-
-<p>APT (Used by Debian, Ubuntu) and RPM (Used by RedHat, CentOS, SUSE, Fedora) are the two most popular package managers.</p>
-
-<p>Yum provides a wrapper around RPM which allows to install from multiple package repositories. It also resolves dependencies.</p>
-
-<p><strong>Installing Packages</strong></p>
-
-<p><code class="highlighter-rouge">yum install dstat&lt;br /&gt;
-rpm -i dstat-0.3.9.rpm</code>(where -i is install)</p>
-
-<p><strong>Upgrading Packages</strong></p>
-
-<p><code class="highlighter-rouge">yum install dstat</code></p>
-
-<p>To upgrade all packages run:</p>
-
-<p><code class="highlighter-rouge">yum upgrade&lt;br /&gt;
-rpm -Uvh dstat-0.3.9.rpm</code></p>
-
-<p>(where -U is Upgrade, v is verbose and h is hash (displays hash signs))</p>
-
-<p><strong>Uninstalling Packages</strong></p>
-
-<p><code class="highlighter-rouge">yum remove dstat&lt;br /&gt;
-rpm -e dstat</code></p>
-
-<p><strong>Cleaning RPM Database</strong></p>
-
-<p><code class="highlighter-rouge">yum clean all</code> (removes all refresh package metadata next time)</p>
-
-<hr />
-
-<p> </p>
-
-<h2 id="boot-process">Boot Process</h2>
-
-<p><strong>Power Supply Unit</strong></p>
-
-<ol>
-  <li>When the power switch is turned on, the internal electrical circuit is complete and the PSU starts getting power. It performs a self-test after which it notifies the CPU through the 4-pin connector that the CPU should power on.</li>
-  <li>After the CPU has powered up, the first call is made to the BIOS. The first step taken by the BIOS is to ensure the minimum hardware exists.</li>
-  <li>The BIOS can be programmed with firmware. Firmware is the software that is programmed into Electrically Erasable Programmable Read-Only Memory (EEPROM). In this case, the firmware facilitates booting an operating system and configuring basic hardware settings.</li>
-  <li>After confirming the existence of the CPU, Memory and Video Card, the BIOS configures them using CMOS. The CMOS serves as the memory of the BIOS where information like memory frequency and CPU frequency is stored. BIOS first sets the memory frequency on the memory controller an then multiplies the memory frequency by CPU frequency multiplier. This product is the speed at which the CPU runs.</li>
-  <li>After setting the frequencies the BIOS performs POST (Power-on Self Test) where it checks if &lt;ol style="list-style-type: lower-alpha;"&gt;
-    <li>
-   The memory is working
- </li>
-    <li>
-   Hard drives and other devices are responding
- </li>
-    <li>
-   Keyboard and mouse are connected
- </li>
-    <li>
-   Initialize any additional BIOSes (eg. RAID cards)
- </li>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ol&gt;
-</code></pre></div>    </div>
-  </li>
-  <li>The system may beep in case the POST fails. One beep indicates success, three successive beeps indicate memory error and one long beep followed by two short beeps indicate a video card or display problem.</li>
-  <li>Next, based on the boot order set through the BIOS, the device for booting is selected. Supported devices are CD-ROMs, USB flash drives, Hard Drives, a network.</li>
-  <li>After selecting the particular drive to boot from, it looks at the first sector of that drive to find the boot sector. There are two main types of boot sectors/partition tables.</li>
-</ol>
-
-<p><strong>Master Boot Record (MBR)</strong></p>
-
-<ul>
-  <li>Has two parts. <strong>Boot loader information block</strong> (448 bytes) and the <strong>partition table</strong> (64 bytes)</li>
-  <li>Boot loader is where the first program the computer can run is stored.</li>
-  <li>Partition table stores the logical layout of the drive</li>
-</ul>
-
-<p>Since the space provided by the boot loader was becoming insufficient, a process called “chain boot loading” is used where the first program residing in the bootloader loads other programs from elsewhere into the memory is used. This new program then continues the boot process.</p>
-
-<p><strong>GPT – GUID Partition Way</strong></p>
-
-<ul>
-  <li>Partitions are identified by Globally-unique ID (GUID) rather than partition numbers (MBR).</li>
-  <li>It supports unlimited partitions.</li>
-  <li>The address space allows storage devices greater than 2TB (limitation of MBR)</li>
-  <li>A backup copy of the partition table is stored at the end of the disk.</li>
-</ul>
-
-<p><strong>Bootloader</strong></p>
-
-<p>The purpose of the bootloader is to load the initial kernel and supporting modules into the memory. GRand Unified Bootloader (GRUB) is a widely used bootloader by many Linux distributions. GRUB is a “chain bootloader” and initialises itself in these stages</p>
-
-<p>Stage 1: A very tiny application that can exist in the first part of the drive, it exists to load the next, larger part of the GRUB</p>
-
-<p>Stage 1.5: Contains the drivers necessary to load the filesystem in Stage 2.</p>
-
-<p>Stage 2: This stage loads the menu and config options for GRUB</p>
-
-<p><strong>Kernel and Init</strong></p>
-
-<p>The kernel is the main component of an OS which manages the memory and processor related tasks and also handles the various device drivers of different devices. Since it’s not possible to store every device driver in the kernel (it affects the boot speed), a component called RAM disk (part of RAM as a disk drive) is used on which enough drivers are used so that the kernel can load filesystem where the other drivers are located.</p>
-
-<p>The init system is defined as the organizational scheme for loading the system services. The most common init system in Linux is called “System V init”.</p>
-
-<p>After the ramdisk helps the kernel access the hard drive, the first process is run. i.e. /bin/init.</p>
-
-<p><strong>Runlevels</strong></p>
-
-<p>The init process reads from /etc/inittab to figure out which script to run. These scripts are run or not run based on the desired “runlevel” of the system.</p>
-
-<p>The six runlevels are:</p>
-
-<p>0: Halt the system</p>
-
-<p>1: Singler-user mode (for special administration/troubleshooting)</p>
-
-<p>2: Local Multiuser with Networking but without network service (like NFS)</p>
-
-<p>3: Full Mutliuser with Networking</p>
-
-<p>4: Not Used</p>
-
-<p>5: Full Multiuser with Networking and X Windows(GUI)</p>
-
-<p>6: Reboot</p>
-
-<hr />
-
-<p> </p>
-
-<h2 id="shell-tools">Shell Tools</h2>
-
-<ul>
-  <li><a>ps</a></li>
-</ul>
-
-<p>The <code class="highlighter-rouge">ps</code> command lists out all the running processes and accepts several arguments. Some useful ps recipes.</p>
-
-<p><code class="highlighter-rouge">ps aux</code>     : shows all running processes from a user standpoint.</p>
-
-<p><code class="highlighter-rouge">ps -lfU</code> : shows all processes owned by <username> in long format.</username></p>
-
-<hr />
-
-<ul>
-  <li><a>top</a></li>
-</ul>
-
-<p><code class="highlighter-rouge">top</code> shows the most CPU intensive processes in tabular format and refreshes it every second. Pressing <code class="highlighter-rouge">m</code> when <code class="highlighter-rouge">top</code> is running will sort the processes by memory usage rather than the default of processor usage.</p>
-
-<hr />
-
-<ul>
-  <li><a>df</a></li>
-</ul>
-
-<p><code class="highlighter-rouge">df    </code>   : Shows status of mounted filesystems:</p>
-
-<p><code class="highlighter-rouge">df -h</code>      : Shows status in human readable form</p>
-
-<p><code class="highlighter-rouge">df -h .</code> : Shows only the filesystem on which the current working directory is located.</p>
-
-<hr />
-
-<ul>
-  <li><a>du</a></li>
-</ul>
-
-<p>Estimates the size on disk of a file/files.</p>
-
-<p><code class="highlighter-rouge">du -h</code> : Returns the information in human readable form</p>
-
-<p>If a directory is provided as an argument to the command, it will return a value for each file in the directory. <code class="highlighter-rouge">du -sh</code> which will give a sum of all the files under the specified directory.</p>
-
-<hr />
-
-<ul>
-  <li><a>find</a></li>
-</ul>
-
-<p>Finds files on the system. <code class="highlighter-rouge">find .</code> recursively walks the entire filesystem tree below the current working directory and prints out each file.</p>
-
-<p><code class="highlighter-rouge">find . -name 'user'</code> will again walk the entire filesystem recursively but only print out the files named “user”.</p>
-
-<p><code class="highlighter-rouge">find . -name "*.html"</code> will list out all html files.</p>
-
-<p><code class="highlighter-rouge">find . -name 'java' -type d</code> will only list directories while f will list out files.</p>
-
-<hr />
-
-<ul>
-  <li><a>kill</a></li>
-</ul>
-
-<p>Kill is used to send a signal to a process. It is most commonly used to stop or kill a process.</p>
-
-<p><code class="highlighter-rouge">kill 123</code> : Sends TERM signal to process with PID 123</p>
-
-<p><code class="highlighter-rouge">kill -KILL 123</code> : Sends KILL signal (force-kills process) to process with PID 123</p>
-
-<hr />
-
-<ul>
-  <li><a>ls</a></li>
-</ul>
-
-<p>Lists contents of a directory.</p>
-
-<p><code class="highlighter-rouge">ls -a</code> : Lists all files and directories include hidden ones</p>
-
-<p><code class="highlighter-rouge">ls -l</code> : Lists info in long format.</p>
-
-<hr />
-
-<ul>
-  <li><a>lsof</a></li>
-</ul>
-
-<p>Lists open files. Useful in determining what files are being used by a user or process.</p>
-
-<hr />
-
-<ul>
-  <li><a>man</a></li>
-</ul>
-
-<p>Opens the manual pages for the specified command.</p>
-
-<p><code class="highlighter-rouge">man -k</code> : Searches through the man pages using the search term provided.</p>
-
-<hr />
-
-<ul>
-  <li><a>mount</a></li>
-</ul>
-
-<p>Mounts filesystems.</p>
-
-<p><code class="highlighter-rouge">mount -t ext4 /dev/sda /mnt</code> : Mounts /dev/sda on mount point /mnt. The ‘-t’ switch indicates the the filesystem type.</p>
-
-<p><code class="highlighter-rouge">mount</code> : Lists the filesystems currently mounted on the system.</p>
-
-<p><code class="highlighter-rouge">mount /home</code> : The mount command will look into /etc/fstab and mount whatever partition is associated with the ‘/home’ entry.</p>
-
-<p><code class="highlighter-rouge">mount -o loop -t iso9660 /home/isos/ubuntu.iso /mnt/cdrom</code> : Mounts the iso file to /mnt/cdrom</p>
-
-<p><code class="highlighter-rouge">mount  -o remount, ro /</code> : Remounts the / filesystem as read-only.</p>
-
-<hr />
-
-<ul>
-  <li><a>cat</a></li>
-</ul>
-
-<p>Outputs contents of a file.</p>
-
-<p><code class="highlighter-rouge">cat /home/foo.txt:</code> Outputs contents of file “foo.txt” on the shell</p>
-
-<p><code class="highlighter-rouge">cat /tmp/foo.txt /home/jdoe/bar.txt &gt; /home/jdoe/foobar.txt:</code>Outputs contents of files “foo.txt” and “bar.txt” to “foobar.txt” (will overwrite contents of “foobar.txt” if any)</p>
-
-<hr />
-
-<ul>
-  <li><a>cut</a></li>
-</ul>
-
-<p><code class="highlighter-rouge">cut</code> cuts out specified portions of text</p>
-
-<p><code class="highlighter-rouge">cat students.txt</code></p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>John Doe</td>
-      <td>25</td>
-      <td>john@example.com</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Jack Smith</td>
-      <td>26</td>
-      <td>jack@example.com</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Jane Doe</td>
-      <td>24</td>
-      <td>jane@example.com</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="highlighter-rouge">cut -f1 -d| students.txt</code></p>
-
-<p>John Doe</p>
-
-<p>Jack Smith</p>
-
-<p>Jane Doe</p>
-
-<p>where -f specifies the field number, -d specifies the delimiter</p>
-
-<hr />
-
-<ul>
-  <li><a>awk</a></li>
-</ul>
-
-<p><code class="highlighter-rouge">awk</code> is used to extract and manipulate data from files.</p>
-
-<p><code class="highlighter-rouge">cat students.txt</code></p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>John Doe</td>
-      <td>25</td>
-      <td>john@example.com</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Jack Smith</td>
-      <td>26</td>
-      <td>jack@example.com</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Jane Doe</td>
-      <td>24</td>
-      <td>jane@example.com</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="highlighter-rouge">awk '{print $4, $1}' students.txt</code></p>
-
-<p>john@example.com John</p>
-
-<p>jack@example.com Jack</p>
-
-<p>jane@example.com Jane</p>
-
-<p>The -F flag can be used for custom delimiters</p>
-
-<p><code class="highlighter-rouge">cat students.txt</code></p>
-
-<p>John Doe – 25 – john@example.com</p>
-
-<p>Jack Smith – 26 – jack@example.com</p>
-
-<p>Jane Doe – 24 – jane@example.com</p>
-
-<p><code class="highlighter-rouge">awk -F '-' '{print $1, $3}' students.txt</code></p>
-
-<p>John Doe john@example.com</p>
-
-<p>Jack Smith jack@example.com</p>
-
-<p>Jane Doe jane@example.com</p>
-
-<p>Specific rows can be extracted using the NR flag</p>
-
-<p><code class="highlighter-rouge">awk 'NR==2' students.txt</code></p>
-
-<p>Jack Smith – 26 – jack@example.com</p>
-
-<hr />
-
-<ul>
-  <li><a>sort</a></li>
-</ul>
-
-<p>sort is used to sort lines of text using parameters</p>
-
-<p>The default action sorts the lines alphabetically</p>
-
-<p><code class="highlighter-rouge">cat coffee.txt</code></p>
-
-<p>Mocha</p>
-
-<p>Cappuccino</p>
-
-<p>Espresso</p>
-
-<p>Americano</p>
-
-<p><code class="highlighter-rouge">sort coffee.txt</code></p>
-
-<p>Americano</p>
-
-<p>Cappuccino</p>
-
-<p>Espresso</p>
-
-<p>Mocha</p>
-
-<p>The -r flag sorts it in reverse order</p>
-
-<p><code class="highlighter-rouge">sort -r coffee.txt</code></p>
-
-<p>Mocha</p>
-
-<p>Espresso</p>
-
-<p>Cappuccino</p>
-
-<p>Americano</p>
-
-<p>For number sorting, use the -n flag</p>
-
-<p><code class="highlighter-rouge">sort orders.txt</code></p>
-
-<p>1003 Americano</p>
-
-<p>100 Mocha</p>
-
-<p>25 Cappuccino</p>
-
-<p>63 Espresso</p>
-
-<p><code class="highlighter-rouge">sort -n orders.txt</code></p>
-
-<p>25 Cappuccino</p>
-
-<p>63 Espresso</p>
-
-<p>100 Mocha</p>
-
-<p>1003 Americano</p>
-
-<hr />
-
-<ul>
-  <li>history</li>
-</ul>
-
-<p>It gives you a list of commands that were run by the current user. These commands are stored in a hidden file called “bash_history” located in the user’s home directory. The command history are accompanied by a index number. In order to clear a specific command use</p>
-
-<p><code class="highlighter-rouge">history -d &lt;line-number&gt;</code></p>
-
-<p>To clear multiple lines, say lines 1800 to 1815 write the following in  To clear lines from let’s say line 1800 to 1815 , use the following command:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for line in $(seq 1800 1815) ; do history -d 1800; done
-</code></pre></div></div>
-
-<div>
-  <div>
-    If you want to delete the history for the deletion command, write 1816 (1815 +1) and the history for that sequence will be deleted along with the deletion command too.
-  </div>
-</div>
 
     
 

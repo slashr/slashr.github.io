@@ -21,19 +21,19 @@
    <!-- enable seo optimization-->
    <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Page 3 of 5 for Home | Akash Nair</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Home" />
 <meta name="author" content="Akash Nair" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
 <meta property="og:description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
-<link rel="canonical" href="http://localhost:4000/page3/" />
-<meta property="og:url" content="http://localhost:4000/page3/" />
+<link rel="canonical" href="https://akashnair.com/page3/" />
+<meta property="og:url" content="https://akashnair.com/page3/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="http://localhost:4000/page2" />
-<link rel="next" href="http://localhost:4000/page4" />
+<link rel="prev" href="https://akashnair.com/page2" />
+<link rel="next" href="https://akashnair.com/page4" />
 <script type="application/ld+json">
-{"headline":"Home","@type":"WebPage","url":"http://localhost:4000/page3/","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","headline":"Home","url":"https://akashnair.com/page3/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -300,7 +300,7 @@
 </nav>
 
  <!-- <p>
- <!--font size="1"> &copy; 2020 All rights reserved.</font-->
+ <!--font size="1"> &copy; 2021 All rights reserved.</font-->
   <!--<a href="/LICENSE.md">MIT License.</a>-->
 </p>
  
@@ -321,6 +321,68 @@
 
   
 
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/cloudformation-launch-ec2-execute-script-startup/">
+        CloudFormation Template to Launch an EC2 instance
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">29 Apr 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <p>The following is a bare-minimum CloudFormation template to launch an EC2 instance. It’s bare-minimum in the sense that only the Parameters and Resources which are absolutely necessary are part of the template.</p>
+
+<p>This template can also execute a bash script provided as <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html#user-data-shell-scripts">User Data</a> to the EC2 instance. The User Data can be a set of directives that will be executed only once during the first boot cycle of the instance. This feature can be used when you need to say launch several instances with the Apache web server installed on them. To do this you would simply supply the command <code class="language-plaintext highlighter-rouge">apt-get install apache2</code> as user-data. There is no need to add sudo keyword to the command as the script will be run with root privileges.</p>
+
+<p>In the above template, the custom script updates the list of packages (apt-get update) and installs Apache (apt-get install apache2). You can add/remove commands as required. Be sure to put them inside double quotes and each command should be on a new line.</p>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -365,25 +427,25 @@
 
 <ol>
   <li>Launch an Ubuntu EC2 instance. <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-launch-instance_linux">how-to</a></li>
-  <li>Add the following PPA: <code class="highlighter-rouge">sudo add-apt-repository ppa:mrazavi/openvas</code></li>
-  <li>Update apt-get: <code class="highlighter-rouge">sudo apt-get update</code></li>
-  <li>Install OpenVAS: <code class="highlighter-rouge">sudo apt-get install openvas</code></li>
+  <li>Add the following PPA: <code class="language-plaintext highlighter-rouge">sudo add-apt-repository ppa:mrazavi/openvas</code></li>
+  <li>Update apt-get: <code class="language-plaintext highlighter-rouge">sudo apt-get update</code></li>
+  <li>Install OpenVAS: <code class="language-plaintext highlighter-rouge">sudo apt-get install openvas</code></li>
   <li>Run the following commands to update OpenVAS scripts and data:
     <ul>
-      <li><code class="highlighter-rouge">sudo apt-get install sqlite3</code></li>
-      <li><code class="highlighter-rouge">sudo openvas-nvt-sync</code></li>
-      <li><code class="highlighter-rouge">sudo openvas-scapdata-sync</code></li>
-      <li><code class="highlighter-rouge">sudo openvas-certdata-sync</code></li>
-      <li><code class="highlighter-rouge">sudo service openvas-scanner restart</code></li>
-      <li><code class="highlighter-rouge">sudo service openvas-manager restart</code></li>
-      <li><code class="highlighter-rouge">sudo openvasmd --rebuild --progress</code>
+      <li><code class="language-plaintext highlighter-rouge">sudo apt-get install sqlite3</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sudo openvas-nvt-sync</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sudo openvas-scapdata-sync</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sudo openvas-certdata-sync</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sudo service openvas-scanner restart</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sudo service openvas-manager restart</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sudo openvasmd --rebuild --progress</code>
         <blockquote>
           <p>The above commands will download large amounts of data from the internet. It might take several minutes to complete depending on the internet speed.</p>
         </blockquote>
       </li>
     </ul>
   </li>
-  <li>After the downloads have finished, Goto <code class="highlighter-rouge">https:&lt;instance-public-ip&gt;:443</code> and login. The default username and password is <code class="highlighter-rouge">admin</code></li>
+  <li>After the downloads have finished, Goto <code class="language-plaintext highlighter-rouge">https:&lt;instance-public-ip&gt;:443</code> and login. The default username and password is <code class="language-plaintext highlighter-rouge">admin</code></li>
 </ol>
 
     
@@ -438,22 +500,22 @@
 
 <p>Install the following packages on your instance:</p>
 
-<p>Pip (apt-get install python-pip)</p>
+<p>Pip: <code class="language-plaintext highlighter-rouge">apt-get install python-pip</code></p>
 
-<p>Virtualenv (apt-get install python-virtualenv)</p>
+<p>Virtualenv: <code class="language-plaintext highlighter-rouge">apt-get install python-virtualenv</code></p>
 
-<p>Awsebcli (pip install awsebcli)</p>
+<p>Awsebcli: <code class="language-plaintext highlighter-rouge">pip install awsebcli</code></p>
 
 <hr />
 
 <h3 id="setting-up-the-tools-and-environment-for-running-django-by-using-a-virtual-environment">Setting up the tools and environment for running Django by using a virtual environment</h3>
 
 <ol>
-  <li>Create a virtual env: virtualenv eb-virt</li>
-  <li>Activate the env: source ~/eb-virt/bin/activate</li>
-  <li>Install Django using pip: pip install django==1.9.2</li>
-  <li>Verify Django is installed by running: pip freeze</li>
-  <li>Deactivate the environment: deactivate</li>
+  <li>Create a virtual env: <code class="language-plaintext highlighter-rouge">virtualenv eb-virt</code></li>
+  <li>Activate the env: <code class="language-plaintext highlighter-rouge">source ~/eb-virt/bin/activate</code></li>
+  <li>Install Django using pip: <code class="language-plaintext highlighter-rouge">pip install django==1.9.2</code></li>
+  <li>Verify Django is installed by running: <code class="language-plaintext highlighter-rouge">pip freeze</code></li>
+  <li>Deactivate the environment: <code class="language-plaintext highlighter-rouge">deactivate</code></li>
 </ol>
 
 <hr />
@@ -461,32 +523,30 @@
 <h3 id="creating-a-sample-django-project">Creating a sample Django project</h3>
 
 <ol>
-  <li>Activate the env: source ~/eb-virt/bin/activate</li>
-  <li>Create a sample project: django-admin startproject skywide</li>
-  <li>Enter the project directory: cd skywide</li>
-  <li>Run the Django server: python manage.py runserver 0.0.0.0:8000</li>
+  <li>Activate the env: <code class="language-plaintext highlighter-rouge">source ~/eb-virt/bin/activate</code></li>
+  <li>Create a sample project: <code class="language-plaintext highlighter-rouge">django-admin startproject skywide</code></li>
+  <li>Enter the project directory: <code class="language-plaintext highlighter-rouge">cd skywide</code></li>
+  <li>Run the Django server: <code class="language-plaintext highlighter-rouge">python manage.py runserver 0.0.0.0:8000</code></li>
   <li>Deactivate the environment before moving to the next step: deactivate</li>
 </ol>
 
 <p>You can now see the following page by hitting the public IP of your instance in your browser. Example: 54.255.233.22:8000</p>
 
-<p><a href="http://skywide.in/blog/wp-content/uploads/2016/03/Django.png" rel="attachment wp-att-474"><img class="aligncenter wp-image-474 size-large" src="http://skywide.in/blog/wp-content/uploads/2016/03/Django-1024x540.png" alt="Django" width="584" height="308" srcset="https://skywide.in/blog/wp-content/uploads/2016/03/Django-1024x540.png 1024w, https://skywide.in/blog/wp-content/uploads/2016/03/Django-300x158.png 300w, https://skywide.in/blog/wp-content/uploads/2016/03/Django-768x405.png 768w, https://skywide.in/blog/wp-content/uploads/2016/03/Django.png 1301w" sizes="(max-width: 584px) 100vw, 584px" /></a></p>
+<p><img src="/assets/images/Django.png" alt="django" /></p>
 
-<p>Now that Django is up and running on your EC2 instance, we can proceed to make it ready to be deployed on Elastic Beanstalk.</p>
+<p>Now that Django is up and running on your EC2 instance, we can proceed to prepare it to be deployed on Elastic Beanstalk.</p>
 
 <hr />
 
 <h3 id="configuring-your-application-to-work-with-elastic-beanstalk">Configuring your application to work with Elastic Beanstalk</h3>
 
 <ol>
-  <li>Activate the virtual environment: source ~/eb-virt/bin/activate</li>
-  <li>Create a requirements.txt file. This file is used by EB to install the dependencies on the instances it will launch: pip freeze &gt; requirements.txt. (Do verify that requirements.txt contains “django==1.9.2”)</li>
-  <li>Create a new directory called .ebextensions inside ~/skywide. We will create a configuration file inside this directory later: mkdir .ebextensions</li>
-  <li>Create a file django.config inside .ebextensions containing the following code:</li>
+  <li>Activate the virtual environment: <code class="language-plaintext highlighter-rouge">source ~/eb-virt/bin/activate</code></li>
+  <li>Create a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file. This file is used by EB to install the dependencies on the instances it will launch: <code class="language-plaintext highlighter-rouge">pip freeze &gt; requirements.txt</code> (Do verify that requirements.txt contains “django==1.9.2”)</li>
+  <li>Create a new directory called <code class="language-plaintext highlighter-rouge">.ebextensions</code> inside ~/skywide. We will create a configuration file inside this directory later: <code class="language-plaintext highlighter-rouge">mkdir .ebextensions</code></li>
+  <li>Create a file <code class="language-plaintext highlighter-rouge">django.config</code> inside <code class="language-plaintext highlighter-rouge">.ebextensions</code> containing the following code: This setting, <code class="language-plaintext highlighter-rouge">WSGIPath</code> specifies the location of the WSGI script that Elastic Beanstalk uses to start your application.</li>
+  <li>Finally, deactivate the virtual environment: <code class="language-plaintext highlighter-rouge">deactivate</code></li>
 </ol>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This setting, &lt;code class="code"&gt;WSGIPath&lt;/code&gt;, specifies the location of the WSGI script that Elastic Beanstalk uses to start your application.    5. Finally, deactivate the virtual environment: deactivate 
-</code></pre></div></div>
 
 <p>Next step is to deploy your Django app to EB.</p>
 
@@ -494,15 +554,14 @@
 
 <h3 id="deploying-your-applicaiton-to-elastic-beanstalk">Deploying your applicaiton to Elastic Beanstalk</h3>
 
-<p>Make sure you have a directory structure that looks like this:</p>
-
+<p>Make sure you have a directory structure is correct.</p>
 <ol>
-  <li>Go inside your project directory (~/skywide) and create a new EB application (initiate the repository) with the following command: eb init -p python3.4 skywide</li>
-  <li>Run eb init again configure a default keypair that will be used to login to the instances launched by EB.</li>
-  <li>Next, create an environment inside the application we just created: eb create skywide-env</li>
+  <li>Go inside your project directory (~/skywide) and create a new EB application (initiate the repository) with the following command: <code class="language-plaintext highlighter-rouge">eb init -p python3.4 skywide</code></li>
+  <li>Run <code class="language-plaintext highlighter-rouge">eb init</code> again configure a default keypair that will be used to login to the instances launched by EB.</li>
+  <li>Next, create an environment inside the application we just created: <code class="language-plaintext highlighter-rouge">eb create skywide-env</code></li>
 </ol>
 
-<p>To see the app live, go to the Elastic Beanstalk console, click on the Application we created and then on the Environment created (skywide-env). Click on the URL listed at the top of the page and you’ll see your app in action in your browser!</p>
+<p>To see the app live, go to the Elastic Beanstalk console, click on the Application we created and then on the Environment created (skywide-env). Click on the URL listed at the top of the page and you willll see your app in action in your browser!</p>
 
     
 
@@ -522,7 +581,7 @@
       </a>
     </h2>
     <div class="post-meta">
-  <span class="post-date">19 Mar 2016</span>
+  <span class="post-date">20 Mar 2016</span>
   <span class="post-categories">
     
       &bull;
@@ -550,11 +609,42 @@
 
 
     
-      <p>The following policy restricts access of a user to the folder inside the bucket that is named after the username. It is suited to be applied to IAM groups.</p>
+      <p>The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups.</p>
 
-<p>This helps create a bucket inside which you can create several user directories and each directory can be accessed only by it’s owner.</p>
+<p>This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner.</p>
 
-<p>Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, change all occurrences of “home” with the name of your directory.</p>
+<p>Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": ["s3:ListAllMyBuckets", "s3:GetBucketLocation"],
+      "Effect": "Allow",
+      "Resource": ["arn:aws:s3:::*"]
+    },
+    {
+      "Action": ["s3:ListBucket"],
+      "Effect": "Allow",
+      "Resource": ["arn:aws:s3:::bucket-name"],
+      "Condition":{"StringEquals":{
+      "s3:prefix":["","home/"],"s3:delimiter":["/"]}}
+    },
+    {
+      "Action": ["s3:ListBucket"],
+      "Effect": "Allow",
+      "Resource": ["arn:aws:s3:::bucket-name"],
+      "Condition":{"StringLike":{"s3:prefix":["home/${aws:username}/*"]}}
+    },
+    {
+      "Action":["s3:*"],
+      "Effect":"Allow",
+      "Resource": ["arn:aws:s3:::bucket-name;/home/${aws:username}"
+      "arn:aws:s3:::bucket-name/home/${aws:username}/*"]
+    }
+  ]
+}
+</code></pre></div></div>
 
     
 
@@ -574,7 +664,7 @@
       </a>
     </h2>
     <div class="post-meta">
-  <span class="post-date">24 Feb 2016</span>
+  <span class="post-date">25 Feb 2016</span>
   <span class="post-categories">
     
       &bull;
@@ -592,22 +682,17 @@
 
 
     
-      <h4 id="about-route-53">About Route 53</h4>
+      <h3 id="about-route-53">About Route 53</h3>
 
-<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Since it is a native AWS service, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
+<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
 
 <hr />
-
 <p>Here are a few common use-cases along with a broad overview of the process steps:</p>
 
-<ul style="list-style-type: square;">
-  <li>
-    Migrating an existing domain&#8217;s DNS to Route 53
-  </li>
-</ul>
+<h4 id="migrating-an-existing-domains-dns-to-route-53">Migrating an existing domain’s DNS to Route 53</h4>
 
 <ol>
-  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.skywide.in)</li>
+  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.example.com)</li>
   <li>Add a <strong>Record Set</strong> to the <strong>Hosted Zone</strong> and add the IP of the server as a <strong>A record</strong> (also create MX, CNAME and other records depending on your requirement)</li>
   <li>Copy the four name servers provided by the <strong>Hosted Zone</strong></li>
   <li>Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53.</li>
@@ -615,42 +700,27 @@
 </ol>
 
 <hr />
-
-<ul style="list-style-type: square;">
-  <li>
-    Migrating the sub-domain DNS to Route 53 without migrating the parent domain
-  </li>
-</ul>
+<h4 id="migrating-the-sub-domain-dns-to-route-53-without-migrating-the-parent-domain">Migrating the sub-domain DNS to Route 53 without migrating the parent domain</h4>
 
 <ol>
-  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.skywide.in)</li>
+  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.example.com)</li>
   <li>Add a <strong>Record Set</strong> to the hosted zone and add the IP of the server as a <strong>A record</strong> (similarly add MX, CNAME records if required)</li>
   <li>Copy the four name servers provided by the <strong>Hosted Zone</strong>. Replace the NS Records of the registrar with these name servers</li>
 </ol>
 
-<p><em>Important:</em> Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
+<p><strong>Important</strong>: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
 
 <hr />
 
-<ul style="list-style-type: square;">
-  <li>
-    Private Hosted Zone
-  </li>
-</ul>
+<h4 id="private-hosted-zone">Private Hosted Zone</h4>
 
 <ol>
   <li><strong>Private Hosted Zone</strong> is a <strong>Hosted Zone</strong> for managing domains within an AWS VPC</li>
-  <li>First step is to Amazon VPC settings to <code class="highlighter-rouge">true</code>: &lt;div class="itemizedlist"&gt;
-    <ul class="itemizedlist" type="disc">
-   <li class="listitem">
-     <code class="code">enableDnsHostnames</code>
-   </li>
-   <li class="listitem">
-     <code class="code">enableDnsSupport</code>
-   </li>
- </ul>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/div&gt;
-</code></pre></div>    </div>
+  <li>First step is to set the following Amazon VPC settings to <code class="language-plaintext highlighter-rouge">true</code>:
+    <ul>
+      <li>enableDnsHostnames</li>
+      <li>enableDnsSupport</li>
+    </ul>
   </li>
   <li>On the Route 53 page, click on <strong>Create Hosted Zone</strong>.</li>
   <li>Next, in the <strong>Create Private Hosted Zone</strong> pane, enter your domain name. Select <strong>Private Hosted Zone for Amazon VPC</strong> in the <strong>Type</strong> list.</li>
@@ -658,281 +728,18 @@
   <li>Click on <strong>Create</strong>. Your VPC should get linked with Route 53 within a few minutes.</li>
 </ol>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * *
-</code></pre></div></div>
-
-<ul style="list-style-type: square;">
-  <li>
-    <em>Inte</em>gration with other AWS Services
-  </li>
-</ul>
+<hr />
+<h4 id="integration-with-other-aws-services">Integration with other AWS Services</h4>
 
 <p>Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services.</p>
 
-<table style="width: 571px;">
-  <tr>
-    <td style="width: 90px;">
-      EC2
-    </td>
-    
-    <td style="width: 469px;">
-      Create an <strong>A record</strong> with the <strong>Elastic IP</strong> of the instance
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      ELB
-    </td>
-    
-    <td style="width: 469px;">
-      Add <strong>public DNS</strong> of the load balancer to a <strong>CNAME record</strong>
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      CloudFront
-    </td>
-    
-    <td style="width: 469px;">
-      Add <strong>Distribution URL</strong> to a <strong>CNAME</strong> record
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      S3
-    </td>
-    
-    <td style="width: 469px;">
-      Add the <strong>Bucket URL</strong> to a <strong>CNAME</strong> record
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 90px;">
-      RDS
-    </td>
-    
-    <td style="width: 469px;">
-      Add the <strong>RDS endpoint</strong> to a <strong>CNAME</strong> record
-    </td>
-  </tr>
-</table>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/launching-ec2-instances-using-vagrant/">
-        EC2 Instances Automated Deployment using Vagrant
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">12 Feb 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Automation
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Ops
-      
-    
-  </span>
-</div>
-
-
-    
-      <h2 style="text-align: left;">
-  Why use Vagrant to launch EC2 instance?
-</h2>
-
-<p style="text-align: left;">
-  EC2 instances can be deployed seamlessly using Vagrant. Once you setup Vagrant and configure it, launching an EC2 instance becomes as easy as running the command <em>vagrant up. </em>Such automation is especially useful when you have to launch a large fleet of EC2 instances quickly.
-</p>
-
-<h4 style="text-align: left;">
-  Setting up Vagrant on your machine
-</h4>
-
 <ol>
-  <li>Install vagrant:</li>
+  <li>EC2: Create an A record with the Elastic IP of the instance</li>
+  <li>ELB: Add public DNS of the load balancer to a CNAME record</li>
+  <li>CloudFront: Add Distribution URL to a CNAME record</li>
+  <li>S3: Add the Bucket URL to a CNAME record</li>
+  <li>RDS: Add the RDS endpoint to a CNAME record</li>
 </ol>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`sudo apt-get install vagrant`   2. Initialize vagrant:
-  
-`vagrant init hashicorp/precise32`
-  
-`vagrant up`
-  
-(This will download the example virtualbox image from vagrant servers. It might take a few minutes)   3. Install vagrant aws plugin:
-  
-`sudo vagrant plugin install vagrant-aws`   4. Get the AWS Box image:
-  
-`vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
-</code></pre></div></div>
-
-<hr />
-
-<h4 style="text-align: left;">
-  Launching the instance
-</h4>
-
-<ol>
-  <li>Create a directory in your home folder and from inside the directory, run</li>
-</ol>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`vagrant init hashicorp/precise32`
-  
-(This will create a &amp;#8220;Vagrantfile&amp;#8221; in your directory)   2. Open your Vagrantfile, clear all contents and add the following. Please modify the values wherever necessary.
-</code></pre></div></div>
-
-<ol>
-  <li>
-    <p>Save the file and run:</p>
-
-    <p><code class="highlighter-rouge">vagrant up --provider=aws</code></p>
-  </li>
-  <li>
-    <p>Your instance should be up and running in a few minutes.</p>
-  </li>
-</ol>
-
-<hr />
-
-<p>The above configuration only contains the bare essential configurations. Here are some more configuration parameters.</p>
-
-<table style="height: 258px; width: 675px;">
-  <tr>
-    <td style="width: 253px;">
-      availability_zone
-    </td>
-    
-    <td style="width: 408px;">
-      Specify the desired availability zone. (ap-southeast-1a)
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      instance_type
-    </td>
-    
-    <td style="width: 408px;">
-      The default value of this if not specified is &#8220;m3.medium&#8221;
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      private_ip_address
-    </td>
-    
-    <td style="width: 408px;">
-      The private IP address to assign to an instance within a VPC
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      instance_ready_timeout
-    </td>
-    
-    <td style="width: 408px;">
-      The number of seconds to wait for the instance to become &#8220;ready&#8221; in AWS. Defaults to 120 seconds
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      instance_package_timeout
-    </td>
-    
-    <td style="width: 408px;">
-      The number of seconds to wait for the instance to be burnt into an AMI during packaging. Defaults to 600 seconds
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      elastic_ip
-    </td>
-    
-    <td style="width: 408px;">
-      Can be set to &#8216;true&#8217;, or to an existing Elastic IP address
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      security_groups
-    </td>
-    
-    <td style="width: 408px;">
-      An array of security groups for the instance. If this instance will be launched in VPC, this must be a list of security group Name. For a non-default VPC, you must use security group IDs instead
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      subnet_id
-    </td>
-    
-    <td style="width: 408px;">
-      The subnet to launch the instance inside
-    </td>
-  </tr>
-  
-  <tr>
-    <td style="width: 253px;">
-      associate_public_ip
-    </td>
-    
-    <td style="width: 408px;">
-      true/false. If true, will associate a public IP address to an instance in a VPC
-    </td>
-  </tr>
-</table>
-
-<p>The full list of options can be found here: <a href="https://github.com/mitchellh/vagrant-aws#configuration" target="_blank">https://github.com/mitchellh/vagrant-aws#configuration</a></p>
-
-<hr />
-
-<p>Note: This guide is written for a *nix environment. The steps are similar for Windows based environments.</p>
 
     
 

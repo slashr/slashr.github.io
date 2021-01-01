@@ -21,19 +21,19 @@
    <!-- enable seo optimization-->
    <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Page 2 of 5 for Home | Akash Nair</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Home" />
 <meta name="author" content="Akash Nair" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
 <meta property="og:description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
-<link rel="canonical" href="http://localhost:4000/page2/" />
-<meta property="og:url" content="http://localhost:4000/page2/" />
+<link rel="canonical" href="https://akashnair.com/page2/" />
+<meta property="og:url" content="https://akashnair.com/page2/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="http://localhost:4000/" />
-<link rel="next" href="http://localhost:4000/page3" />
+<link rel="prev" href="https://akashnair.com/" />
+<link rel="next" href="https://akashnair.com/page3" />
 <script type="application/ld+json">
-{"headline":"Home","@type":"WebPage","url":"http://localhost:4000/page2/","author":{"@type":"Person","name":"Akash Nair"},"description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","@context":"https://schema.org"}</script>
+{"author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","headline":"Home","url":"https://akashnair.com/page2/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -300,7 +300,7 @@
 </nav>
 
  <!-- <p>
- <!--font size="1"> &copy; 2020 All rights reserved.</font-->
+ <!--font size="1"> &copy; 2021 All rights reserved.</font-->
   <!--<a href="/LICENSE.md">MIT License.</a>-->
 </p>
  
@@ -321,6 +321,59 @@
 
   
 
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/docker/">
+        Docker: Install, Build an Image and Publish to DockerHub
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">20 Jul 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <p>Docker is a <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">container technology</a> that provides a <strong>layer of abstraction</strong> on the OS that it is installed on(Linux or Windows). It allows the packaging of a software application into a <strong>image</strong> which consists of everything the software requires to run: code, system utilities, third party libraries and other dependencies. Then this image is run on the common <strong>layer of abstraction</strong> defined above. Therefore, it becomes easy to move and deploy the software application (which refers to the <strong>container</strong>) across any infrastructure or environment.</p>
+
+<p><strong><em>Updated: August, 2018</em></strong></p>
+
+
+    
+
+    
+      
+      
+      
+
+      
+        <a href="/docker/"></a>
+      
+    
+  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -482,33 +535,33 @@
 <ol>
   <li>
     <p>Update and upgrade your system packages: 
- <code class="highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
+ <code class="language-plaintext highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
   </li>
   <li>
     <p>Logstash requires Java on the machine. Install Java: 
- <code class="highlighter-rouge">sudo apt-get install default-jdk</code></p>
+ <code class="language-plaintext highlighter-rouge">sudo apt-get install default-jdk</code></p>
   </li>
   <li>
     <p>Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories">this page</a></p>
 
-    <p>Run: <code class="highlighter-rouge">echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list</code></p>
+    <p>Run: <code class="language-plaintext highlighter-rouge">echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list</code></p>
   </li>
   <li>
     <p>Finally, update your packages again and install Logstash:
- <code class="highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get install logstash</code></p>
+ <code class="language-plaintext highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get install logstash</code></p>
   </li>
   <li>
     <p>Add your AWS IAM Access Key and Secret Key by using environment variables: 
- <code class="highlighter-rouge">echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code></p>
+ <code class="language-plaintext highlighter-rouge">echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code></p>
 
-    <p><code class="highlighter-rouge">echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code></p>
+    <p><code class="language-plaintext highlighter-rouge">echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code></p>
   </li>
   <li>
-    <p>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as <code class="highlighter-rouge">/etc/logstash/conf.d/logstash.conf</code></p>
+    <p>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as <code class="language-plaintext highlighter-rouge">/etc/logstash/conf.d/logstash.conf</code></p>
   </li>
   <li>
     <p>Run Logstash:
- <code class="highlighter-rouge">/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt;</code></p>
+ <code class="language-plaintext highlighter-rouge">/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt;</code></p>
     <hr />
   </li>
 </ol>
@@ -592,29 +645,29 @@
 <ol>
   <li>
     <p>The easiest and recommended way of installing is from the package repositories. Simply run: 
-   <code class="highlighter-rouge">sudo apt-get install ansible</code></p>
+   <code class="language-plaintext highlighter-rouge">sudo apt-get install ansible</code></p>
   </li>
   <li>
     <p>To test the installation, run the following. If you get a prompt asking for the SSH password, it indicates that the installation was successful. 
-   <code class="highlighter-rouge">ansible all -m ping --ask-pass</code></p>
+   <code class="language-plaintext highlighter-rouge">ansible all -m ping --ask-pass</code></p>
   </li>
   <li>
     <p>Open the file /etc/ansible/hosts and add the IPs of your servers in it. For example, you can add EC2 instance public IP or you can add the private IP if your control machine is the same VPC as the servers. The control machine as the name indicates is the machine which will be sending the commands to your servers.</p>
   </li>
   <li>
-    <p>To test if the control machine is able to reach the servers, run the <code class="highlighter-rouge">ping</code> command. Key-based authentication is encouraged over passwords. use the <code class="highlighter-rouge">--private-key</code> flag to specify the path to your keyfile. If successful, it will return a JSON response containing the string <code class="highlighter-rouge">success</code> 
-   <code class="highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu</code></p>
+    <p>To test if the control machine is able to reach the servers, run the <code class="language-plaintext highlighter-rouge">ping</code> command. Key-based authentication is encouraged over passwords. use the <code class="language-plaintext highlighter-rouge">--private-key</code> flag to specify the path to your keyfile. If successful, it will return a JSON response containing the string <code class="language-plaintext highlighter-rouge">success</code> 
+   <code class="language-plaintext highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu</code></p>
   </li>
   <li>
     <p>To log in as root, add the become flag (-b)
-   <code class="highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu -b</code></p>
+   <code class="language-plaintext highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu -b</code></p>
   </li>
   <li>
     <p>Test the configuration further by running a live command on the nodes
-   <code class="highlighter-rouge">ansible all -a "/bin/echo skywide" --private-key ~/path/to/key -u ubuntu</code></p>
+   <code class="language-plaintext highlighter-rouge">ansible all -a "/bin/echo skywide" --private-key ~/path/to/key -u ubuntu</code></p>
   </li>
   <li>
-    <p>If you’d like to have a fully automated and unattended setup, it would be wise to disable the host key checking feature. This feature when enabled will prompt for confirmation of the key the first time Ansible tries to log into the server. Disabling host key checking however has some implications and you might want to fully understand them before disabling the host check. Inside <code class="highlighter-rouge">/etc/ansible/ansible.cfg</code>, edit the following <code class="highlighter-rouge">host_key_checking = False</code></p>
+    <p>If you’d like to have a fully automated and unattended setup, it would be wise to disable the host key checking feature. This feature when enabled will prompt for confirmation of the key the first time Ansible tries to log into the server. Disabling host key checking however has some implications and you might want to fully understand them before disabling the host check. Inside <code class="language-plaintext highlighter-rouge">/etc/ansible/ansible.cfg</code>, edit the following <code class="language-plaintext highlighter-rouge">host_key_checking = False</code></p>
   </li>
   <li>
     <p>This way, you are able to successfully run commands on your nodes. However, Ansible goes far beyond running simple commands on your nodes. To make the most of it, we need to make use of playbooks.</p>
@@ -636,14 +689,14 @@
   </li>
   <li>
     <h5 id="patterns">Patterns</h5>
-    <p>The hosts that are specified in an inventory file can be grouped into categories like <em>web servers</em> and <em>db servers</em> by using the appropriate syntax. A Pattern refers to a set of groups (which are a set of hosts). Take for example, <code class="highlighter-rouge">ansible all -m ping</code> Here <em>all</em> refers to all hosts. Whereas in <code class="highlighter-rouge">ansible webservers -m ping</code> the command will only work on the hosts in the group <em>webservers</em> as defined in the inventory file.</p>
+    <p>The hosts that are specified in an inventory file can be grouped into categories like <em>web servers</em> and <em>db servers</em> by using the appropriate syntax. A Pattern refers to a set of groups (which are a set of hosts). Take for example, <code class="language-plaintext highlighter-rouge">ansible all -m ping</code> Here <em>all</em> refers to all hosts. Whereas in <code class="language-plaintext highlighter-rouge">ansible webservers -m ping</code> the command will only work on the hosts in the group <em>webservers</em> as defined in the inventory file.</p>
   </li>
   <li>
     <h5 id="variables">Variables</h5>
     <p>Variables, as the name suggests, are values that are used when you are working on systems that require varied configuration. Variables can be something like a port number or a private IP address. Variables can be defined either in Inventory files or Playbooks.
    Example:</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   - hosts: all
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   - hosts: all
      vars:
        http_port: 80
 </code></pre></div>    </div>
@@ -652,80 +705,18 @@
   </li>
   <li>
     <h5 id="ad-hoc-commands">Ad-Hoc Commands</h5>
-    <p>Ad-Hoc Commands are used to perform quick tasks that you don’t want to write an entire playbook for. Take the analogy of running a command through shell (ad-hoc command) and running it through a bash script (playbook). <code class="highlighter-rouge">ansible all -m ping</code> is an example of a ad-hoc command.</p>
+    <p>Ad-Hoc Commands are used to perform quick tasks that you don’t want to write an entire playbook for. Take the analogy of running a command through shell (ad-hoc command) and running it through a bash script (playbook). <code class="language-plaintext highlighter-rouge">ansible all -m ping</code> is an example of a ad-hoc command.</p>
   </li>
   <li>
     <h5 id="playbooks">Playbooks</h5>
     <p>A playbook is a file containing instructions. The following playbook will install Apache web server on your nodes.</p>
 
     <p>To run the playbook, use the following command:
-   <code class="highlighter-rouge">ansible-playbook skywide.yaml --private-key ~/path/to/key.pem</code></p>
+   <code class="language-plaintext highlighter-rouge">ansible-playbook skywide.yaml --private-key ~/path/to/key.pem</code></p>
 
-    <p>If you want to avoid specifying the path to the key file every time, modify the file <code class="highlighter-rouge">/etc/ansible/ansible.cfg</code> and set the path in the variable <code class="highlighter-rouge">private_key_file</code></p>
+    <p>If you want to avoid specifying the path to the key file every time, modify the file <code class="language-plaintext highlighter-rouge">/etc/ansible/ansible.cfg</code> and set the path in the variable <code class="language-plaintext highlighter-rouge">private_key_file</code></p>
   </li>
 </ol>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/cloudformation-launch-ec2-execute-script-startup/">
-        CloudFormation Template to Launch an EC2 instance
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">29 Apr 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Automation
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Ops
-      
-    
-  </span>
-</div>
-
-
-    
-      <p>The following is a bare-minimum CloudFormation template to launch an EC2 instance. It’s bare-minimum in the sense that only the Parameters and Resources which are absolutely necessary are part of the template.</p>
-
-<p>This template can also execute a bash script provided as <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html#user-data-shell-scripts">User Data</a> to the EC2 instance. The User Data can be a set of directives that will be executed only once during the first boot cycle of the instance. This feature can be used when you need to say launch several instances with the Apache web server installed on them. To do this you would simply supply the command <code class="highlighter-rouge">apt-get install apache2</code> as user-data. There is no need to add sudo keyword to the command as the script will be run with root privileges.</p>
-
-<p>In the above template, the custom script updates the list of packages (apt-get update) and installs Apache (apt-get install apache2). You can add/remove commands as required. Be sure to put them inside double quotes and each command should be on a new line.</p>
 
     
 

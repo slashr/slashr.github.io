@@ -21,20 +21,20 @@
    <!-- enable seo optimization-->
    <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Analyzing ELB Logs using Elasticsearch and Logstash | Akash Nair</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Analyzing ELB Logs using Elasticsearch and Logstash" />
 <meta name="author" content="Akash" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;&amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;&amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation." />
 <meta property="og:description" content="Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;&amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;&amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation." />
-<link rel="canonical" href="http://localhost:4000/elb-logs-using-elk/" />
-<meta property="og:url" content="http://localhost:4000/elb-logs-using-elk/" />
+<link rel="canonical" href="https://akashnair.com/elb-logs-using-elk/" />
+<meta property="og:url" content="https://akashnair.com/elb-logs-using-elk/" />
 <meta property="og:site_name" content="Akash Nair" />
-<meta property="og:image" content="http://localhost:4000/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" />
+<meta property="og:image" content="https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2016-06-16T08:50:16+02:00" />
+<meta property="article:published_time" content="2016-06-16T12:20:16+05:30" />
 <script type="application/ld+json">
-{"headline":"Analyzing ELB Logs using Elasticsearch and Logstash","dateModified":"2016-06-16T08:50:16+02:00","datePublished":"2016-06-16T08:50:16+02:00","@type":"BlogPosting","image":"http://localhost:4000/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/elb-logs-using-elk/"},"url":"http://localhost:4000/elb-logs-using-elk/","author":{"@type":"Person","name":"Akash"},"description":"Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;&amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;&amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation.","@context":"https://schema.org"}</script>
+{"image":"https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png","author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","description":"Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;&amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;&amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation.","headline":"Analyzing ELB Logs using Elasticsearch and Logstash","dateModified":"2016-06-16T12:20:16+05:30","datePublished":"2016-06-16T12:20:16+05:30","url":"https://akashnair.com/elb-logs-using-elk/","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/elb-logs-using-elk/"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -301,7 +301,7 @@
 </nav>
 
  <!-- <p>
- <!--font size="1"> &copy; 2020 All rights reserved.</font-->
+ <!--font size="1"> &copy; 2021 All rights reserved.</font-->
   <!--<a href="/LICENSE.md">MIT License.</a>-->
 </p>
  
@@ -363,33 +363,33 @@
 <ol>
   <li>
     <p>Update and upgrade your system packages: 
- <code class="highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
+ <code class="language-plaintext highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
   </li>
   <li>
     <p>Logstash requires Java on the machine. Install Java: 
- <code class="highlighter-rouge">sudo apt-get install default-jdk</code></p>
+ <code class="language-plaintext highlighter-rouge">sudo apt-get install default-jdk</code></p>
   </li>
   <li>
     <p>Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories">this page</a></p>
 
-    <p>Run: <code class="highlighter-rouge">echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list</code></p>
+    <p>Run: <code class="language-plaintext highlighter-rouge">echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list</code></p>
   </li>
   <li>
     <p>Finally, update your packages again and install Logstash:
- <code class="highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get install logstash</code></p>
+ <code class="language-plaintext highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get install logstash</code></p>
   </li>
   <li>
     <p>Add your AWS IAM Access Key and Secret Key by using environment variables: 
- <code class="highlighter-rouge">echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code></p>
+ <code class="language-plaintext highlighter-rouge">echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code></p>
 
-    <p><code class="highlighter-rouge">echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code></p>
+    <p><code class="language-plaintext highlighter-rouge">echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code></p>
   </li>
   <li>
-    <p>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as <code class="highlighter-rouge">/etc/logstash/conf.d/logstash.conf</code></p>
+    <p>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as <code class="language-plaintext highlighter-rouge">/etc/logstash/conf.d/logstash.conf</code></p>
   </li>
   <li>
     <p>Run Logstash:
- <code class="highlighter-rouge">/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt;</code></p>
+ <code class="language-plaintext highlighter-rouge">/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt;</code></p>
     <hr />
   </li>
 </ol>
@@ -499,9 +499,9 @@
   *  https://disqus.com/admin/universalcode/#configuration-variables
   */
   var disqus_config = function () {
-    this.page.url = "http://localhost:4000/elb-logs-using-elk/";
+    this.page.url = "https://akashnair.com/elb-logs-using-elk/";
     this.page.identifier = "" ||
-                           "http://localhost:4000/elb-logs-using-elk/";
+                           "https://akashnair.com/elb-logs-using-elk/";
   }
   function loadDisqusComments() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
@@ -525,6 +525,15 @@
     
       <li>
         <h3>
+          <a href="/migrate-helm2-to-helm3/">
+            Migrate from Helm 2 to Helm 3 Safely
+            <small>01 Jan 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/jenkins-kaniko-kubernetes-cloud-ci-cd/">
             Jenkins, Kaniko, Kubernetes: The Cloud CI/CD Trifecta
             <small>24 Jun 2019</small>
@@ -536,16 +545,7 @@
         <h3>
           <a href="/fire-suppression-using-smart-sensors-iot/">
             Suppressing Fires using Gas: An IoT Experiment
-            <small>17 Mar 2018</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/using-lambda-turn-off-ec2-instances/">
-            Using Lambda to Turn Off EC2 Instances During Off Hours
-            <small>24 Nov 2016</small>
+            <small>18 Mar 2018</small>
           </a>
         </h3>
       </li>
