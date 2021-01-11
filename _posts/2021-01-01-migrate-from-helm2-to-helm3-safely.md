@@ -48,8 +48,8 @@ The basic flow of the migration will be as follows
 2. There are two major steps to the migration. 
     - Move Config: This copies the configuration of the Releases into the Helm3 config directory. 
     - Convert: This will create links to the Helm2 Releases in the Helm3 config directory so that `helm3` can access them. After this `helm3 list` should show the currently deployed Releases
-3. So first, run `helm3 2to3 move config grafana --dry-run` to make sure there are no errors and then subsequently run it without the --dry-run flag. 
-4. Next, run `helm3 2to3 convert --dry-run` to ensure a error-free run and then execute the command without the --dry-run flag
+3. So first, run `helm3 2to3 move config --dry-run` to make sure there are no errors and then subsequently run it without the --dry-run flag. 
+4. Next, run `helm3 2to3 convert <release-name> --dry-run` to ensure a error-free run and then execute the command without the --dry-run flag
 5. You should now be able to list the Releases using `helm3 list` 
 6. As a safety check, do a `kubectl get pods,svc` on the resources running under the Helm2 Releases. Check the Age of these resources to make sure that they weren't redeployed. 
 
