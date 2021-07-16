@@ -23,13 +23,18 @@ The best way of achieving this is to use Terraform and Helm to install basic app
 <center><img src="../assets/images/eyeofgrafana.png" height="400" width="400"></center>
 <!--more-->
 
+---
 
 ### Step 1: 
 Use the Terraform Module to install the Loki Helm Chart (with Grafana and Prometheus disabled, and Promtail enabled). This is because when installing Grafana using Loki, it installs a rather outdated version of Grafana. 
 Thus it is better to use the Grafana Helm Chart to install the latest version of Grafana and Prometheus. 
 
+---
+
 ### Step 2: 
 Configuration of Loki inside Grafana
+
+```
 enabled: true
 check_for_updates: false
 
@@ -52,10 +57,13 @@ datasources:
           - matcherRegex: "traceID=(\\w+)"
             name: TraceID
             url: 'http://loki-stack:3100'
+```
 
 As you can see, there is also the possiblity of parsing logs using the Derived Fields feature of Loki. This rule would however apply to all logs and it is therefore preferred to do all parsing using Promtail. 
 
 You can add the Loki datasource inside the values.yaml of Grafana so that it is pre-configured. The URL should match the Service name of the Loki stack
+
+---
 
 ### Step 3: 
 
@@ -69,6 +77,7 @@ However, this can become a problem when in the future updates to the ConfigMap t
         source_labels:
         - __meta_kubernetes_namespace
 
+---
 
 ### Step 4: 
 
@@ -147,25 +156,29 @@ Next, in order to Parse the logs to extract the most useful information, add a n
         source_labels:
 ```
 
-Using the Regex above, this Job would extract four labels from a log entry that looks like this: 
-```
-2021-07-15T09:28:20.888238937Z stdout F { "timestamp": "2021-07-15T09:28:20.881Z", "severity": "Info", "message": Request finished in 0.2358ms 200 application/grpc, "traceId": "969814f6-40ac9c957e3abdf8", "additionalData": { "ElapsedMilliseconds": 0.2358, "StatusCode": 200, "ContentType": "application\/grpc"} }
-```
+Using the Regex above and given the log entry below: 
 
-traceId: 969814f6-40ac9c957e3abdf8
-responseTime: 0.2358
-statusCode: 200
-finishedRequests: 1
+- `2021-07-15T09:28:20.888238937Z stdout F { "timestamp": "2021-07-15T09:28:20.881Z", "severity": "Info", "message": Request finished in 0.2358ms 200 application/grpc, "traceId": "969814f6-40ac9c957e3abdf8", "additionalData": { "ElapsedMilliseconds": 0.2358, "StatusCode": 200, "ContentType": "application\/grpc"} }`
+
+Promtail would extract the following four labels:
+
+- traceId: 969814f6-40ac9c957e3abdf8
+- responseTime: 0.2358
+- statusCode: 200
+- finishedRequests: 1
 
 The above snippet of code also has the stage `metrics`. Metrics will use the extracted value specified by `source` and perform an action on it specified by `config.action`. There are three types of metrics available using Promtail currently: Counter, Gauge and Histogram. These metrics will then be read and exposed by Prometheus. 
 
+---
 
 ### Step 5: 
 You can create custom Dashboards using the above metrics extracted from your logs in Grafan. Create a new Dashboard, then add a Panel, select Prometheus as the Datasource and then search for the name of the metric exposed (note that it will begin with the prefix "myapp_log_metrics") as specified in the snippet above. 
 
 After creating this Dashoboard, you can export them to a JSON file. Add these JSON files to your repository, and create a ConfigMap with `metadata.labels.grafana_dashboard: "true"` and add the JSON files under `data`. 
 
-This will make Grafana automatically import the dashboards on lauch. Example: https://github.com/pivotal-cf/charts-grafana/blob/master/templates/dashboard-configMap.yaml
+This will make Grafana automatically import the dashboards on lauch. 
+
+Example of this configuration can be found [here](https://github.com/pivotal-cf/charts-grafana/blob/master/templates/dashboard-configMap.yaml)
 
 Finally, this setup can be packaged into a Helm chart and published in a chart repo. And thus, you can finally add the chart to be deployed using a Terraform Helm module and thus make this monitoring stack plug-and-playable. 
 
