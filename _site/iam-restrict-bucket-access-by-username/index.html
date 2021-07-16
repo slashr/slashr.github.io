@@ -27,15 +27,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups. This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner. Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory. { &quot;Version&quot;: &quot;2012-10-17&quot;, &quot;Statement&quot;: [ { &quot;Action&quot;: [&quot;s3:ListAllMyBuckets&quot;, &quot;s3:GetBucketLocation&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::*&quot;] }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringEquals&quot;:{ &quot;s3:prefix&quot;:[&quot;&quot;,&quot;home/&quot;],&quot;s3:delimiter&quot;:[&quot;/&quot;]}} }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringLike&quot;:{&quot;s3:prefix&quot;:[&quot;home/${aws:username}/*&quot;]}} }, { &quot;Action&quot;:[&quot;s3:*&quot;], &quot;Effect&quot;:&quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name;/home/${aws:username}&quot; &quot;arn:aws:s3:::bucket-name/home/${aws:username}/*&quot;] } ] }" />
 <meta property="og:description" content="The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups. This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner. Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory. { &quot;Version&quot;: &quot;2012-10-17&quot;, &quot;Statement&quot;: [ { &quot;Action&quot;: [&quot;s3:ListAllMyBuckets&quot;, &quot;s3:GetBucketLocation&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::*&quot;] }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringEquals&quot;:{ &quot;s3:prefix&quot;:[&quot;&quot;,&quot;home/&quot;],&quot;s3:delimiter&quot;:[&quot;/&quot;]}} }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringLike&quot;:{&quot;s3:prefix&quot;:[&quot;home/${aws:username}/*&quot;]}} }, { &quot;Action&quot;:[&quot;s3:*&quot;], &quot;Effect&quot;:&quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name;/home/${aws:username}&quot; &quot;arn:aws:s3:::bucket-name/home/${aws:username}/*&quot;] } ] }" />
-<link rel="canonical" href="https://akashnair.com/iam-restrict-bucket-access-by-username/" />
-<meta property="og:url" content="https://akashnair.com/iam-restrict-bucket-access-by-username/" />
+<link rel="canonical" href="http://localhost:4000/iam-restrict-bucket-access-by-username/" />
+<meta property="og:url" content="http://localhost:4000/iam-restrict-bucket-access-by-username/" />
 <meta property="og:site_name" content="Akash Nair" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-03-19T19:52:39+01:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="IAM: Restrict Access to Folders Inside Bucket" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/iam-restrict-bucket-access-by-username/"},"author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","description":"The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups. This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner. Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory. { &quot;Version&quot;: &quot;2012-10-17&quot;, &quot;Statement&quot;: [ { &quot;Action&quot;: [&quot;s3:ListAllMyBuckets&quot;, &quot;s3:GetBucketLocation&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::*&quot;] }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringEquals&quot;:{ &quot;s3:prefix&quot;:[&quot;&quot;,&quot;home/&quot;],&quot;s3:delimiter&quot;:[&quot;/&quot;]}} }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringLike&quot;:{&quot;s3:prefix&quot;:[&quot;home/${aws:username}/*&quot;]}} }, { &quot;Action&quot;:[&quot;s3:*&quot;], &quot;Effect&quot;:&quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name;/home/${aws:username}&quot; &quot;arn:aws:s3:::bucket-name/home/${aws:username}/*&quot;] } ] }","url":"https://akashnair.com/iam-restrict-bucket-access-by-username/","headline":"IAM: Restrict Access to Folders Inside Bucket","dateModified":"2016-03-19T19:52:39+01:00","datePublished":"2016-03-19T19:52:39+01:00","@context":"https://schema.org"}</script>
+{"headline":"IAM: Restrict Access to Folders Inside Bucket","dateModified":"2016-03-19T19:52:39+01:00","datePublished":"2016-03-19T19:52:39+01:00","author":{"@type":"Person","name":"Akash"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/iam-restrict-bucket-access-by-username/"},"@type":"BlogPosting","description":"The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups. This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner. Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory. { &quot;Version&quot;: &quot;2012-10-17&quot;, &quot;Statement&quot;: [ { &quot;Action&quot;: [&quot;s3:ListAllMyBuckets&quot;, &quot;s3:GetBucketLocation&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::*&quot;] }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringEquals&quot;:{ &quot;s3:prefix&quot;:[&quot;&quot;,&quot;home/&quot;],&quot;s3:delimiter&quot;:[&quot;/&quot;]}} }, { &quot;Action&quot;: [&quot;s3:ListBucket&quot;], &quot;Effect&quot;: &quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name&quot;], &quot;Condition&quot;:{&quot;StringLike&quot;:{&quot;s3:prefix&quot;:[&quot;home/${aws:username}/*&quot;]}} }, { &quot;Action&quot;:[&quot;s3:*&quot;], &quot;Effect&quot;:&quot;Allow&quot;, &quot;Resource&quot;: [&quot;arn:aws:s3:::bucket-name;/home/${aws:username}&quot; &quot;arn:aws:s3:::bucket-name/home/${aws:username}/*&quot;] } ] }","url":"http://localhost:4000/iam-restrict-bucket-access-by-username/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -440,9 +440,9 @@
   *  https://disqus.com/admin/universalcode/#configuration-variables
   */
   var disqus_config = function () {
-    this.page.url = "https://akashnair.com/iam-restrict-bucket-access-by-username/";
+    this.page.url = "http://localhost:4000/iam-restrict-bucket-access-by-username/";
     this.page.identifier = "" ||
-                           "https://akashnair.com/iam-restrict-bucket-access-by-username/";
+                           "http://localhost:4000/iam-restrict-bucket-access-by-username/";
   }
   function loadDisqusComments() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
@@ -466,6 +466,15 @@
     
       <li>
         <h3>
+          <a href="/grafana-loki-prometheus/">
+            Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
+            <small>16 Jul 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/migrate-helm2-to-helm3/">
             Migrate from Helm 2 to Helm 3 Safely
             <small>01 Jan 2021</small>
@@ -478,15 +487,6 @@
           <a href="/jenkins-kaniko-kubernetes-cloud-ci-cd/">
             Jenkins, Kaniko, Kubernetes: The Cloud CI/CD Trifecta
             <small>24 Jun 2019</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/fire-suppression-using-smart-sensors-iot/">
-            Suppressing Fires using Gas: An IoT Experiment
-            <small>17 Mar 2018</small>
           </a>
         </h3>
       </li>

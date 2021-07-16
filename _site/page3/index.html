@@ -27,15 +27,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
 <meta property="og:description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
-<link rel="canonical" href="https://akashnair.com/page3/" />
-<meta property="og:url" content="https://akashnair.com/page3/" />
+<link rel="canonical" href="http://localhost:4000/page3/" />
+<meta property="og:url" content="http://localhost:4000/page3/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="https://akashnair.com/page2" />
-<link rel="next" href="https://akashnair.com/page4" />
+<link rel="prev" href="http://localhost:4000/page2" />
+<link rel="next" href="http://localhost:4000/page4" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Home" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","url":"https://akashnair.com/page3/","headline":"Home","@context":"https://schema.org"}</script>
+{"headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","url":"http://localhost:4000/page3/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -323,6 +323,146 @@
 
   
 
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/configuration-management-ec2-ansible/">
+        Configuration Management on EC2 Using Ansible
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">05 May 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <h4 id="introduction">Introduction</h4>
+
+<p>Ansible is one of the easiest Configuration Management tools to get started with due to its client-less architecture. Ansible is written in Python and uses YAML for is configuration files which is a simple and human-readable syntax. One of the most important features of Ansible is its idempotency which means changes are only made when required and ignored otherwise. This prevents the possibility of inconsistency in your infrastructure.</p>
+
+<hr />
+
+<h4 id="installation">Installation</h4>
+
+<ol>
+  <li>
+    <p>The easiest and recommended way of installing is from the package repositories. Simply run: 
+   <code class="language-plaintext highlighter-rouge">sudo apt-get install ansible</code></p>
+  </li>
+  <li>
+    <p>To test the installation, run the following. If you get a prompt asking for the SSH password, it indicates that the installation was successful. 
+   <code class="language-plaintext highlighter-rouge">ansible all -m ping --ask-pass</code></p>
+  </li>
+  <li>
+    <p>Open the file /etc/ansible/hosts and add the IPs of your servers in it. For example, you can add EC2 instance public IP or you can add the private IP if your control machine is the same VPC as the servers. The control machine as the name indicates is the machine which will be sending the commands to your servers.</p>
+  </li>
+  <li>
+    <p>To test if the control machine is able to reach the servers, run the <code class="language-plaintext highlighter-rouge">ping</code> command. Key-based authentication is encouraged over passwords. use the <code class="language-plaintext highlighter-rouge">--private-key</code> flag to specify the path to your keyfile. If successful, it will return a JSON response containing the string <code class="language-plaintext highlighter-rouge">success</code> 
+   <code class="language-plaintext highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu</code></p>
+  </li>
+  <li>
+    <p>To log in as root, add the become flag (-b)
+   <code class="language-plaintext highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu -b</code></p>
+  </li>
+  <li>
+    <p>Test the configuration further by running a live command on the nodes
+   <code class="language-plaintext highlighter-rouge">ansible all -a "/bin/echo skywide" --private-key ~/path/to/key -u ubuntu</code></p>
+  </li>
+  <li>
+    <p>If you’d like to have a fully automated and unattended setup, it would be wise to disable the host key checking feature. This feature when enabled will prompt for confirmation of the key the first time Ansible tries to log into the server. Disabling host key checking however has some implications and you might want to fully understand them before disabling the host check. Inside <code class="language-plaintext highlighter-rouge">/etc/ansible/ansible.cfg</code>, edit the following <code class="language-plaintext highlighter-rouge">host_key_checking = False</code></p>
+  </li>
+  <li>
+    <p>This way, you are able to successfully run commands on your nodes. However, Ansible goes far beyond running simple commands on your nodes. To make the most of it, we need to make use of playbooks.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h4 id="components">Components</h4>
+
+<ol>
+  <li>
+    <h5 id="inventory">Inventory</h5>
+    <p>The inventory file is nothing but a file containing the list of servers you want to configure. This file by default exists at /etc/ansible/hosts. It is also possible to use multiple inventory files.</p>
+  </li>
+  <li>
+    <h5 id="dynamic-inventory">Dynamic Inventory</h5>
+    <p>A Dynamic Inventory is when the inventory files are stored in a different system. For example, the files can be stored on a cloud storage provider, LDAP or other such storage solutions.</p>
+  </li>
+  <li>
+    <h5 id="patterns">Patterns</h5>
+    <p>The hosts that are specified in an inventory file can be grouped into categories like <em>web servers</em> and <em>db servers</em> by using the appropriate syntax. A Pattern refers to a set of groups (which are a set of hosts). Take for example, <code class="language-plaintext highlighter-rouge">ansible all -m ping</code> Here <em>all</em> refers to all hosts. Whereas in <code class="language-plaintext highlighter-rouge">ansible webservers -m ping</code> the command will only work on the hosts in the group <em>webservers</em> as defined in the inventory file.</p>
+  </li>
+  <li>
+    <h5 id="variables">Variables</h5>
+    <p>Variables, as the name suggests, are values that are used when you are working on systems that require varied configuration. Variables can be something like a port number or a private IP address. Variables can be defined either in Inventory files or Playbooks.
+   Example:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   - hosts: all
+     vars:
+       http_port: 80
+</code></pre></div>    </div>
+
+    <p>Here <em>http_port</em> is a variable.</p>
+  </li>
+  <li>
+    <h5 id="ad-hoc-commands">Ad-Hoc Commands</h5>
+    <p>Ad-Hoc Commands are used to perform quick tasks that you don’t want to write an entire playbook for. Take the analogy of running a command through shell (ad-hoc command) and running it through a bash script (playbook). <code class="language-plaintext highlighter-rouge">ansible all -m ping</code> is an example of a ad-hoc command.</p>
+  </li>
+  <li>
+    <h5 id="playbooks">Playbooks</h5>
+    <p>A playbook is a file containing instructions. The following playbook will install Apache web server on your nodes.</p>
+
+    <p>To run the playbook, use the following command:
+   <code class="language-plaintext highlighter-rouge">ansible-playbook skywide.yaml --private-key ~/path/to/key.pem</code></p>
+
+    <p>If you want to avoid specifying the path to the key file every time, modify the file <code class="language-plaintext highlighter-rouge">/etc/ansible/ansible.cfg</code> and set the path in the variable <code class="language-plaintext highlighter-rouge">private_key_file</code></p>
+  </li>
+</ol>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -647,101 +787,6 @@
   ]
 }
 </code></pre></div></div>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/route-53-use-cases/">
-        Moving your DNS to Route 53
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">24 Feb 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-  </span>
-</div>
-
-
-    
-      <h3 id="about-route-53">About Route 53</h3>
-
-<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
-
-<hr />
-<p>Here are a few common use-cases along with a broad overview of the process steps:</p>
-
-<h4 id="migrating-an-existing-domains-dns-to-route-53">Migrating an existing domain’s DNS to Route 53</h4>
-
-<ol>
-  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.example.com)</li>
-  <li>Add a <strong>Record Set</strong> to the <strong>Hosted Zone</strong> and add the IP of the server as a <strong>A record</strong> (also create MX, CNAME and other records depending on your requirement)</li>
-  <li>Copy the four name servers provided by the <strong>Hosted Zone</strong></li>
-  <li>Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53.</li>
-  <li>The DNS propagation from your domain registrar to Route 53 will take 48 hours or more.</li>
-</ol>
-
-<hr />
-<h4 id="migrating-the-sub-domain-dns-to-route-53-without-migrating-the-parent-domain">Migrating the sub-domain DNS to Route 53 without migrating the parent domain</h4>
-
-<ol>
-  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.example.com)</li>
-  <li>Add a <strong>Record Set</strong> to the hosted zone and add the IP of the server as a <strong>A record</strong> (similarly add MX, CNAME records if required)</li>
-  <li>Copy the four name servers provided by the <strong>Hosted Zone</strong>. Replace the NS Records of the registrar with these name servers</li>
-</ol>
-
-<p><strong>Important</strong>: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
-
-<hr />
-
-<h4 id="private-hosted-zone">Private Hosted Zone</h4>
-
-<ol>
-  <li><strong>Private Hosted Zone</strong> is a <strong>Hosted Zone</strong> for managing domains within an AWS VPC</li>
-  <li>First step is to set the following Amazon VPC settings to <code class="language-plaintext highlighter-rouge">true</code>:
-    <ul>
-      <li>enableDnsHostnames</li>
-      <li>enableDnsSupport</li>
-    </ul>
-  </li>
-  <li>On the Route 53 page, click on <strong>Create Hosted Zone</strong>.</li>
-  <li>Next, in the <strong>Create Private Hosted Zone</strong> pane, enter your domain name. Select <strong>Private Hosted Zone for Amazon VPC</strong> in the <strong>Type</strong> list.</li>
-  <li>Finally, in the <strong>VPC ID</strong> list, select the VPC you want to associate with Route 53.</li>
-  <li>Click on <strong>Create</strong>. Your VPC should get linked with Route 53 within a few minutes.</li>
-</ol>
-
-<hr />
-<h4 id="integration-with-other-aws-services">Integration with other AWS Services</h4>
-
-<p>Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services.</p>
-
-<ol>
-  <li>EC2: Create an A record with the Elastic IP of the instance</li>
-  <li>ELB: Add public DNS of the load balancer to a CNAME record</li>
-  <li>CloudFront: Add Distribution URL to a CNAME record</li>
-  <li>S3: Add the Bucket URL to a CNAME record</li>
-  <li>RDS: Add the RDS endpoint to a CNAME record</li>
-</ol>
 
     
 

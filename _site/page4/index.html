@@ -27,15 +27,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
 <meta property="og:description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
-<link rel="canonical" href="https://akashnair.com/page4/" />
-<meta property="og:url" content="https://akashnair.com/page4/" />
+<link rel="canonical" href="http://localhost:4000/page4/" />
+<meta property="og:url" content="http://localhost:4000/page4/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="https://akashnair.com/page3" />
-<link rel="next" href="https://akashnair.com/page5" />
+<link rel="prev" href="http://localhost:4000/page3" />
+<link rel="next" href="http://localhost:4000/page5" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Home" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","url":"https://akashnair.com/page4/","headline":"Home","@context":"https://schema.org"}</script>
+{"headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","url":"http://localhost:4000/page4/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -323,6 +323,101 @@
 
   
 
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/route-53-use-cases/">
+        Moving your DNS to Route 53
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">24 Feb 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+  </span>
+</div>
+
+
+    
+      <h3 id="about-route-53">About Route 53</h3>
+
+<p>Amazon Route 53 is a Domain Name System (DNS) owned and provided by AWS. Being part of the AWS ecosystem, it works well with other services like EC2 instances, Elastic Load Balancing, S3 storage etc compared to other Domain Registrars. So if your infrastructure is completely built on AWS, you should consider moving your DNS to Route 53 since it would help create a homogeneous environment.</p>
+
+<hr />
+<p>Here are a few common use-cases along with a broad overview of the process steps:</p>
+
+<h4 id="migrating-an-existing-domains-dns-to-route-53">Migrating an existing domain’s DNS to Route 53</h4>
+
+<ol>
+  <li>Create a <strong>Hosted Zone</strong> and enter the existing domain name (www.example.com)</li>
+  <li>Add a <strong>Record Set</strong> to the <strong>Hosted Zone</strong> and add the IP of the server as a <strong>A record</strong> (also create MX, CNAME and other records depending on your requirement)</li>
+  <li>Copy the four name servers provided by the <strong>Hosted Zone</strong></li>
+  <li>Log in to your domain registrar’s control panel/admin console. If your registrar supports TTL modification, It is recommended to set it to 900 seconds for a quicker propagation. Replace your domain registrar’s NS records with the four name servers you copied from Route 53.</li>
+  <li>The DNS propagation from your domain registrar to Route 53 will take 48 hours or more.</li>
+</ol>
+
+<hr />
+<h4 id="migrating-the-sub-domain-dns-to-route-53-without-migrating-the-parent-domain">Migrating the sub-domain DNS to Route 53 without migrating the parent domain</h4>
+
+<ol>
+  <li>Create a <strong>Hosted Zone</strong> and enter the sub domain name (www.aws.example.com)</li>
+  <li>Add a <strong>Record Set</strong> to the hosted zone and add the IP of the server as a <strong>A record</strong> (similarly add MX, CNAME records if required)</li>
+  <li>Copy the four name servers provided by the <strong>Hosted Zone</strong>. Replace the NS Records of the registrar with these name servers</li>
+</ol>
+
+<p><strong>Important</strong>: Do not add a start of authority (SOA) record to the zone file for the parent domain. Reason for this being since the sub-domain will use Amazon Route 53, the DNS service for the parent domain is not the authority for the sub-domain.</p>
+
+<hr />
+
+<h4 id="private-hosted-zone">Private Hosted Zone</h4>
+
+<ol>
+  <li><strong>Private Hosted Zone</strong> is a <strong>Hosted Zone</strong> for managing domains within an AWS VPC</li>
+  <li>First step is to set the following Amazon VPC settings to <code class="language-plaintext highlighter-rouge">true</code>:
+    <ul>
+      <li>enableDnsHostnames</li>
+      <li>enableDnsSupport</li>
+    </ul>
+  </li>
+  <li>On the Route 53 page, click on <strong>Create Hosted Zone</strong>.</li>
+  <li>Next, in the <strong>Create Private Hosted Zone</strong> pane, enter your domain name. Select <strong>Private Hosted Zone for Amazon VPC</strong> in the <strong>Type</strong> list.</li>
+  <li>Finally, in the <strong>VPC ID</strong> list, select the VPC you want to associate with Route 53.</li>
+  <li>Click on <strong>Create</strong>. Your VPC should get linked with Route 53 within a few minutes.</li>
+</ol>
+
+<hr />
+<h4 id="integration-with-other-aws-services">Integration with other AWS Services</h4>
+
+<p>Once a Hosted Zone is created, incorporating other AWS Services into Route 53 is just a matter of creating a few record sets. Here’s a list of the record sets needed for the corresponding AWS services.</p>
+
+<ol>
+  <li>EC2: Create an A record with the Elastic IP of the instance</li>
+  <li>ELB: Add public DNS of the load balancer to a CNAME record</li>
+  <li>CloudFront: Add Distribution URL to a CNAME record</li>
+  <li>S3: Add the Bucket URL to a CNAME record</li>
+  <li>RDS: Add the RDS endpoint to a CNAME record</li>
+</ol>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -860,139 +955,6 @@
 <p>I have largely automated the setup process in the following script. The distributions currently supported are Amazon Linux, Ubuntu and SUSE Linux.</p>
 
 <p>Download the script here: <a href="https://github.com/slashr/CloudWatch-Deployment/" target="_blank">https://github.com/slashr/CloudWatch-Deployment</a></p>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/aws-designing-a-3-tier-web-application/">
-        Designing a 3-tier Web Application on AWS
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">08 Jul 2015</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-  </span>
-</div>
-
-
-    
-      <h2 id="making-the-most-of-aws">Making the Most of AWS</h2>
-
-<p>With an increasing number of websites and web applications moving their infrastructure to AWS from the traditional “web hosting” services, it has become important to ensure that this shift is done properly and in a well-planned manner. Doing so ensures that the application is able to make the most of the benefits AWS has to offer like Scalability, High Availability, Fault Tolerance, Content Distribution Networks and so on.</p>
-
-<p>Below is a guide on how to leverage the infrastructure provided by AWS to create a highly scalable and fault tolerant web architecture.</p>
-
-<hr />
-
-<p>1) <strong>Create a VPC</strong></p>
-
-<p>The first step is to create a Virtual Private Cloud with a CIDR IP range of your choice. The block size should be between /16 and /28</p>
-
-<p><img src="/assets/images/2015/07/Blank-Flowchart-New-Page1-900x854.png" alt="A nice, blank canvas for us to work on" /> A nice, blank canvas for us to work on</p>
-
-<hr />
-
-<p>2) <strong>Create subnets</strong></p>
-
-<p>Next step is to create subnets under the VPC. For our architecture, we’ll design two private subnets in two different availability zones.
-<img src="/assets/images/2015/07/Blank-Flowchart-New-Page.png" alt="Two subnets corresponding to two different Availability Zones in order to implement High Availability" /> Two subnets corresponding to two different Availability Zones in order to implement High Availability</p>
-
-<hr />
-
-<p>3) <strong>Adding an Internet Gateway</strong></p>
-
-<p>In order for the instances to access the internet, we must attach an Internet Gateway to the VPC. We’ll first create an Internet Gateway and then attach it to our VPC. In addition to this, we need to edit the Route Tables being used by the two subnets (a route table is created automatically whenever a VPC is created and all the subnets created inside the VPC get implicitly associated with this route table).</p>
-
-<p>Edit the Route Table and add “0.0.0.0/0” to the Target field and select the IGW (Internet Gateway) in the Destination field. This will direct all traffic headed towards “0.0.0.0/0” to the IGW which will then route it to the appropriate destination.</p>
-
-<p><img src="/assets/images/2015/07/Blank-Flowchart-New-Page2.png" alt="IGW allows communicating with internet" /> IGW allows communicating with internet</p>
-
-<hr />
-
-<p>4) <strong>Launch Instances</strong></p>
-
-<p>We only require one instance each for the Web Layer and the Application Layer. The instance will be added to corresponding Auto-Scaling groups (one for Web Layer and one for Application Layer) which will automatically increase or decrease the number of instances in the group.<figure id="attachment_297" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/Blank-Flowchart-New-Page3.png"><img class="size-large wp-image-297" src="http://skywide.in/wp-content/uploads/2015/07/Blank-Flowchart-New-Page3-1024x972.png" alt="Launch a single instance of the Web and App servers " width="584" height="554" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/Blank-Flowchart-New-Page3-1024x972.png 1024w, https://skywide.in/blog/wp-content/uploads/2015/07/Blank-Flowchart-New-Page3-300x285.png 300w, https://skywide.in/blog/wp-content/uploads/2015/07/Blank-Flowchart-New-Page3-900x854.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/Blank-Flowchart-New-Page3.png 1180w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;Launch a single instance of the Web and App servers&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>5) <strong>Create Load Balancers</strong></p>
-
-<p>Create two Elastic Load Balancers, for the Web Layer and Application Layer respectively. While creating it, configure the ELBs to span both the subnets.<figure id="attachment_307" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page3.png"><img class="size-large wp-image-307" src="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page3-925x1024.png" alt="Create load balancer for the Web and App layer respectively" width="584" height="647" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page3-925x1024.png 925w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page3-271x300.png 271w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page3-900x997.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page3.png 1210w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;Load balancers for the Web and App layer respectively&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>6) **Create Auto-Scaling Group and attach it to Load Balancer</p>
-
-<p>**</p>
-
-<p>There are three steps under this.</p>
-
-<p>i) After configuring the Web and Application servers launched above, create an AMI of both.</p>
-
-<p>ii) Create two Auto-Scaling groups for both the Web and Application Layers using the AMIs created in the above step.</p>
-
-<p>iii) Attach the Web Layer Auto-Scaling group to the Web Layer ELB and the Application Layer Aut0-Scaling group to the Application Layer ELB<figure id="attachment_301" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page.png"><img class="size-large wp-image-301" src="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page-1024x1024.png" alt="Create two AutoScaling groups and attach it to the corresponding ELBs" width="584" height="584" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page-1024x1024.png 1024w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page-150x150.png 150w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page-300x300.png 300w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page-144x144.png 144w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page-900x900.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page.png 1240w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;Create two AutoScaling groups and attach it to the corresponding ELBs&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>7) <strong>Add the third Database Layer</strong></p>
-
-<p>Add an RDS instance in Multi-AZ mode which will create a standby RDS instance.<figure id="attachment_302" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page1.png"><img class="size-large wp-image-302" src="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page1-814x1024.png" alt="The third layer of our architecture" width="584" height="735" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page1-814x1024.png 814w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page1-238x300.png 238w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page1-900x1132.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page1.png 1240w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;RDS the third layer of the architecture&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>8) <strong>Create CloudFront Distribution using ELB endpoint</strong><figure id="attachment_304" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page2.png"><img class="size-large wp-image-304" src="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page2-656x1024.png" alt="Create a CloudFront distribution using the ELB endpoint" width="584" height="912" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page2-656x1024.png 656w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page2-192x300.png 192w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page2-900x1405.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page2.png 1230w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;Create a CloudFront distribution using the Web Layer ELB endpoint&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>9) <strong>Add an S3 bucket to store static content. Connect CloudFront to this bucket.</strong><figure id="attachment_305" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page11.png"><img class="size-large wp-image-305" src="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page11-643x1024.png" alt="Connect CloudFront to S3 for serving static content" width="584" height="930" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page11-643x1024.png 643w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page11-188x300.png 188w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page11-900x1434.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page11.png 1230w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;Store static content on S3 and connect it to CloudFront to S3 which will cache and serve the content&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>10) <strong>Map your domain to the CloudFront Distribution URL by using Route 53 to configure a CNAME record.</strong><figure id="attachment_306" style="width: 584px" class="wp-caption aligncenter"></figure></p>
-
-<p><a href="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page21.png"><img class="size-large wp-image-306" src="http://skywide.in/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page21-643x1024.png" alt="Create CNAME record using CloudFront Distribution URL" width="584" height="930" srcset="https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page21-643x1024.png 643w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page21-188x300.png 188w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page21-900x1434.png 900w, https://skywide.in/blog/wp-content/uploads/2015/07/3-Tier-Web-Architecture-New-Page21.png 1230w" sizes="(max-width: 584px) 100vw, 584px" /></a>&lt;figcaption class="wp-caption-text"&gt;Create a CNAME record using CloudFront Distribution URL on Route 53&lt;/figcaption&gt;&lt;/figure&gt;</p>
-
-<hr />
-
-<p>By following this design methodology, we can ensure that our architecture is capable of utilizing scalable infrastructure. It is important to identify the components in your architecture that can potentially cause bottlenecks. By refactoring such components, your infrastructure can be made non-blocking. It is also equally important to ensure that your application plays well with scalability. Ideally, your application should be stateless in nature and highly decoupled.</p>
-
-<p>In this way, you are ready to exploit the cloud and fully leverage the benefits it has to offer.</p>
-
-<p><sub>Reference: http://media.amazonwebservices.com/architecturecenter/AWS_ac_ra_web_01.pdf</sub></p>
 
     
 

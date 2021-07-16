@@ -27,15 +27,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
 <meta property="og:description" content="I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud." />
-<link rel="canonical" href="https://akashnair.com/page2/" />
-<meta property="og:url" content="https://akashnair.com/page2/" />
+<link rel="canonical" href="http://localhost:4000/page2/" />
+<meta property="og:url" content="http://localhost:4000/page2/" />
 <meta property="og:site_name" content="Akash Nair" />
-<link rel="prev" href="https://akashnair.com/" />
-<link rel="next" href="https://akashnair.com/page3" />
+<link rel="prev" href="http://localhost:4000/" />
+<link rel="next" href="http://localhost:4000/page3" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Home" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","url":"https://akashnair.com/page2/","headline":"Home","@context":"https://schema.org"}</script>
+{"headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","url":"http://localhost:4000/page2/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -326,6 +326,57 @@
   
   <article class="post-body">
     <h2 class="post-title">
+      <a href="/rds-read-replica-aurora-mysql/">
+        RDS Read Replica for Aurora using MySQL
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">07 Sep 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Ops
+      
+    
+  </span>
+</div>
+
+
+    
+      <p>Default Read Replicas provided by AWS are instances which should be of the same instance type as the master DB or higher. This might not always be an ideal solution since read replica servers do not require significant computing power. As an alternative, one can create a read replica on a standalone EC2 instance or a RDS DB instance. In the following scenario, we’ll create a read replica running on MySQL syncing with a master DB running on Amazon Aurora. The replica instance type can be any type as seen fit by the user.</p>
+
+
+    
+
+    
+      
+      
+      
+
+      
+        <a href="/rds-read-replica-aurora-mysql/"></a>
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
       <a href="/docker/">
         Docker: Install, Build an Image and Publish to DockerHub
       </a>
@@ -578,146 +629,6 @@
     </ul>
   </li>
   <li>To get started with visualizing your data, read through the <a href="https://www.elastic.co/guide/en/kibana/current/visualize.html">Visualize section</a> of Elastic’s official documentation.</li>
-</ol>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/configuration-management-ec2-ansible/">
-        Configuration Management on EC2 Using Ansible
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">05 May 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Automation
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Ops
-      
-    
-  </span>
-</div>
-
-
-    
-      <h4 id="introduction">Introduction</h4>
-
-<p>Ansible is one of the easiest Configuration Management tools to get started with due to its client-less architecture. Ansible is written in Python and uses YAML for is configuration files which is a simple and human-readable syntax. One of the most important features of Ansible is its idempotency which means changes are only made when required and ignored otherwise. This prevents the possibility of inconsistency in your infrastructure.</p>
-
-<hr />
-
-<h4 id="installation">Installation</h4>
-
-<ol>
-  <li>
-    <p>The easiest and recommended way of installing is from the package repositories. Simply run: 
-   <code class="language-plaintext highlighter-rouge">sudo apt-get install ansible</code></p>
-  </li>
-  <li>
-    <p>To test the installation, run the following. If you get a prompt asking for the SSH password, it indicates that the installation was successful. 
-   <code class="language-plaintext highlighter-rouge">ansible all -m ping --ask-pass</code></p>
-  </li>
-  <li>
-    <p>Open the file /etc/ansible/hosts and add the IPs of your servers in it. For example, you can add EC2 instance public IP or you can add the private IP if your control machine is the same VPC as the servers. The control machine as the name indicates is the machine which will be sending the commands to your servers.</p>
-  </li>
-  <li>
-    <p>To test if the control machine is able to reach the servers, run the <code class="language-plaintext highlighter-rouge">ping</code> command. Key-based authentication is encouraged over passwords. use the <code class="language-plaintext highlighter-rouge">--private-key</code> flag to specify the path to your keyfile. If successful, it will return a JSON response containing the string <code class="language-plaintext highlighter-rouge">success</code> 
-   <code class="language-plaintext highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu</code></p>
-  </li>
-  <li>
-    <p>To log in as root, add the become flag (-b)
-   <code class="language-plaintext highlighter-rouge">ansible all -m ping --private-key ~/path/to/key -u ubuntu -b</code></p>
-  </li>
-  <li>
-    <p>Test the configuration further by running a live command on the nodes
-   <code class="language-plaintext highlighter-rouge">ansible all -a "/bin/echo skywide" --private-key ~/path/to/key -u ubuntu</code></p>
-  </li>
-  <li>
-    <p>If you’d like to have a fully automated and unattended setup, it would be wise to disable the host key checking feature. This feature when enabled will prompt for confirmation of the key the first time Ansible tries to log into the server. Disabling host key checking however has some implications and you might want to fully understand them before disabling the host check. Inside <code class="language-plaintext highlighter-rouge">/etc/ansible/ansible.cfg</code>, edit the following <code class="language-plaintext highlighter-rouge">host_key_checking = False</code></p>
-  </li>
-  <li>
-    <p>This way, you are able to successfully run commands on your nodes. However, Ansible goes far beyond running simple commands on your nodes. To make the most of it, we need to make use of playbooks.</p>
-  </li>
-</ol>
-
-<hr />
-
-<h4 id="components">Components</h4>
-
-<ol>
-  <li>
-    <h5 id="inventory">Inventory</h5>
-    <p>The inventory file is nothing but a file containing the list of servers you want to configure. This file by default exists at /etc/ansible/hosts. It is also possible to use multiple inventory files.</p>
-  </li>
-  <li>
-    <h5 id="dynamic-inventory">Dynamic Inventory</h5>
-    <p>A Dynamic Inventory is when the inventory files are stored in a different system. For example, the files can be stored on a cloud storage provider, LDAP or other such storage solutions.</p>
-  </li>
-  <li>
-    <h5 id="patterns">Patterns</h5>
-    <p>The hosts that are specified in an inventory file can be grouped into categories like <em>web servers</em> and <em>db servers</em> by using the appropriate syntax. A Pattern refers to a set of groups (which are a set of hosts). Take for example, <code class="language-plaintext highlighter-rouge">ansible all -m ping</code> Here <em>all</em> refers to all hosts. Whereas in <code class="language-plaintext highlighter-rouge">ansible webservers -m ping</code> the command will only work on the hosts in the group <em>webservers</em> as defined in the inventory file.</p>
-  </li>
-  <li>
-    <h5 id="variables">Variables</h5>
-    <p>Variables, as the name suggests, are values that are used when you are working on systems that require varied configuration. Variables can be something like a port number or a private IP address. Variables can be defined either in Inventory files or Playbooks.
-   Example:</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   - hosts: all
-     vars:
-       http_port: 80
-</code></pre></div>    </div>
-
-    <p>Here <em>http_port</em> is a variable.</p>
-  </li>
-  <li>
-    <h5 id="ad-hoc-commands">Ad-Hoc Commands</h5>
-    <p>Ad-Hoc Commands are used to perform quick tasks that you don’t want to write an entire playbook for. Take the analogy of running a command through shell (ad-hoc command) and running it through a bash script (playbook). <code class="language-plaintext highlighter-rouge">ansible all -m ping</code> is an example of a ad-hoc command.</p>
-  </li>
-  <li>
-    <h5 id="playbooks">Playbooks</h5>
-    <p>A playbook is a file containing instructions. The following playbook will install Apache web server on your nodes.</p>
-
-    <p>To run the playbook, use the following command:
-   <code class="language-plaintext highlighter-rouge">ansible-playbook skywide.yaml --private-key ~/path/to/key.pem</code></p>
-
-    <p>If you want to avoid specifying the path to the key file every time, modify the file <code class="language-plaintext highlighter-rouge">/etc/ansible/ansible.cfg</code> and set the path in the variable <code class="language-plaintext highlighter-rouge">private_key_file</code></p>
-  </li>
 </ol>
 
     

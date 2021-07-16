@@ -27,15 +27,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="The following is a bare-minimum CloudFormation template to launch an EC2 instance. It’s bare-minimum in the sense that only the Parameters and Resources which are absolutely necessary are part of the template. This template can also execute a bash script provided as User Data to the EC2 instance. The User Data can be a set of directives that will be executed only once during the first boot cycle of the instance. This feature can be used when you need to say launch several instances with the Apache web server installed on them. To do this you would simply supply the command apt-get install apache2 as user-data. There is no need to add sudo keyword to the command as the script will be run with root privileges. In the above template, the custom script updates the list of packages (apt-get update) and installs Apache (apt-get install apache2). You can add/remove commands as required. Be sure to put them inside double quotes and each command should be on a new line." />
 <meta property="og:description" content="The following is a bare-minimum CloudFormation template to launch an EC2 instance. It’s bare-minimum in the sense that only the Parameters and Resources which are absolutely necessary are part of the template. This template can also execute a bash script provided as User Data to the EC2 instance. The User Data can be a set of directives that will be executed only once during the first boot cycle of the instance. This feature can be used when you need to say launch several instances with the Apache web server installed on them. To do this you would simply supply the command apt-get install apache2 as user-data. There is no need to add sudo keyword to the command as the script will be run with root privileges. In the above template, the custom script updates the list of packages (apt-get update) and installs Apache (apt-get install apache2). You can add/remove commands as required. Be sure to put them inside double quotes and each command should be on a new line." />
-<link rel="canonical" href="https://akashnair.com/cloudformation-launch-ec2-execute-script-startup/" />
-<meta property="og:url" content="https://akashnair.com/cloudformation-launch-ec2-execute-script-startup/" />
+<link rel="canonical" href="http://localhost:4000/cloudformation-launch-ec2-execute-script-startup/" />
+<meta property="og:url" content="http://localhost:4000/cloudformation-launch-ec2-execute-script-startup/" />
 <meta property="og:site_name" content="Akash Nair" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-04-29T09:09:57+02:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="CloudFormation Template to Launch an EC2 instance" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/cloudformation-launch-ec2-execute-script-startup/"},"author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","description":"The following is a bare-minimum CloudFormation template to launch an EC2 instance. It’s bare-minimum in the sense that only the Parameters and Resources which are absolutely necessary are part of the template. This template can also execute a bash script provided as User Data to the EC2 instance. The User Data can be a set of directives that will be executed only once during the first boot cycle of the instance. This feature can be used when you need to say launch several instances with the Apache web server installed on them. To do this you would simply supply the command apt-get install apache2 as user-data. There is no need to add sudo keyword to the command as the script will be run with root privileges. In the above template, the custom script updates the list of packages (apt-get update) and installs Apache (apt-get install apache2). You can add/remove commands as required. Be sure to put them inside double quotes and each command should be on a new line.","url":"https://akashnair.com/cloudformation-launch-ec2-execute-script-startup/","headline":"CloudFormation Template to Launch an EC2 instance","dateModified":"2016-04-29T09:09:57+02:00","datePublished":"2016-04-29T09:09:57+02:00","@context":"https://schema.org"}</script>
+{"headline":"CloudFormation Template to Launch an EC2 instance","dateModified":"2016-04-29T09:09:57+02:00","datePublished":"2016-04-29T09:09:57+02:00","author":{"@type":"Person","name":"Akash"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cloudformation-launch-ec2-execute-script-startup/"},"@type":"BlogPosting","description":"The following is a bare-minimum CloudFormation template to launch an EC2 instance. It’s bare-minimum in the sense that only the Parameters and Resources which are absolutely necessary are part of the template. This template can also execute a bash script provided as User Data to the EC2 instance. The User Data can be a set of directives that will be executed only once during the first boot cycle of the instance. This feature can be used when you need to say launch several instances with the Apache web server installed on them. To do this you would simply supply the command apt-get install apache2 as user-data. There is no need to add sudo keyword to the command as the script will be run with root privileges. In the above template, the custom script updates the list of packages (apt-get update) and installs Apache (apt-get install apache2). You can add/remove commands as required. Be sure to put them inside double quotes and each command should be on a new line.","url":"http://localhost:4000/cloudformation-launch-ec2-execute-script-startup/","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -441,9 +441,9 @@
   *  https://disqus.com/admin/universalcode/#configuration-variables
   */
   var disqus_config = function () {
-    this.page.url = "https://akashnair.com/cloudformation-launch-ec2-execute-script-startup/";
+    this.page.url = "http://localhost:4000/cloudformation-launch-ec2-execute-script-startup/";
     this.page.identifier = "http://skywide.in/blog/?p=535" ||
-                           "https://akashnair.com/cloudformation-launch-ec2-execute-script-startup/";
+                           "http://localhost:4000/cloudformation-launch-ec2-execute-script-startup/";
   }
   function loadDisqusComments() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
@@ -467,6 +467,15 @@
     
       <li>
         <h3>
+          <a href="/grafana-loki-prometheus/">
+            Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
+            <small>16 Jul 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/migrate-helm2-to-helm3/">
             Migrate from Helm 2 to Helm 3 Safely
             <small>01 Jan 2021</small>
@@ -479,15 +488,6 @@
           <a href="/jenkins-kaniko-kubernetes-cloud-ci-cd/">
             Jenkins, Kaniko, Kubernetes: The Cloud CI/CD Trifecta
             <small>24 Jun 2019</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/fire-suppression-using-smart-sensors-iot/">
-            Suppressing Fires using Gas: An IoT Experiment
-            <small>17 Mar 2018</small>
           </a>
         </h3>
       </li>
