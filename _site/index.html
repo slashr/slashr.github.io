@@ -34,7 +34,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Home" />
 <script type="application/ld+json">
-{"headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"@type":"WebSite","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","name":"Akash Nair","url":"https://akashnair.com/","@context":"https://schema.org"}</script>
+{"name":"Akash Nair","author":{"@type":"Person","name":"Akash Nair"},"url":"https://akashnair.com/","@type":"WebSite","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","headline":"Home","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -318,6 +318,56 @@
       </a>
     </h2>
     <div class="post-meta">
+  <span class="post-date">04 Nov 2021</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+  </span>
+</div>
+
+
+    
+      ### Introduction ###
+
+With the growing popularity of Kubernetes and the number of options to easily deploy a K8S cluster quickly, organisations are becoming more confident of hosting a SaaS in-house rather than use it as a subscription. 
+However, when you ship a Terraform moulded K8S cluster, it is important that you also get visibility into the cluster as well as the application. 
+
+The best way of achieving this is to use Terraform and Helm to install basic apps on the cluster such as the Grafana-Loki-Promtheus stack
+
+
+<center><img src="../assets/images/eyeofgrafana.png" height="400" width="400"></center>
+
+
+
+    
+
+    
+      
+      
+      
+
+      
+        <a href="/grafana-loki-prometheus/"></a>
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/grafana-loki-prometheus/">
+        Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
+      </a>
+    </h2>
+    <div class="post-meta">
   <span class="post-date">16 Jul 2021</span>
   <span class="post-categories">
     
@@ -489,71 +539,6 @@ However, when you ship a Terraform moulded K8S cluster, it is important that you
 
       
         <a href="/fire-suppression-using-smart-sensors-iot/"></a>
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/using-lambda-turn-off-ec2-instances/">
-        Using Lambda to Turn Off EC2 Instances During Off Hours
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">24 Nov 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Automation
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Ops
-      
-    
-  </span>
-</div>
-
-
-    
-      <p>A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT environments aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on costs.</p>
-
-<p>In order to do this, we can make use of AWS Lambda, which lets you run your code or without setting up any servers. Since it charges based on the compute time taken up by the code, it is very cost efficient. A task running twice within a 24-hour cycle for typically less than 60 seconds with memory consumption up to 128MB (like the script in this post) typically costs around $0.008 per month.</p>
-
-<p>We will use the official AWS SDK for Python, boto3 to write our script and then run it using Lambda functions.</p>
-
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/using-lambda-turn-off-ec2-instances/"></a>
       
     
   </article>
