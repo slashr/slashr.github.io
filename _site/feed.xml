@@ -1,172 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://akashnair.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://akashnair.com/" rel="alternate" type="text/html" /><updated>2021-12-18T09:45:47+01:00</updated><id>https://akashnair.com/feed.xml</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Observable Kubernetes Cluster Using Grafana-Loki-Prometheus</title><link href="https://akashnair.com/grafana-loki-prometheus/" rel="alternate" type="text/html" title="Observable Kubernetes Cluster Using Grafana-Loki-Prometheus" /><published>2021-11-04T00:00:00+01:00</published><updated>2021-11-04T00:00:00+01:00</updated><id>https://akashnair.com/infrastructure-engineering-using-terraform-and-gitlab</id><content type="html" xml:base="https://akashnair.com/grafana-loki-prometheus/">### Introduction ###
-
-With the growing popularity of Kubernetes and the number of options to easily deploy a K8S cluster quickly, organisations are becoming more confident of hosting a SaaS in-house rather than use it as a subscription. 
-However, when you ship a Terraform moulded K8S cluster, it is important that you also get visibility into the cluster as well as the application. 
-
-The best way of achieving this is to use Terraform and Helm to install basic apps on the cluster such as the Grafana-Loki-Promtheus stack
-
-
-&lt;center&gt;&lt;img src=&quot;../assets/images/eyeofgrafana.png&quot; height=&quot;400&quot; width=&quot;400&quot;&gt;&lt;/center&gt;
-&lt;!--more--&gt;
-
----
-
-### Step 1: 
-Use the Terraform Module to install the Loki Helm Chart (with Grafana and Prometheus disabled, and Promtail enabled). This is because when installing Grafana using Loki, it installs a rather outdated version of Grafana. 
-Thus it is better to use the Grafana Helm Chart to install the latest version of Grafana and Prometheus. 
-
----
-
-### Step 2: 
-Configuration of Loki inside Grafana
-
-```
-enabled: true
-check_for_updates: false
-
-plugins:
-  - grafana-piechart-panel
-  - vonage-status-panel
-
-datasources: 
-  datasources.yaml:
-    apiVersion: 1
-    datasources:
-    - name: Loki
-      type: loki
-      access: proxy
-      url: http://loki-stack:3100
-      jsonData:
-        maxLines: 1000
-        derivedFields:
-         # Field with external link.
-          - matcherRegex: &quot;traceID=(\\w+)&quot;
-            name: TraceID
-            url: &apos;http://loki-stack:3100&apos;
-```
-
-As you can see, there is also the possiblity of parsing logs using the Derived Fields feature of Loki. This rule would however apply to all logs and it is therefore preferred to do all parsing using Promtail. 
-
-You can add the Loki datasource inside the values.yaml of Grafana so that it is pre-configured. The URL should match the Service name of the Loki stack
-
----
-
-### Step 3: 
-
-Optionally, configure Promtail to blacklist unecessary namespaces such as kube-system, monitoring etc. This can be done by adding the following code in every `relabel_configs` part of every job in the Promtail configuration. The best way to do this is to copy the default ConfigMap of Promtail and paste it in the values.yaml file of the Loki Stack under promatil.scrapeConfigs
-
-However, this can become a problem when in the future updates to the ConfigMap template inside the Helm Charts are made and it won&apos;t be reflected on your ConfigMap until it is updated manually. So until, we have the ability to drop logs based on namespace, pod-name etc using the Values file, I would advice against doing this. 
-
-      relabel_configs:
-      - action: drop
-        regex: &apos;kube-system&apos;
-        source_labels:
-        - __meta_kubernetes_namespace
-
----
-
-### Step 4: 
-
-Next, in order to Parse the logs to extract the most useful information, add a new Job under `promatil.extraScrapeConfigs` in the Values file with the following code:
-
-```
-    - job_name: custom_logs_scraping
-      kubernetes_sd_configs:
-      - role: pod
-      pipeline_stages:
-      - docker: {}
-        # Regex expressions for extraction of specific metrics/keywords from the logs
-        - regex:
-            expression: &apos;\&quot;traceId\&quot;..\&quot;(?P&lt;traceId&gt;.+?)\&quot;&apos;
-        - regex:
-            expression: \&quot;ElapsedMilliseconds\&quot;..(?P&lt;responseTime&gt;[\d\.]+)
-        - regex:
-            expression: &apos;\&quot;StatusCode\&quot;..(?P&lt;statusCode&gt;.\d+)&apos;
-        - regex: 
-            expression: ^.*(?P&lt;finishedRequests&gt;Request finished).*$
-        # Converts extracted values above into log labels
-        - labels:
-            traceId:
-            responseTime:
-            statusCode:
-            finishedRequests:
-        # Creates metrics from the extracted label
-        # The metrics can be viewed in Grafana with Prometheus as data source
-        - metrics:
-            total_finished_requests_counter:
-              type: Counter
-              description: &quot;Total number of requests finished successfully&quot;
-              prefix: myapp_log_metrics_
-              source: finishedRequests
-              config:
-                action: inc
-        - metrics:
-            http_response_time_milliseconds:
-              type: Histogram
-              description: &quot;HTTP Request response times&quot;
-              prefix: myapp_log_metrics_
-              source: responseTime
-              config:
-                buckets: [0.25,0.5,1.0,1.25,1.5,1.75]
-      relabel_configs:
-      - action: drop
-        regex: &apos;custom-metrics&apos;
-        source_labels:
-        - __meta_kubernetes_namespace
-      - action: drop
-        regex: .+
-        source_labels:
-        - __meta_kubernetes_pod_label_name
-      - source_labels:
-        - __meta_kubernetes_pod_label_app
-        - __meta_kubernetes_pod_node_name
-        target_label: __host__
-      - action: drop
-        regex: &apos;&apos;
-        source_labels:
-        - __service__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      - action: replace
-        replacement: $1
-        separator: /
-        source_labels:
-        - __meta_kubernetes_namespace
-        - __service__
-        target_label: job
-      - action: replace
-        source_labels:
-        - __meta_kubernetes_namespace
-        target_label: namespace
-      - action: replace
-        source_labels:
-```
-
-Using the Regex above and given the log entry below: 
-
-- `2021-07-15T09:28:20.888238937Z stdout F { &quot;timestamp&quot;: &quot;2021-07-15T09:28:20.881Z&quot;, &quot;severity&quot;: &quot;Info&quot;, &quot;message&quot;: Request finished in 0.2358ms 200 application/grpc, &quot;traceId&quot;: &quot;969814f6-40ac9c957e3abdf8&quot;, &quot;additionalData&quot;: { &quot;ElapsedMilliseconds&quot;: 0.2358, &quot;StatusCode&quot;: 200, &quot;ContentType&quot;: &quot;application\/grpc&quot;} }`
-
-Promtail would extract the following four labels:
-
-- traceId: 969814f6-40ac9c957e3abdf8
-- responseTime: 0.2358
-- statusCode: 200
-- finishedRequests: 1
-
-The above snippet of code also has the stage `metrics`. Metrics will use the extracted value specified by `source` and perform an action on it specified by `config.action`. There are three types of metrics available using Promtail currently: Counter, Gauge and Histogram. These metrics will then be read and exposed by Prometheus. 
-
----
-
-### Step 5: 
-You can create custom Dashboards using the above metrics extracted from your logs in Grafan. Create a new Dashboard, then add a Panel, select Prometheus as the Datasource and then search for the name of the metric exposed (note that it will begin with the prefix &quot;myapp_log_metrics&quot;) as specified in the snippet above. 
-
-After creating this Dashoboard, you can export them to a JSON file. Add these JSON files to your repository, and create a ConfigMap with `metadata.labels.grafana_dashboard: &quot;true&quot;` and add the JSON files under `data`. 
-
-This will make Grafana automatically import the dashboards on lauch. 
-
-Example of this configuration can be found [here](https://github.com/pivotal-cf/charts-grafana/blob/master/templates/dashboard-configMap.yaml)
-
-Finally, this setup can be packaged into a Helm chart and published in a chart repo. And thus, you can finally add the chart to be deployed using a Terraform Helm module and thus make this monitoring stack plug-and-playable.</content><author><name>Akash</name></author><category term="Automation" /><category term="helm" /><category term="kubernetes" /><category term="docker" /><summary type="html">### Introduction ### With the growing popularity of Kubernetes and the number of options to easily deploy a K8S cluster quickly, organisations are becoming more confident of hosting a SaaS in-house rather than use it as a subscription. However, when you ship a Terraform moulded K8S cluster, it is important that you also get visibility into the cluster as well as the application. The best way of achieving this is to use Terraform and Helm to install basic apps on the cluster such as the Grafana-Loki-Promtheus stack</summary></entry><entry><title type="html">Observable Kubernetes Cluster Using Grafana-Loki-Prometheus</title><link href="https://akashnair.com/grafana-loki-prometheus/" rel="alternate" type="text/html" title="Observable Kubernetes Cluster Using Grafana-Loki-Prometheus" /><published>2021-07-16T00:00:00+02:00</published><updated>2021-07-16T00:00:00+02:00</updated><id>https://akashnair.com/observable-k8s-cluster-using-grafana-loki-prometheus</id><content type="html" xml:base="https://akashnair.com/grafana-loki-prometheus/">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://akashnair.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://akashnair.com/" rel="alternate" type="text/html" /><updated>2021-12-18T09:58:28+01:00</updated><id>https://akashnair.com/feed.xml</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Observable Kubernetes Cluster Using Grafana-Loki-Prometheus</title><link href="https://akashnair.com/grafana-loki-prometheus/" rel="alternate" type="text/html" title="Observable Kubernetes Cluster Using Grafana-Loki-Prometheus" /><published>2021-07-16T00:00:00+02:00</published><updated>2021-07-16T00:00:00+02:00</updated><id>https://akashnair.com/observable-k8s-cluster-using-grafana-loki-prometheus</id><content type="html" xml:base="https://akashnair.com/grafana-loki-prometheus/">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 
 &lt;p&gt;With the growing popularity of Kubernetes and the number of options to easily deploy a K8S cluster quickly, organisations are becoming more confident of hosting a SaaS in-house rather than use it as a subscription. 
 However, when you ship a Terraform moulded K8S cluster, it is important that you also get visibility into the cluster as well as the application.&lt;/p&gt;
@@ -944,4 +776,66 @@ Overview of actions performed:&lt;/p&gt;
 
 &lt;p&gt;Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/slashr/f17eb97ac86e94160ce03cc920373143.js&quot;&gt;&lt;/script&gt;</content><author><name>Akash</name></author><category term="AWS" /><category term="Custom IAM Policies" /><category term="aws" /><category term="ec2" /><category term="iam" /><summary type="html">Restrict user activity to a specific region in order to minimize resource wastage. This policy will ensure that all of the resources are being created only in the region of your choice so that when it comes down to resource cleanup and housekeeping, you’ll be able to save quite a lot of time. Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" /><media:content medium="image" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;script src=&quot;https://gist.github.com/slashr/f17eb97ac86e94160ce03cc920373143.js&quot;&gt;&lt;/script&gt;</content><author><name>Akash</name></author><category term="AWS" /><category term="Custom IAM Policies" /><category term="aws" /><category term="ec2" /><category term="iam" /><summary type="html">Restrict user activity to a specific region in order to minimize resource wastage. This policy will ensure that all of the resources are being created only in the region of your choice so that when it comes down to resource cleanup and housekeeping, you’ll be able to save quite a lot of time. Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" /><media:content medium="image" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Analyzing ELB Logs using Elasticsearch and Logstash</title><link href="https://akashnair.com/elb-logs-using-elk/" rel="alternate" type="text/html" title="Analyzing ELB Logs using Elasticsearch and Logstash" /><published>2016-06-16T08:50:16+02:00</published><updated>2016-06-16T08:50:16+02:00</updated><id>https://akashnair.com/elb-logs-using-elk</id><content type="html" xml:base="https://akashnair.com/elb-logs-using-elk/">&lt;p&gt;Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;setting-up-elasticsearch&quot;&gt;Setting Up Elasticsearch&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose a domain name that would be part of the ElasticSearch endpoint. For example, &lt;em&gt;mysite&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Under &lt;strong&gt;Set up access policy,&lt;/strong&gt; select &lt;strong&gt;Allow open access to the domain. &lt;/strong&gt;This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click &lt;strong&gt;Next&lt;/strong&gt; and then &lt;strong&gt;Confirm and Create. &lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;The domain will take around 5 to 10 minutes to get created.&lt;/li&gt;
+  &lt;li&gt;Meanwhile, enable Access Logs on ELB by following &lt;a href=&quot;https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/enable-access-logs.html&quot;&gt;this guide&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;setting-up-logstash&quot;&gt;Setting Up Logstash&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update and upgrade your system packages: 
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Logstash requires Java on the machine. Install Java: 
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get install default-jdk&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on &lt;a href=&quot;https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories&quot;&gt;this page&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;Run: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Finally, update your packages again and install Logstash:
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install logstash&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add your AWS IAM Access Key and Secret Key by using environment variables: 
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/logstash/conf.d/logstash.conf&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run Logstash:
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&amp;lt;/code&amp;gt;&lt;/code&gt;&lt;/p&gt;
+    &lt;hr /&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;setting-up-kibana&quot;&gt;Setting Up Kibana&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open Kibana from the URL provided on the Elasticsearch console.
+    &lt;ul&gt;
+      &lt;li&gt;Use the index pattern &lt;em&gt;elb_logs&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;Use the timestamp &lt;em&gt;@timestamp&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;To get started with visualizing your data, read through the &lt;a href=&quot;https://www.elastic.co/guide/en/kibana/current/visualize.html&quot;&gt;Visualize section&lt;/a&gt; of Elastic’s official documentation.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Akash</name></author><category term="AWS" /><category term="Logging" /><category term="analytics" /><category term="aws" /><category term="elasticsearch" /><category term="elb" /><category term="kibana" /><category term="logstash" /><summary type="html">Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&amp;lt;/code&amp;gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" /><media:content medium="image" url="https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

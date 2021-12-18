@@ -35,7 +35,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Home" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash Nair"},"url":"https://akashnair.com/page4/","@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","headline":"Home","@context":"https://schema.org"}</script>
+{"headline":"Home","author":{"@type":"Person","name":"Akash Nair"},"url":"https://akashnair.com/page4/","@type":"WebPage","description":"I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -123,6 +123,10 @@
 
   
     
+  
+
+  
+    
       <a class="page-link "
           href="/about.html">About</a>
     
@@ -178,6 +182,10 @@
   
 
 
+  
+
+  
+    
   
 
   
@@ -323,89 +331,6 @@
 
   
 
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/iam-restrict-bucket-access-by-username/">
-        IAM: Restrict Access to Folders Inside Bucket
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">19 Mar 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Custom IAM Policies
-      
-    
-  </span>
-</div>
-
-
-    
-      <p>The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups.</p>
-
-<p>This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner.</p>
-
-<p>Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": ["s3:ListAllMyBuckets", "s3:GetBucketLocation"],
-      "Effect": "Allow",
-      "Resource": ["arn:aws:s3:::*"]
-    },
-    {
-      "Action": ["s3:ListBucket"],
-      "Effect": "Allow",
-      "Resource": ["arn:aws:s3:::bucket-name"],
-      "Condition":{"StringEquals":{
-      "s3:prefix":["","home/"],"s3:delimiter":["/"]}}
-    },
-    {
-      "Action": ["s3:ListBucket"],
-      "Effect": "Allow",
-      "Resource": ["arn:aws:s3:::bucket-name"],
-      "Condition":{"StringLike":{"s3:prefix":["home/${aws:username}/*"]}}
-    },
-    {
-      "Action":["s3:*"],
-      "Effect":"Allow",
-      "Resource": ["arn:aws:s3:::bucket-name;/home/${aws:username}"
-      "arn:aws:s3:::bucket-name/home/${aws:username}/*"]
-    }
-  ]
-}
-</code></pre></div></div>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
   
   <article class="post-body">
     <h2 class="post-title">
@@ -921,6 +846,123 @@
 </code></pre></div>    </div>
   </li>
 </ol>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
+      <a href="/cloudwatch-custom-metric-quick-start/">
+        CloudWatch Custom Metric Quick Start
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">08 Oct 2015</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+  </span>
+</div>
+
+
+    
+      <h2 id="what-is-cloudwatch-custom-metrics">What is CloudWatch Custom Metrics</h2>
+
+<p>Setting up CloudWatch Custom Metrics on your instance allows you to monitor resources in addition to the default metrics of CPU Utilization, Disk I/O and Network I/O provided by default. Custom Metrics includes the following additional metrics:</p>
+
+<p>memory-used</p>
+
+<p>memory-utilization</p>
+
+<p>memory-available</p>
+
+<p>swap-utilization</p>
+
+<p>swap-used</p>
+
+<p>disk-space-utilization</p>
+
+<p>disk-space-used</p>
+
+<p>disk-space-availability</p>
+
+<hr />
+
+<p>These steps are written specifically for Ubuntu. The steps vary for different distributions.</p>
+
+<ol>
+  <li>SSH into your EC2 instance</li>
+  <li>Install the required dependencies: &lt;ul style="list-style-type: square;"&gt;
+    <li>
+   <code>sudo apt-get install unzip &amp;&amp; apt-get install libwww-perl &amp;&amp; apt-get install libcrypt-ssleay-perl apt-get install libswitch-perl</code>
+ </li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Download the monitoring scripts: &lt;ul style="list-style-type: square;"&gt;
+    <li>
+   <code>wget http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip</code>
+ </li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Extract the contents and remove the zip file: &lt;ul style="list-style-type: square;"&gt;
+    <li>
+   <code>unzip CloudWatchMonitoringScripts-v1.1.0.zip</code><br /> <code>rm CloudWatchMonitoringScripts-v1.1.0.zip</code>
+ </li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Add access key and secret key to the configuration file. Edit the awscreds.template located inside aws-scripts-mon directory file to add your Access Key and Secret Key. &lt;ul style="list-style-type: square;"&gt;
+    <li>
+   <code>cd aws-scripts-mon</code><code>echo "AWSAccessKeyId=****" &gt; awscreds.template</code><br /> <code>echo "AWSSecretKey=****" &gt;&gt; awscreds.template</code>
+ </li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Set environment variable &amp; export the path of the credential file &lt;ul style="list-style-type: square;"&gt;
+    <li>
+   <code>path=$(pwd) ; export AWS_CREDENTIAL_FILE=${path}/awscreds.template</code>
+ </li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Create a cronjob. Add the monitoring script to the crontab. Run it every 5 minutes or choose a time cycle according to your requirements. &lt;ul style="list-style-type: square;"&gt;
+    <li>
+   <code>echo "*/5 * * * * ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --mem-used --mem-avail --swap-util --swap-used --disk-path=/ --disk-space-util --disk-space-used --disk-space-avail" &gt;&gt; /etc/crontab</code>
+ </li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/ul&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Check the metrics on the AWS console</li>
+</ol>
+
+<hr />
+
+<p>Head over to the CloudWatch console to check the metrics. Goto: https://console.aws.amazon.com/cloudwatch/</p>
+
+<p>Click on Linux System under Metrics. Then click on the instance ID that you want to check the metrics of.</p>
+
+<p>I have largely automated the setup process in the following script. The distributions currently supported are Amazon Linux, Ubuntu and SUSE Linux.</p>
+
+<p>Download the script here: <a href="https://github.com/slashr/CloudWatch-Deployment/" target="_blank">https://github.com/slashr/CloudWatch-Deployment</a></p>
 
     
 
