@@ -1,5 +1,5 @@
 ---
-id: 668
+id: 669
 author: Akash
 title: 'ArgoCD: The first step towards GitOps' 
 layout: post
