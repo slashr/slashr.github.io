@@ -1,4 +1,188 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://akashnair.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://akashnair.com/" rel="alternate" type="text/html" /><updated>2022-04-15T17:53:01+02:00</updated><id>https://akashnair.com/feed.xml</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.</subtitle><author><name>Akash Nair</name></author><entry><title type="html">Observable Kubernetes Cluster Using Grafana-Loki-Prometheus</title><link href="https://akashnair.com/grafana-loki-prometheus/" rel="alternate" type="text/html" title="Observable Kubernetes Cluster Using Grafana-Loki-Prometheus" /><published>2021-07-16T00:00:00+02:00</published><updated>2021-07-16T00:00:00+02:00</updated><id>https://akashnair.com/observable-k8s-cluster-using-grafana-loki-prometheus</id><content type="html" xml:base="https://akashnair.com/grafana-loki-prometheus/">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://akashnair.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://akashnair.com/" rel="alternate" type="text/html" /><updated>2022-04-15T17:56:22+02:00</updated><id>https://akashnair.com/feed.xml</id><title type="html">Akash Nair</title><subtitle>I am a DevOps Engineer and infrastructure nerd. I design and build on the cloud.</subtitle><author><name>Akash Nair</name></author><entry><title type="html">ArgoCD: The first step towards GitOps</title><link href="https://akashnair.com/git-to-ops/" rel="alternate" type="text/html" title="ArgoCD: The first step towards GitOps" /><published>2022-04-15T00:00:00+02:00</published><updated>2022-04-15T00:00:00+02:00</updated><id>https://akashnair.com/gitops-in-reverse-argo-cd</id><content type="html" xml:base="https://akashnair.com/git-to-ops/">&lt;h1 id=&quot;gitops-in-reverse&quot;&gt;GitOps in Reverse&lt;/h1&gt;
+
+&lt;p&gt;This article is part of a series to have your Infrastructure deployed using the GitOps approach. We’ll start by deploying a microservice on a Kubernetes cluster using a minimal Continuous Deployment framework and then keep adding and modifying our setup to make it complete and comprehensive. In this article, we’ll look at how we can use ArgoCD to manage automatic deployments of apps.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#create-cluster&quot;&gt;Spin up a K8S cluster using Minikube&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#setup-argocd&quot;&gt;Setup ArgoCD&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#prepare-podinfo&quot;&gt;Prepare Podinfo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#create-app-of-apps&quot;&gt;Create ArgoCD app-of-apps&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;create-cluster&quot;&gt; Spin up a K8s Cluster using Minikube &lt;/h2&gt;
+
+&lt;p&gt;To an extent, it is Kubernetes that largely enables the possiblity of having infrastructure as code. Paired with Terraform, the need for clicking buttons and navigating through GUIs becomes less and less necessary.&lt;/p&gt;
+
+&lt;p&gt;The easisest solution to setup a homelab would be to use Minikube. Install minikube and set up a two node cluster on your machine.&lt;/p&gt;
+
+&lt;p&gt;We can then use Terraform to make changes to this cluster. So make a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform&lt;/code&gt; directory in your gitops repo and then create a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;provider.tf&lt;/code&gt; file&lt;/p&gt;
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;kubernetes&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;config_path&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;~/.kube/config&quot;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;config_context_cluster&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;minikube&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Perfect, that should give Terraform access to our Minikube cluster.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;setup-argocd&quot;&gt; Setup ArgoCD &lt;/h2&gt;
+
+&lt;p&gt;We can now start creating ArgoCD Terraform templates in a &lt;a href=&quot;https://www.terraform.io/language/modules/develop&quot;&gt;modular&lt;/a&gt; way as is Terraform best practice.&lt;/p&gt;
+
+&lt;p&gt;Create a directory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;argo-cd&lt;/code&gt; inside of a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;modules&lt;/code&gt; directory. Let’s create a file argo-cd.tf with the following contents&lt;/p&gt;
+
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;kubernetes_namespace&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;argo-cd&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;metadata&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;argo-cd&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;helm_release&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;argo-cd&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;argo-cd&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;namespace&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;argo-cd&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;repository&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://argoproj.github.io/argo-helm&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;chart&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;argo-cd&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;version&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;4.2.3&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;values&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;templatefile&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;${path.module}/values.yaml&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,{}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;depends_on&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kubernetes_namespace&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;argo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cd&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We are first creating a namespace and then using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;helm_release&lt;/code&gt; provider to install the argo-cd Helm chart along with a custom values.yaml file, the contents of which should be as follows:&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;enableStatefulSet&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;autoscaling&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;minReplicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;repoServer&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;autoscaling&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;minReplicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;configs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;argocdServerAdminPassword&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$2a$10$6Oa1o/Y/5xjDk2dQCQ8F9uDCqm9w8BJEp7ZjI0.SvmZqIXXpHFyQW&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;argocdServerAdminPassword&lt;/code&gt; is optional but makes it easy to access ArgoCD since otherwise you’ll have to fetch the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;initial admin secret&lt;/code&gt; from the cluster everytime you recreate the deployment. It is a hashed value which can be generated using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;htpasswd -nbBC 10 &quot;&quot; $ARGO_PWD | tr -d &apos;:\n&apos; | sed &apos;s/$2y/$2a/&apos;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;With this we are ready to install Argo-CD! Run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform apply&lt;/code&gt; to install it.&lt;/p&gt;
+
+&lt;p&gt;Try deleting and creating using Terraform. When it works a couple of times, you have achieved what is called a state of “reproduceability”. This will help us out in the future when the infrastructure starts to become more and more complex yet we stick to the principle of having almost all config in the form of infra-as-code.&lt;/p&gt;
+
+&lt;p&gt;But even with infra-as-code, there are certain parameters and flows that might not lead to perfect reproduceability of your setup, and that’s where creating/recreating can also be a debugging process where you iron out the clinks in the armor.&lt;/p&gt;
+
+&lt;p&gt;An important building block of GitOps is how we handle releases and deployments. The recommended way is to specify in the form of code the &lt;em&gt;state&lt;/em&gt; of a deployment. This state is a declarative way of saying which app do you want to be deployed, which version of the app, which configuration and so on.&lt;/p&gt;
+
+&lt;p&gt;ArgoCD and Flux both offer these state based deployment models with the exception that ArgoCD offers a UI.&lt;/p&gt;
+
+&lt;h2 id=&quot;prepare-podinfo&quot;&gt; Prepare Podinfo &lt;/h2&gt;
+&lt;p&gt;Now with ArgoCD up and running, we can deploy our very first app. To keep things simple, let’s use the wonderfully simple &lt;a href=&quot;https://github.com/stefanprodan/podinfo&quot;&gt;podinfo&lt;/a&gt; app.&lt;/p&gt;
+
+&lt;p&gt;In order to install this using ArgoCD, we first need to add the Helm repo URL of the app in ArgoCD.&lt;/p&gt;
+
+&lt;p&gt;Inside argocd/values.yaml add the following block&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;configs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;repositories&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;podinfo-helm-repo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;https://stefanprodan.github.io/podinfo&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;podinfo&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;helm&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and then run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;helm upgrade argo-cd argo/argo-cd -n argo-cd --create-namespace --values=values.yaml&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This means that ArgoCD now knows about the Podinfo Helm repo and will the Podinfo chart version defined by us. But where exactly do we define the version we want to deploy? Inside &lt;a href=&quot;https://argo-cd.readthedocs.io/en/latest/user-guide/commands/argocd_app_manifests/&quot;&gt;App manifests&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the approaches to Gitops is to put our “declarative manifests” inside a repo independent of application code. So simply create a new Git repo and name it  or something similar.&lt;/p&gt;
+
+&lt;p&gt;Inside this repo, create a directory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;podinfo&lt;/code&gt; with the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;release.yaml&lt;/code&gt; consisting this code:&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;argoproj.io/v1alpha1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;podinfo&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;argo-cd&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;finalizers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;resources-finalizer.argocd.argoproj.io&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://kubernetes.default.svc&apos;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;syncPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;automated&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;selfHeal&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;syncOptions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;CreateNamespace=true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;project&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;default&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;targetRevision&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;gt;=5.*.*&apos;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;repoURL&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://stefanprodan.github.io/podinfo&apos;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;chart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;podinfo&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;helm&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;replicaCount: &apos;2&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is the &lt;em&gt;state&lt;/em&gt; we want our app to be in.&lt;/p&gt;
+
+&lt;p&gt;Since ArgoCD doesn’t support external values.yaml file for Helm charts yet, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;values: |&lt;/code&gt; parameter of Argo release.yaml to specify the values.yaml as a string inside the release.yaml file. 
+The rest of the code is pretty self-explanatory except for the targetRevision. Helm charts use Semver versioning and it’s important to understand it in order to see how the Regex inside the targetRevision field is being used.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-app-of-apps&quot;&gt; Create ArgoCD App-of-Apps &lt;/h2&gt;
+
+&lt;p&gt;After creating this new repo, we need to add it to ArgoCD just like we did for the Helm repo. 
+So under config.repositories, add another block for your Git app-manifests repo&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;app-manifests-repo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;https://github.com/slashr/app-manifests.git&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;app-manifests&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;git&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should now see the Helm and Git repositories successfully added in ArgoCD Settings - Repositories page!&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;../assets/images/argo-helm-git-repo-added.png&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;Now, lets create what ArgoCD calls an “app-of-apps” to deploy Podinfo on our cluster. Add the following code to argo-cd.tf to create an &lt;em&gt;app-of-apps&lt;/em&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;autoscaling&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;minReplicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;additionalApplications&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;default&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://kubernetes.default.svc&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;finalizers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;resources-finalizer.argocd.argoproj.io&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;app-of-apps&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;argo-cd&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;project&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;default&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;directory&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;recurse&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;repoURL&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://github.com/slashr/app-manifests.git&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;targetRevision&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;main&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#should correspond to the active branch name&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Be careful to indent the block properly as not doing so can lead to hard to debug errors. Sometimes the code is perfectly correct but because the YAML is missing a space or has an extra one, it’s not parsed correctly and you wouldn’t know what’s wrong easily.&lt;/p&gt;
+
+&lt;p&gt;Now our values.yaml for ArgoCD is good enough for having ArgoCD up and running with the required repositories configured inside it.&lt;/p&gt;
+
+&lt;p&gt;Now after a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform apply&lt;/code&gt;, you will be able to see the app-of-apps on the ArgoCD homepage along with the podinfo app. Success! We have deployed our first app using through ArgoCD.&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;../assets/images/argo-app-of-apps-added.png&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/center&gt;
+
+&lt;hr /&gt;</content><author><name>Akash</name></author><category term="Automation" /><category term="gitops" /><category term="kubernetes" /><category term="argo-cd" /><category term="helm" /><category term="terraform" /><summary type="html">GitOps in Reverse This article is part of a series to have your Infrastructure deployed using the GitOps approach. We’ll start by deploying a microservice on a Kubernetes cluster using a minimal Continuous Deployment framework and then keep adding and modifying our setup to make it complete and comprehensive. In this article, we’ll look at how we can use ArgoCD to manage automatic deployments of apps. Spin up a K8S cluster using Minikube Setup ArgoCD Prepare Podinfo Create ArgoCD app-of-apps Spin up a K8s Cluster using Minikube To an extent, it is Kubernetes that largely enables the possiblity of having infrastructure as code. Paired with Terraform, the need for clicking buttons and navigating through GUIs becomes less and less necessary. The easisest solution to setup a homelab would be to use Minikube. Install minikube and set up a two node cluster on your machine. We can then use Terraform to make changes to this cluster. So make a terraform directory in your gitops repo and then create a provider.tf file provider &quot;kubernetes&quot; { config_path = &quot;~/.kube/config&quot; config_context_cluster = &quot;minikube&quot; } Perfect, that should give Terraform access to our Minikube cluster. Setup ArgoCD We can now start creating ArgoCD Terraform templates in a modular way as is Terraform best practice. Create a directory argo-cd inside of a modules directory. Let’s create a file argo-cd.tf with the following contents resource &quot;kubernetes_namespace&quot; &quot;argo-cd&quot; { metadata { name = &quot;argo-cd&quot; } } resource &quot;helm_release&quot; &quot;argo-cd&quot; { name = &quot;argo-cd&quot; namespace = &quot;argo-cd&quot; repository = &quot;https://argoproj.github.io/argo-helm&quot; chart = &quot;argo-cd&quot; version = &quot;4.2.3&quot; values = [templatefile(&quot;${path.module}/values.yaml&quot;,{})] depends_on = [ resource.kubernetes_namespace.argo-cd ] } We are first creating a namespace and then using the helm_release provider to install the argo-cd Helm chart along with a custom values.yaml file, the contents of which should be as follows: controller: enableStatefulSet: true server: autoscaling: enabled: true minReplicas: 2 repoServer: autoscaling: enabled: true minReplicas: 2 configs: secret: argocdServerAdminPassword: $2a$10$6Oa1o/Y/5xjDk2dQCQ8F9uDCqm9w8BJEp7ZjI0.SvmZqIXXpHFyQW The argocdServerAdminPassword is optional but makes it easy to access ArgoCD since otherwise you’ll have to fetch the initial admin secret from the cluster everytime you recreate the deployment. It is a hashed value which can be generated using htpasswd -nbBC 10 &quot;&quot; $ARGO_PWD | tr -d &apos;:\n&apos; | sed &apos;s/$2y/$2a/&apos; With this we are ready to install Argo-CD! Run terraform apply to install it. Try deleting and creating using Terraform. When it works a couple of times, you have achieved what is called a state of “reproduceability”. This will help us out in the future when the infrastructure starts to become more and more complex yet we stick to the principle of having almost all config in the form of infra-as-code. But even with infra-as-code, there are certain parameters and flows that might not lead to perfect reproduceability of your setup, and that’s where creating/recreating can also be a debugging process where you iron out the clinks in the armor. An important building block of GitOps is how we handle releases and deployments. The recommended way is to specify in the form of code the state of a deployment. This state is a declarative way of saying which app do you want to be deployed, which version of the app, which configuration and so on. ArgoCD and Flux both offer these state based deployment models with the exception that ArgoCD offers a UI. Prepare Podinfo Now with ArgoCD up and running, we can deploy our very first app. To keep things simple, let’s use the wonderfully simple podinfo app. In order to install this using ArgoCD, we first need to add the Helm repo URL of the app in ArgoCD. Inside argocd/values.yaml add the following block configs: repositories: podinfo-helm-repo: url: https://stefanprodan.github.io/podinfo name: podinfo type: helm and then run helm upgrade argo-cd argo/argo-cd -n argo-cd --create-namespace --values=values.yaml This means that ArgoCD now knows about the Podinfo Helm repo and will the Podinfo chart version defined by us. But where exactly do we define the version we want to deploy? Inside App manifests One of the approaches to Gitops is to put our “declarative manifests” inside a repo independent of application code. So simply create a new Git repo and name it or something similar. Inside this repo, create a directory podinfo with the file release.yaml consisting this code: apiVersion: argoproj.io/v1alpha1 kind: Application metadata: name: podinfo namespace: argo-cd finalizers: - resources-finalizer.argocd.argoproj.io spec: destination: namespace: default server: &apos;https://kubernetes.default.svc&apos; syncPolicy: automated: selfHeal: true syncOptions: - CreateNamespace=true project: default source: targetRevision: &apos;&amp;gt;=5.*.*&apos; repoURL: &apos;https://stefanprodan.github.io/podinfo&apos; chart: podinfo helm: values: | replicaCount: &apos;2&apos; This is the state we want our app to be in. Since ArgoCD doesn’t support external values.yaml file for Helm charts yet, you can use the values: | parameter of Argo release.yaml to specify the values.yaml as a string inside the release.yaml file. The rest of the code is pretty self-explanatory except for the targetRevision. Helm charts use Semver versioning and it’s important to understand it in order to see how the Regex inside the targetRevision field is being used. Create ArgoCD App-of-Apps After creating this new repo, we need to add it to ArgoCD just like we did for the Helm repo. So under config.repositories, add another block for your Git app-manifests repo app-manifests-repo: url: https://github.com/slashr/app-manifests.git name: app-manifests type: git You should now see the Helm and Git repositories successfully added in ArgoCD Settings - Repositories page! Now, lets create what ArgoCD calls an “app-of-apps” to deploy Podinfo on our cluster. Add the following code to argo-cd.tf to create an app-of-apps. server: autoscaling: enabled: true minReplicas: 2 additionalApplications: - destination: namespace: &quot;default&quot; server: &quot;https://kubernetes.default.svc&quot; finalizers: - &quot;resources-finalizer.argocd.argoproj.io&quot; name: &quot;app-of-apps&quot; namespace: &quot;argo-cd&quot; project: &quot;default&quot; source: directory: recurse: true path: &quot;.&quot; repoURL: &quot;https://github.com/slashr/app-manifests.git&quot; targetRevision: &quot;main&quot; #should correspond to the active branch name Be careful to indent the block properly as not doing so can lead to hard to debug errors. Sometimes the code is perfectly correct but because the YAML is missing a space or has an extra one, it’s not parsed correctly and you wouldn’t know what’s wrong easily. Now our values.yaml for ArgoCD is good enough for having ArgoCD up and running with the required repositories configured inside it. Now after a terraform apply, you will be able to see the app-of-apps on the ArgoCD homepage along with the podinfo app. Success! We have deployed our first app using through ArgoCD.</summary></entry><entry><title type="html">Observable Kubernetes Cluster Using Grafana-Loki-Prometheus</title><link href="https://akashnair.com/grafana-loki-prometheus/" rel="alternate" type="text/html" title="Observable Kubernetes Cluster Using Grafana-Loki-Prometheus" /><published>2021-07-16T00:00:00+02:00</published><updated>2021-07-16T00:00:00+02:00</updated><id>https://akashnair.com/observable-k8s-cluster-using-grafana-loki-prometheus</id><content type="html" xml:base="https://akashnair.com/grafana-loki-prometheus/">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 
 &lt;p&gt;With the growing popularity of Kubernetes and the number of options to easily deploy a K8S cluster quickly, organisations are becoming more confident of hosting a SaaS in-house rather than use it as a subscription. 
 However, when you ship a Terraform moulded K8S cluster, it is important that you also get visibility into the cluster as well as the application.&lt;/p&gt;
@@ -776,66 +960,4 @@ Overview of actions performed:&lt;/p&gt;
 
 &lt;p&gt;Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/slashr/f17eb97ac86e94160ce03cc920373143.js&quot;&gt;&lt;/script&gt;</content><author><name>Akash</name></author><category term="AWS" /><category term="Custom IAM Policies" /><category term="aws" /><category term="ec2" /><category term="iam" /><summary type="html">Restrict user activity to a specific region in order to minimize resource wastage. This policy will ensure that all of the resources are being created only in the region of your choice so that when it comes down to resource cleanup and housekeeping, you’ll be able to save quite a lot of time. Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" /><media:content medium="image" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Analyzing ELB Logs using Elasticsearch and Logstash</title><link href="https://akashnair.com/elb-logs-using-elk/" rel="alternate" type="text/html" title="Analyzing ELB Logs using Elasticsearch and Logstash" /><published>2016-06-16T08:50:16+02:00</published><updated>2016-06-16T08:50:16+02:00</updated><id>https://akashnair.com/elb-logs-using-elk</id><content type="html" xml:base="https://akashnair.com/elb-logs-using-elk/">&lt;p&gt;Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&quot;setting-up-elasticsearch&quot;&gt;Setting Up Elasticsearch&lt;/h4&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Choose a domain name that would be part of the ElasticSearch endpoint. For example, &lt;em&gt;mysite&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
-  &lt;li&gt;Under &lt;strong&gt;Set up access policy,&lt;/strong&gt; select &lt;strong&gt;Allow open access to the domain. &lt;/strong&gt;This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click &lt;strong&gt;Next&lt;/strong&gt; and then &lt;strong&gt;Confirm and Create. &lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;The domain will take around 5 to 10 minutes to get created.&lt;/li&gt;
-  &lt;li&gt;Meanwhile, enable Access Logs on ELB by following &lt;a href=&quot;https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/enable-access-logs.html&quot;&gt;this guide&lt;/a&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&quot;setting-up-logstash&quot;&gt;Setting Up Logstash&lt;/h4&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Update and upgrade your system packages: 
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Logstash requires Java on the machine. Install Java: 
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get install default-jdk&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on &lt;a href=&quot;https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories&quot;&gt;this page&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;Run: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Finally, update your packages again and install Logstash:
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install logstash&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Add your AWS IAM Access Key and Secret Key by using environment variables: 
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/logstash/conf.d/logstash.conf&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Run Logstash:
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&amp;lt;/code&amp;gt;&lt;/code&gt;&lt;/p&gt;
-    &lt;hr /&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;setting-up-kibana&quot;&gt;Setting Up Kibana&lt;/h4&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Open Kibana from the URL provided on the Elasticsearch console.
-    &lt;ul&gt;
-      &lt;li&gt;Use the index pattern &lt;em&gt;elb_logs&lt;/em&gt;&lt;/li&gt;
-      &lt;li&gt;Use the timestamp &lt;em&gt;@timestamp&lt;/em&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;To get started with visualizing your data, read through the &lt;a href=&quot;https://www.elastic.co/guide/en/kibana/current/visualize.html&quot;&gt;Visualize section&lt;/a&gt; of Elastic’s official documentation.&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Akash</name></author><category term="AWS" /><category term="Logging" /><category term="analytics" /><category term="aws" /><category term="elasticsearch" /><category term="elb" /><category term="kibana" /><category term="logstash" /><summary type="html">Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;amp;&amp;amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&amp;lt;/code&amp;gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" /><media:content medium="image" url="https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;script src=&quot;https://gist.github.com/slashr/f17eb97ac86e94160ce03cc920373143.js&quot;&gt;&lt;/script&gt;</content><author><name>Akash</name></author><category term="AWS" /><category term="Custom IAM Policies" /><category term="aws" /><category term="ec2" /><category term="iam" /><summary type="html">Restrict user activity to a specific region in order to minimize resource wastage. This policy will ensure that all of the resources are being created only in the region of your choice so that when it comes down to resource cleanup and housekeeping, you’ll be able to save quite a lot of time. Apart from restricting access region-wise, it allows users read-only access to resources launched in other regions.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" /><media:content medium="image" url="https://akashnair.com/wp-content/uploads/2016/07/iam-logo.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

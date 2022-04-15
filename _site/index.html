@@ -313,6 +313,229 @@
   
   <article class="post-body">
     <h2 class="post-title">
+      <a href="/git-to-ops/">
+        ArgoCD: The first step towards GitOps
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">15 Apr 2022</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Automation
+      
+    
+  </span>
+</div>
+
+
+    
+      <h1 id="gitops-in-reverse">GitOps in Reverse</h1>
+
+<p>This article is part of a series to have your Infrastructure deployed using the GitOps approach. We’ll start by deploying a microservice on a Kubernetes cluster using a minimal Continuous Deployment framework and then keep adding and modifying our setup to make it complete and comprehensive. In this article, we’ll look at how we can use ArgoCD to manage automatic deployments of apps.</p>
+
+<ol>
+  <li><a href="#create-cluster">Spin up a K8S cluster using Minikube</a></li>
+  <li><a href="#setup-argocd">Setup ArgoCD</a></li>
+  <li><a href="#prepare-podinfo">Prepare Podinfo</a></li>
+  <li><a href="#create-app-of-apps">Create ArgoCD app-of-apps</a></li>
+</ol>
+
+<hr />
+<h2 id="create-cluster"> Spin up a K8s Cluster using Minikube </h2>
+
+<p>To an extent, it is Kubernetes that largely enables the possiblity of having infrastructure as code. Paired with Terraform, the need for clicking buttons and navigating through GUIs becomes less and less necessary.</p>
+
+<p>The easisest solution to setup a homelab would be to use Minikube. Install minikube and set up a two node cluster on your machine.</p>
+
+<p>We can then use Terraform to make changes to this cluster. So make a <code class="language-plaintext highlighter-rouge">terraform</code> directory in your gitops repo and then create a <code class="language-plaintext highlighter-rouge">provider.tf</code> file</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">provider</span> <span class="s2">"kubernetes"</span> <span class="p">{</span>
+<span class="nx">config_path</span>            <span class="p">=</span> <span class="s2">"~/.kube/config"</span>
+<span class="nx">config_context_cluster</span> <span class="p">=</span> <span class="s2">"minikube"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Perfect, that should give Terraform access to our Minikube cluster.</p>
+
+<hr />
+<h2 id="setup-argocd"> Setup ArgoCD </h2>
+
+<p>We can now start creating ArgoCD Terraform templates in a <a href="https://www.terraform.io/language/modules/develop">modular</a> way as is Terraform best practice.</p>
+
+<p>Create a directory <code class="language-plaintext highlighter-rouge">argo-cd</code> inside of a <code class="language-plaintext highlighter-rouge">modules</code> directory. Let’s create a file argo-cd.tf with the following contents</p>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"kubernetes_namespace"</span> <span class="s2">"argo-cd"</span> <span class="p">{</span>
+  <span class="nx">metadata</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="p">=</span> <span class="s2">"argo-cd"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">resource</span> <span class="s2">"helm_release"</span> <span class="s2">"argo-cd"</span> <span class="p">{</span>
+  <span class="nx">name</span>       <span class="p">=</span> <span class="s2">"argo-cd"</span>
+  <span class="nx">namespace</span>  <span class="p">=</span> <span class="s2">"argo-cd"</span>
+  <span class="nx">repository</span> <span class="p">=</span> <span class="s2">"https://argoproj.github.io/argo-helm"</span>
+  <span class="nx">chart</span>      <span class="p">=</span> <span class="s2">"argo-cd"</span>
+  <span class="nx">version</span>    <span class="p">=</span> <span class="s2">"4.2.3"</span>
+
+  <span class="nx">values</span> <span class="p">=</span> <span class="p">[</span><span class="nx">templatefile</span><span class="err">(</span><span class="s2">"${path.module}/values.yaml"</span><span class="p">,{}</span><span class="err">)</span><span class="p">]</span>
+
+  <span class="nx">depends_on</span> <span class="p">=</span> <span class="p">[</span>
+    <span class="nx">resource</span><span class="err">.</span><span class="nx">kubernetes_namespace</span><span class="err">.</span><span class="nx">argo</span><span class="err">-</span><span class="nx">cd</span>
+  <span class="p">]</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We are first creating a namespace and then using the <code class="language-plaintext highlighter-rouge">helm_release</code> provider to install the argo-cd Helm chart along with a custom values.yaml file, the contents of which should be as follows:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">controller</span><span class="pi">:</span>
+  <span class="na">enableStatefulSet</span><span class="pi">:</span> <span class="no">true</span>
+
+<span class="na">server</span><span class="pi">:</span>
+  <span class="na">autoscaling</span><span class="pi">:</span>
+    <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">minReplicas</span><span class="pi">:</span> <span class="m">2</span>
+
+<span class="na">repoServer</span><span class="pi">:</span>
+  <span class="na">autoscaling</span><span class="pi">:</span>
+    <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">minReplicas</span><span class="pi">:</span> <span class="m">2</span>
+
+<span class="na">configs</span><span class="pi">:</span>
+  <span class="na">secret</span><span class="pi">:</span>
+    <span class="na">argocdServerAdminPassword</span><span class="pi">:</span> <span class="s">$2a$10$6Oa1o/Y/5xjDk2dQCQ8F9uDCqm9w8BJEp7ZjI0.SvmZqIXXpHFyQW</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">argocdServerAdminPassword</code> is optional but makes it easy to access ArgoCD since otherwise you’ll have to fetch the <code class="language-plaintext highlighter-rouge">initial admin secret</code> from the cluster everytime you recreate the deployment. It is a hashed value which can be generated using <code class="language-plaintext highlighter-rouge">htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'</code></p>
+
+<p>With this we are ready to install Argo-CD! Run <code class="language-plaintext highlighter-rouge">terraform apply</code> to install it.</p>
+
+<p>Try deleting and creating using Terraform. When it works a couple of times, you have achieved what is called a state of “reproduceability”. This will help us out in the future when the infrastructure starts to become more and more complex yet we stick to the principle of having almost all config in the form of infra-as-code.</p>
+
+<p>But even with infra-as-code, there are certain parameters and flows that might not lead to perfect reproduceability of your setup, and that’s where creating/recreating can also be a debugging process where you iron out the clinks in the armor.</p>
+
+<p>An important building block of GitOps is how we handle releases and deployments. The recommended way is to specify in the form of code the <em>state</em> of a deployment. This state is a declarative way of saying which app do you want to be deployed, which version of the app, which configuration and so on.</p>
+
+<p>ArgoCD and Flux both offer these state based deployment models with the exception that ArgoCD offers a UI.</p>
+
+<h2 id="prepare-podinfo"> Prepare Podinfo </h2>
+<p>Now with ArgoCD up and running, we can deploy our very first app. To keep things simple, let’s use the wonderfully simple <a href="https://github.com/stefanprodan/podinfo">podinfo</a> app.</p>
+
+<p>In order to install this using ArgoCD, we first need to add the Helm repo URL of the app in ArgoCD.</p>
+
+<p>Inside argocd/values.yaml add the following block</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">configs</span><span class="pi">:</span>
+  <span class="na">repositories</span><span class="pi">:</span>
+    <span class="na">podinfo-helm-repo</span><span class="pi">:</span>
+      <span class="na">url</span><span class="pi">:</span> <span class="s">https://stefanprodan.github.io/podinfo</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">podinfo</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">helm</span>
+</code></pre></div></div>
+
+<p>and then run <code class="language-plaintext highlighter-rouge">helm upgrade argo-cd argo/argo-cd -n argo-cd --create-namespace --values=values.yaml</code></p>
+
+<p>This means that ArgoCD now knows about the Podinfo Helm repo and will the Podinfo chart version defined by us. But where exactly do we define the version we want to deploy? Inside <a href="https://argo-cd.readthedocs.io/en/latest/user-guide/commands/argocd_app_manifests/">App manifests</a></p>
+
+<p>One of the approaches to Gitops is to put our “declarative manifests” inside a repo independent of application code. So simply create a new Git repo and name it  or something similar.</p>
+
+<p>Inside this repo, create a directory <code class="language-plaintext highlighter-rouge">podinfo</code> with the file <code class="language-plaintext highlighter-rouge">release.yaml</code> consisting this code:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">argoproj.io/v1alpha1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Application</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">podinfo</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">argo-cd</span>
+  <span class="na">finalizers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">resources-finalizer.argocd.argoproj.io</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">destination</span><span class="pi">:</span>
+    <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+    <span class="na">server</span><span class="pi">:</span> <span class="s1">'</span><span class="s">https://kubernetes.default.svc'</span>
+  <span class="na">syncPolicy</span><span class="pi">:</span>
+    <span class="na">automated</span><span class="pi">:</span>
+      <span class="na">selfHeal</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">syncOptions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">CreateNamespace=true</span>
+  <span class="na">project</span><span class="pi">:</span> <span class="s">default</span>
+  <span class="na">source</span><span class="pi">:</span>
+    <span class="na">targetRevision</span><span class="pi">:</span> <span class="s1">'</span><span class="s">&gt;=5.*.*'</span>
+    <span class="na">repoURL</span><span class="pi">:</span> <span class="s1">'</span><span class="s">https://stefanprodan.github.io/podinfo'</span>
+    <span class="na">chart</span><span class="pi">:</span> <span class="s">podinfo</span>
+    <span class="na">helm</span><span class="pi">:</span>
+      <span class="na">values</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">replicaCount: '2'</span>
+</code></pre></div></div>
+
+<p>This is the <em>state</em> we want our app to be in.</p>
+
+<p>Since ArgoCD doesn’t support external values.yaml file for Helm charts yet, you can use the <code class="language-plaintext highlighter-rouge">values: |</code> parameter of Argo release.yaml to specify the values.yaml as a string inside the release.yaml file. 
+The rest of the code is pretty self-explanatory except for the targetRevision. Helm charts use Semver versioning and it’s important to understand it in order to see how the Regex inside the targetRevision field is being used.</p>
+
+<h2 id="create-app-of-apps"> Create ArgoCD App-of-Apps </h2>
+
+<p>After creating this new repo, we need to add it to ArgoCD just like we did for the Helm repo. 
+So under config.repositories, add another block for your Git app-manifests repo</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">app-manifests-repo</span><span class="pi">:</span>
+  <span class="na">url</span><span class="pi">:</span> <span class="s">https://github.com/slashr/app-manifests.git</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">app-manifests</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">git</span>
+</code></pre></div></div>
+
+<p>You should now see the Helm and Git repositories successfully added in ArgoCD Settings - Repositories page!</p>
+
+<center><img src="../assets/images/argo-helm-git-repo-added.png" height="400" width="400" /></center>
+
+<p>Now, lets create what ArgoCD calls an “app-of-apps” to deploy Podinfo on our cluster. Add the following code to argo-cd.tf to create an <em>app-of-apps</em>.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">server</span><span class="pi">:</span>
+  <span class="na">autoscaling</span><span class="pi">:</span>
+    <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">minReplicas</span><span class="pi">:</span> <span class="m">2</span>
+  <span class="na">additionalApplications</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">destination</span><span class="pi">:</span>
+        <span class="na">namespace</span><span class="pi">:</span> <span class="s2">"</span><span class="s">default"</span>
+        <span class="na">server</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://kubernetes.default.svc"</span>
+      <span class="na">finalizers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s2">"</span><span class="s">resources-finalizer.argocd.argoproj.io"</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">app-of-apps"</span>
+      <span class="na">namespace</span><span class="pi">:</span> <span class="s2">"</span><span class="s">argo-cd"</span>
+      <span class="na">project</span><span class="pi">:</span> <span class="s2">"</span><span class="s">default"</span>
+      <span class="na">source</span><span class="pi">:</span>
+        <span class="na">directory</span><span class="pi">:</span>
+          <span class="na">recurse</span><span class="pi">:</span> <span class="no">true</span>
+        <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">."</span>
+        <span class="na">repoURL</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://github.com/slashr/app-manifests.git"</span>
+        <span class="na">targetRevision</span><span class="pi">:</span> <span class="s2">"</span><span class="s">main"</span> <span class="c1">#should correspond to the active branch name</span>
+</code></pre></div></div>
+<p>Be careful to indent the block properly as not doing so can lead to hard to debug errors. Sometimes the code is perfectly correct but because the YAML is missing a space or has an extra one, it’s not parsed correctly and you wouldn’t know what’s wrong easily.</p>
+
+<p>Now our values.yaml for ArgoCD is good enough for having ArgoCD up and running with the required repositories configured inside it.</p>
+
+<p>Now after a <code class="language-plaintext highlighter-rouge">terraform apply</code>, you will be able to see the app-of-apps on the ArgoCD homepage along with the podinfo app. Success! We have deployed our first app using through ArgoCD.</p>
+
+<center><img src="../assets/images/argo-app-of-apps-added.png" height="400" width="400" /></center>
+
+<hr />
+
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
       <a href="/grafana-loki-prometheus/">
         Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
       </a>
@@ -489,71 +712,6 @@ However, when you ship a Terraform moulded K8S cluster, it is important that you
 
       
         <a href="/fire-suppression-using-smart-sensors-iot/"></a>
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/using-lambda-turn-off-ec2-instances/">
-        Using Lambda to Turn Off EC2 Instances During Off Hours
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">24 Nov 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Automation
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Ops
-      
-    
-  </span>
-</div>
-
-
-    
-      <p>A major part of your AWS bills comes from EC2 uptime and EBS storage use. In order to save on these costs, it is recommended to stop your instances whenever it is not required. Often times, your Development, Test or UAT environments aren’t used by developers during off-hours. Thus this would be a great time frame to temporarily stop the instances and save up on costs.</p>
-
-<p>In order to do this, we can make use of AWS Lambda, which lets you run your code or without setting up any servers. Since it charges based on the compute time taken up by the code, it is very cost efficient. A task running twice within a 24-hour cycle for typically less than 60 seconds with memory consumption up to 128MB (like the script in this post) typically costs around $0.008 per month.</p>
-
-<p>We will use the official AWS SDK for Python, boto3 to write our script and then run it using Lambda functions.</p>
-
-
-    
-
-    
-      
-      
-      
-
-      
-        <a href="/using-lambda-turn-off-ec2-instances/"></a>
       
     
   </article>

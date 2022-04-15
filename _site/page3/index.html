@@ -326,6 +326,116 @@
   
   <article class="post-body">
     <h2 class="post-title">
+      <a href="/elb-logs-using-elk/">
+        Analyzing ELB Logs using Elasticsearch and Logstash
+      </a>
+    </h2>
+    <div class="post-meta">
+  <span class="post-date">16 Jun 2016</span>
+  <span class="post-categories">
+    
+      &bull;
+
+      
+      
+      
+
+      
+        AWS
+      
+    
+      &bull;
+
+      
+      
+      
+
+      
+        Logging
+      
+    
+  </span>
+</div>
+
+
+    
+      <p>Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc.</p>
+
+<hr />
+
+<h4 id="setting-up-elasticsearch">Setting Up Elasticsearch</h4>
+
+<ol>
+  <li>Choose a domain name that would be part of the ElasticSearch endpoint. For example, <em>mysite</em>.</li>
+  <li>Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click <strong>Next</strong>.</li>
+  <li>Under <strong>Set up access policy,</strong> select <strong>Allow open access to the domain. </strong>This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click <strong>Next</strong> and then <strong>Confirm and Create. </strong></li>
+  <li>The domain will take around 5 to 10 minutes to get created.</li>
+  <li>Meanwhile, enable Access Logs on ELB by following <a href="https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/enable-access-logs.html">this guide</a>.</li>
+</ol>
+
+<hr />
+
+<h4 id="setting-up-logstash">Setting Up Logstash</h4>
+
+<ol>
+  <li>
+    <p>Update and upgrade your system packages: 
+ <code class="language-plaintext highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
+  </li>
+  <li>
+    <p>Logstash requires Java on the machine. Install Java: 
+ <code class="language-plaintext highlighter-rouge">sudo apt-get install default-jdk</code></p>
+  </li>
+  <li>
+    <p>Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#package-repositories">this page</a></p>
+
+    <p>Run: <code class="language-plaintext highlighter-rouge">echo "deb https://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list</code></p>
+  </li>
+  <li>
+    <p>Finally, update your packages again and install Logstash:
+ <code class="language-plaintext highlighter-rouge">sudo apt-get update &amp;&amp; sudo apt-get install logstash</code></p>
+  </li>
+  <li>
+    <p>Add your AWS IAM Access Key and Secret Key by using environment variables: 
+ <code class="language-plaintext highlighter-rouge">echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY</code></p>
+
+    <p><code class="language-plaintext highlighter-rouge">echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32</code></p>
+  </li>
+  <li>
+    <p>Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as <code class="language-plaintext highlighter-rouge">/etc/logstash/conf.d/logstash.conf</code></p>
+  </li>
+  <li>
+    <p>Run Logstash:
+ <code class="language-plaintext highlighter-rouge">/opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt;</code></p>
+    <hr />
+  </li>
+</ol>
+
+<h4 id="setting-up-kibana">Setting Up Kibana</h4>
+
+<ol>
+  <li>Open Kibana from the URL provided on the Elasticsearch console.
+    <ul>
+      <li>Use the index pattern <em>elb_logs</em></li>
+      <li>Use the timestamp <em>@timestamp</em></li>
+    </ul>
+  </li>
+  <li>To get started with visualizing your data, read through the <a href="https://www.elastic.co/guide/en/kibana/current/visualize.html">Visualize section</a> of Elastic’s official documentation.</li>
+</ol>
+
+    
+
+    
+      
+      
+      
+
+      
+    
+  </article>
+  
+  <article class="post-body">
+    <h2 class="post-title">
       <a href="/configuration-management-ec2-ansible/">
         Configuration Management on EC2 Using Ansible
       </a>
@@ -704,89 +814,6 @@
 </ol>
 
 <p>To see the app live, go to the Elastic Beanstalk console, click on the Application we created and then on the Environment created (skywide-env). Click on the URL listed at the top of the page and you willll see your app in action in your browser!</p>
-
-    
-
-    
-      
-      
-      
-
-      
-    
-  </article>
-  
-  <article class="post-body">
-    <h2 class="post-title">
-      <a href="/iam-restrict-bucket-access-by-username/">
-        IAM: Restrict Access to Folders Inside Bucket
-      </a>
-    </h2>
-    <div class="post-meta">
-  <span class="post-date">19 Mar 2016</span>
-  <span class="post-categories">
-    
-      &bull;
-
-      
-      
-      
-
-      
-        AWS
-      
-    
-      &bull;
-
-      
-      
-      
-
-      
-        Custom IAM Policies
-      
-    
-  </span>
-</div>
-
-
-    
-      <p>The following policy restricts access of a user to the folder inside the bucket that is named after the user’s username. It is suited to be applied to IAM groups.</p>
-
-<p>This helps create a bucket, inside which you can create several user directories and each directory can be accessed only by it’s owner.</p>
-
-<p>Replace the following policy with your S3 bucket name. The policy assumes that the parent directory is a directory named “home”. If you have a differently named directory, replace all occurrences of “home” with the name of your directory.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": ["s3:ListAllMyBuckets", "s3:GetBucketLocation"],
-      "Effect": "Allow",
-      "Resource": ["arn:aws:s3:::*"]
-    },
-    {
-      "Action": ["s3:ListBucket"],
-      "Effect": "Allow",
-      "Resource": ["arn:aws:s3:::bucket-name"],
-      "Condition":{"StringEquals":{
-      "s3:prefix":["","home/"],"s3:delimiter":["/"]}}
-    },
-    {
-      "Action": ["s3:ListBucket"],
-      "Effect": "Allow",
-      "Resource": ["arn:aws:s3:::bucket-name"],
-      "Condition":{"StringLike":{"s3:prefix":["home/${aws:username}/*"]}}
-    },
-    {
-      "Action":["s3:*"],
-      "Effect":"Allow",
-      "Resource": ["arn:aws:s3:::bucket-name;/home/${aws:username}"
-      "arn:aws:s3:::bucket-name/home/${aws:username}/*"]
-    }
-  ]
-}
-</code></pre></div></div>
 
     
 
