@@ -18,10 +18,17 @@ tags:
 
 This article is part of a series to have your Infrastructure deployed using the GitOps approach. We'll start by deploying a microservice on a Kubernetes cluster using a minimal Continuous Deployment framework and then keep adding and modifying our setup to make it complete and comprehensive. In this article, we'll look at how we can use ArgoCD to manage automatic deployments of apps. 
 
+<center><img src="../assets/images/gitops.jpg" height="400" width="400"></center>
+<!--more-->
+
+---
+# Overview 
+
 1. [Spin up a K8S cluster using Minikube](#create-cluster)
 2. [Setup ArgoCD](#setup-argocd)
 3. [Prepare Podinfo](#prepare-podinfo)
 4. [Create ArgoCD app-of-apps](#create-app-of-apps)
+
 
 ---
 <h2 id="create-cluster"> Spin up a K8s Cluster using Minikube </h2>
