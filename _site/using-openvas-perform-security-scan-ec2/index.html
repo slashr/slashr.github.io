@@ -35,7 +35,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Using OpenVas to Perform a Security Scan on EC2" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","url":"https://akashnair.com/using-openvas-perform-security-scan-ec2/","description":"Scan EC2 using OpenVAS Scanning your EC2 instances periodically to check for vulnerabilities and security loopholes is definitely something that no Systems/DevOps engineer should miss out on. There are several scanning tools available for these purposes but very few free ones. OpenVAS is an opensource and free tool which originated as a fork of the now commercial Nessus scanning tool. Follow these steps to quickly get started with OpenVAS Launch an Ubuntu EC2 instance. how-to Add the following PPA: sudo add-apt-repository ppa:mrazavi/openvas Update apt-get: sudo apt-get update Install OpenVAS: sudo apt-get install openvas Run the following commands to update OpenVAS scripts and data: sudo apt-get install sqlite3 sudo openvas-nvt-sync sudo openvas-scapdata-sync sudo openvas-certdata-sync sudo service openvas-scanner restart sudo service openvas-manager restart sudo openvasmd --rebuild --progress The above commands will download large amounts of data from the internet. It might take several minutes to complete depending on the internet speed. After the downloads have finished, Goto https:&lt;instance-public-ip&gt;:443 and login. The default username and password is admin","headline":"Using OpenVas to Perform a Security Scan on EC2","dateModified":"2016-04-22T08:18:24+02:00","datePublished":"2016-04-22T08:18:24+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/using-openvas-perform-security-scan-ec2/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/using-openvas-perform-security-scan-ec2/"},"url":"https://akashnair.com/using-openvas-perform-security-scan-ec2/","description":"Scan EC2 using OpenVAS Scanning your EC2 instances periodically to check for vulnerabilities and security loopholes is definitely something that no Systems/DevOps engineer should miss out on. There are several scanning tools available for these purposes but very few free ones. OpenVAS is an opensource and free tool which originated as a fork of the now commercial Nessus scanning tool. Follow these steps to quickly get started with OpenVAS Launch an Ubuntu EC2 instance. how-to Add the following PPA: sudo add-apt-repository ppa:mrazavi/openvas Update apt-get: sudo apt-get update Install OpenVAS: sudo apt-get install openvas Run the following commands to update OpenVAS scripts and data: sudo apt-get install sqlite3 sudo openvas-nvt-sync sudo openvas-scapdata-sync sudo openvas-certdata-sync sudo service openvas-scanner restart sudo service openvas-manager restart sudo openvasmd --rebuild --progress The above commands will download large amounts of data from the internet. It might take several minutes to complete depending on the internet speed. After the downloads have finished, Goto https:&lt;instance-public-ip&gt;:443 and login. The default username and password is admin","headline":"Using OpenVas to Perform a Security Scan on EC2","dateModified":"2016-04-22T08:18:24+02:00","datePublished":"2016-04-22T08:18:24+02:00","author":{"@type":"Person","name":"Akash"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -469,8 +469,17 @@
     
       <li>
         <h3>
+          <a href="/2022/08/13/making-terraform-less-terrafying.html">
+            
+            <small>13 Aug 2022</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/git-to-ops/">
-            ArgoCD: The first step towards GitOps
+            
             <small>15 Apr 2022</small>
           </a>
         </h3>
@@ -478,18 +487,9 @@
     
       <li>
         <h3>
-          <a href="/grafana-loki-prometheus/">
-            Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
+          <a href="/https:/figments.medium.com/observable-kubernetes-cluster-using-grafana-loki-prometheus-a661a31d7ad8">
+            
             <small>16 Jul 2021</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/migrate-helm2-to-helm3/">
-            Migrate from Helm 2 to Helm 3 Safely
-            <small>01 Jan 2021</small>
           </a>
         </h3>
       </li>

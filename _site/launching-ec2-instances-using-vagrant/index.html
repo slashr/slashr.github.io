@@ -37,7 +37,7 @@
 <meta property="twitter:image" content="https://akashnair.com/wp-content/uploads/2016/02/Vagrant.png" />
 <meta property="twitter:title" content="EC2 Instances Automated Deployment using Vagrant" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","url":"https://akashnair.com/launching-ec2-instances-using-vagrant/","image":"https://akashnair.com/wp-content/uploads/2016/02/Vagrant.png","description":"Why use Vagrant to launch EC2 instance? EC2 instances can be deployed seamlessly using Vagrant. Once you setup Vagrant and configure it, launching an EC2 instance becomes as easy as running the command vagrant up. Such automation is especially useful when you have to launch a large fleet of EC2 instances quickly. Setting up Vagrant on your machine Install vagrant: `sudo apt-get install vagrant` 2. Initialize vagrant: `vagrant init hashicorp/precise32` `vagrant up` (This will download the example virtualbox image from vagrant servers. It might take a few minutes) 3. Install vagrant aws plugin: `sudo vagrant plugin install vagrant-aws` 4. Get the AWS Box image: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box` Launching the instance Create a directory in your home folder and from inside the directory, run `vagrant init hashicorp/precise32` (This will create a &amp;#8220;Vagrantfile&amp;#8221; in your directory) 2. Open your Vagrantfile, clear all contents and add the following. Please modify the values wherever necessary. Save the file and run: vagrant up --provider=aws Your instance should be up and running in a few minutes. The above configuration only contains the bare essential configurations. Here are some more configuration parameters. availability_zone Specify the desired availability zone. (ap-southeast-1a) instance_type The default value of this if not specified is &#8220;m3.medium&#8221; private_ip_address The private IP address to assign to an instance within a VPC instance_ready_timeout The number of seconds to wait for the instance to become &#8220;ready&#8221; in AWS. Defaults to 120 seconds instance_package_timeout The number of seconds to wait for the instance to be burnt into an AMI during packaging. Defaults to 600 seconds elastic_ip Can be set to &#8216;true&#8217;, or to an existing Elastic IP address security_groups An array of security groups for the instance. If this instance will be launched in VPC, this must be a list of security group Name. For a non-default VPC, you must use security group IDs instead subnet_id The subnet to launch the instance inside associate_public_ip true/false. If true, will associate a public IP address to an instance in a VPC The full list of options can be found here: https://github.com/mitchellh/vagrant-aws#configuration Note: This guide is written for a *nix environment. The steps are similar for Windows based environments.","headline":"EC2 Instances Automated Deployment using Vagrant","dateModified":"2016-02-12T08:32:07+01:00","datePublished":"2016-02-12T08:32:07+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/launching-ec2-instances-using-vagrant/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/launching-ec2-instances-using-vagrant/"},"url":"https://akashnair.com/launching-ec2-instances-using-vagrant/","description":"Why use Vagrant to launch EC2 instance? EC2 instances can be deployed seamlessly using Vagrant. Once you setup Vagrant and configure it, launching an EC2 instance becomes as easy as running the command vagrant up. Such automation is especially useful when you have to launch a large fleet of EC2 instances quickly. Setting up Vagrant on your machine Install vagrant: `sudo apt-get install vagrant` 2. Initialize vagrant: `vagrant init hashicorp/precise32` `vagrant up` (This will download the example virtualbox image from vagrant servers. It might take a few minutes) 3. Install vagrant aws plugin: `sudo vagrant plugin install vagrant-aws` 4. Get the AWS Box image: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box` Launching the instance Create a directory in your home folder and from inside the directory, run `vagrant init hashicorp/precise32` (This will create a &amp;#8220;Vagrantfile&amp;#8221; in your directory) 2. Open your Vagrantfile, clear all contents and add the following. Please modify the values wherever necessary. Save the file and run: vagrant up --provider=aws Your instance should be up and running in a few minutes. The above configuration only contains the bare essential configurations. Here are some more configuration parameters. availability_zone Specify the desired availability zone. (ap-southeast-1a) instance_type The default value of this if not specified is &#8220;m3.medium&#8221; private_ip_address The private IP address to assign to an instance within a VPC instance_ready_timeout The number of seconds to wait for the instance to become &#8220;ready&#8221; in AWS. Defaults to 120 seconds instance_package_timeout The number of seconds to wait for the instance to be burnt into an AMI during packaging. Defaults to 600 seconds elastic_ip Can be set to &#8216;true&#8217;, or to an existing Elastic IP address security_groups An array of security groups for the instance. If this instance will be launched in VPC, this must be a list of security group Name. For a non-default VPC, you must use security group IDs instead subnet_id The subnet to launch the instance inside associate_public_ip true/false. If true, will associate a public IP address to an instance in a VPC The full list of options can be found here: https://github.com/mitchellh/vagrant-aws#configuration Note: This guide is written for a *nix environment. The steps are similar for Windows based environments.","image":"https://akashnair.com/wp-content/uploads/2016/02/Vagrant.png","headline":"EC2 Instances Automated Deployment using Vagrant","dateModified":"2016-02-12T08:32:07+01:00","datePublished":"2016-02-12T08:32:07+01:00","author":{"@type":"Person","name":"Akash"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -620,8 +620,17 @@
     
       <li>
         <h3>
+          <a href="/2022/08/13/making-terraform-less-terrafying.html">
+            
+            <small>13 Aug 2022</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/git-to-ops/">
-            ArgoCD: The first step towards GitOps
+            
             <small>15 Apr 2022</small>
           </a>
         </h3>
@@ -629,18 +638,9 @@
     
       <li>
         <h3>
-          <a href="/grafana-loki-prometheus/">
-            Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
+          <a href="/https:/figments.medium.com/observable-kubernetes-cluster-using-grafana-loki-prometheus-a661a31d7ad8">
+            
             <small>16 Jul 2021</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/migrate-helm2-to-helm3/">
-            Migrate from Helm 2 to Helm 3 Safely
-            <small>01 Jan 2021</small>
           </a>
         </h3>
       </li>

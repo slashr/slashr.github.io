@@ -37,7 +37,7 @@
 <meta property="twitter:image" content="https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png" />
 <meta property="twitter:title" content="Analyzing ELB Logs using Elasticsearch and Logstash" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Akash"},"@type":"BlogPosting","url":"https://akashnair.com/elb-logs-using-elk/","image":"https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png","description":"Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;&amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;&amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation.","headline":"Analyzing ELB Logs using Elasticsearch and Logstash","dateModified":"2016-06-16T08:50:16+02:00","datePublished":"2016-06-16T08:50:16+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/elb-logs-using-elk/"},"@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://akashnair.com/elb-logs-using-elk/"},"url":"https://akashnair.com/elb-logs-using-elk/","description":"Elasticsearch, Logstash and Kibana (ELK) is a stack widely used for log analytics. The AWS Elasticsearch service lets you run the Elasticsearch and Kibana right out of the box with some manual setup of Logstash required. In this setup, we’ll walk through setting up the ELK stack on AWS, enabling ELB logs and analyzing the logs to identify and visualize trends like traffic spikes, frequently vistitor IPs etc. Setting Up Elasticsearch Choose a domain name that would be part of the ElasticSearch endpoint. For example, mysite. Select the number of instances in the cluster. Ideally select atleast 2 nodes so that the sharding works. Leave the rest of the options as it is and click Next. Under Set up access policy, select Allow open access to the domain. This will allow anyone to access your endpoint. Since we are only testing this, you can go ahead with this option. However, a production environment would require more restrictive access policies. Click Next and then Confirm and Create.  The domain will take around 5 to 10 minutes to get created. Meanwhile, enable Access Logs on ELB by following this guide. Setting Up Logstash Update and upgrade your system packages: sudo apt-get update &amp;&amp; sudo apt-get upgrade Logstash requires Java on the machine. Install Java: sudo apt-get install default-jdk Add Logstash Package Repositories to your sources list. Verify that you’re getting the latest repository info on this page Run: echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list Finally, update your packages again and install Logstash: sudo apt-get update &amp;&amp; sudo apt-get install logstash Add your AWS IAM Access Key and Secret Key by using environment variables: echo AWS_ACCESS_KEY_ID=AKIAACCESSKEY echo AWS_SECRET_ACCESS_KEY=tUx2SECRETKEYACk32 Create a Logstash configuration file and enter the Elasticsearch endpoint and S3 bucket name in it. Store this file as /etc/logstash/conf.d/logstash.conf Run Logstash: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf&lt;/code&gt; Setting Up Kibana Open Kibana from the URL provided on the Elasticsearch console. Use the index pattern elb_logs Use the timestamp @timestamp To get started with visualizing your data, read through the Visualize section of Elastic’s official documentation.","image":"https://akashnair.com/wp-content/uploads/2016/06/LogstashElasticsearchKibana.png","headline":"Analyzing ELB Logs using Elasticsearch and Logstash","dateModified":"2016-06-16T08:50:16+02:00","datePublished":"2016-06-16T08:50:16+02:00","author":{"@type":"Person","name":"Akash"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -528,8 +528,17 @@
     
       <li>
         <h3>
+          <a href="/2022/08/13/making-terraform-less-terrafying.html">
+            
+            <small>13 Aug 2022</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
           <a href="/git-to-ops/">
-            ArgoCD: The first step towards GitOps
+            
             <small>15 Apr 2022</small>
           </a>
         </h3>
@@ -537,18 +546,9 @@
     
       <li>
         <h3>
-          <a href="/grafana-loki-prometheus/">
-            Observable Kubernetes Cluster Using Grafana-Loki-Prometheus
+          <a href="/https:/figments.medium.com/observable-kubernetes-cluster-using-grafana-loki-prometheus-a661a31d7ad8">
+            
             <small>16 Jul 2021</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/migrate-helm2-to-helm3/">
-            Migrate from Helm 2 to Helm 3 Safely
-            <small>01 Jan 2021</small>
           </a>
         </h3>
       </li>
