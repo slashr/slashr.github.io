@@ -23,8 +23,7 @@ export default function Blog() {
         <span className="eyebrow">2015–2022</span>
         <h1>Blog archive</h1>
         <p>
-          I used to write about AWS, Kubernetes, and infrastructure. I've kept
-          those posts here, with their original dates and links.
+          An archive of past write-ups on challenging tasks I've worked through.
         </p>
       </header>
       <BlogArchive posts={posts} />
