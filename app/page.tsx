@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { PersonalMap } from "@/components/personal-map";
+import { Mascot } from "@/components/mascot";
 
 export default function Home() {
   return (
@@ -9,14 +9,14 @@ export default function Home() {
         <div className="about-copy">
           <span className="eyebrow about-hello">Hello, I'm</span>
           <h1 id="about-title">
-            Akash
-            <br />
-            Nair<span className="name-period">.</span>
+            Akash Nair<span className="name-period">.</span>
           </h1>
           <p className="about-role">
-            DevOps engineer.
+            Software engineer by training.
             <br />
-            Usually building something.
+            DevOps engineer by profession.
+            <br />
+            Full stack using AI.
           </p>
           <span className="location about-location">
             <MapPin size={13} aria-hidden="true" />
@@ -24,13 +24,8 @@ export default function Home() {
           </span>
           <div className="about-story">
             <p>
-              You might know me as <span className="inline-handle">slashr</span>
-              . I work on infrastructure, and spend a fair bit of my spare time
-              making things I use myself.
-            </p>
-            <p>
-              A workout app for the gym. A way to make sense of my finances. A
-              small cluster of machines to run my apps and services.
+              I like seeing network entropy reduce, the servers align and
+              infrastructure converge to code.
             </p>
           </div>
           <Link className="about-project-link" href="/projects/">
@@ -38,14 +33,8 @@ export default function Home() {
             <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
-        <PersonalMap />
+        <Mascot />
       </section>
-      <div className="about-margin-note">
-        <span>Akash in person. slashr on the internet.</span>
-        <span>
-          Always a work in progress <span aria-hidden="true">↗</span>
-        </span>
-      </div>
     </main>
   );
 }

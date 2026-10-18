@@ -14,7 +14,6 @@ const Context = createContext({
   dark: false,
   motion: false,
   toggleTheme() {},
-  toggleMotion() {},
 });
 export const usePreferences = () => useContext(Context);
 export function Preferences({ children }: { children: ReactNode }) {
@@ -68,7 +67,6 @@ export function Preferences({ children }: { children: ReactNode }) {
         dark,
         motion: ready && motion,
         toggleTheme: () => setTheme(dark ? "light" : "dark"),
-        toggleMotion: () => setAnimation(motion ? "off" : "on"),
       }}
     >
       <MotionConfig reducedMotion="user">{children}</MotionConfig>

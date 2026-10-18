@@ -87,7 +87,7 @@ export function AmbientBackground() {
   }, [motion, dark]);
   return (
     <div className="ambient" aria-hidden="true">
-      <div className="light-wash wash-burgundy" />
+      <div className="light-wash wash-maroon" />
       <div className="light-wash wash-lilac" />
       <div className="light-wash wash-peach" />
       <canvas className="ambient-network" ref={canvas} />

@@ -14,23 +14,13 @@ test("the homepage introduces Akash and the main tabs open their own pages", asy
     navigation.getByRole("link", { name: "About", exact: true }),
   ).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "AkashNair.",
+    "Akash Nair.",
   );
   await expect(
     page.getByRole("tablist", { name: "Choose a project" }),
   ).toHaveCount(0);
-  await page.getByRole("button", { name: "Self-hosting", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "Self-hosting", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page
-    .getByRole("link", { name: "Explore Homelab", exact: true })
-    .click();
-  await expect(page).toHaveURL(/\/projects\/#homelab$/);
-  await expect(page.getByRole("tab", { name: "Homelab" })).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
+  await page.getByRole("link", { name: "See what I'm working on" }).click();
+  await expect(page).toHaveURL(/\/projects\/$/);
   await expect(
     navigation.getByRole("link", { name: "Projects", exact: true }),
   ).toHaveAttribute("aria-current", "page");
@@ -126,9 +116,6 @@ test("preferences persist and reduced motion starts with a paused background", a
   await page.emulateMedia({ reducedMotion: "reduce", colorScheme: "light" });
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-motion", "off");
-  await expect(
-    page.getByRole("button", { name: "Play background", exact: true }),
-  ).toBeVisible();
   await page.getByRole("button", { name: "Use dark theme" }).click();
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");

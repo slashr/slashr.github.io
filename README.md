@@ -2,8 +2,7 @@
 
 A personal site built with Next.js and React, exported as static files
 for [slashr.github.io](https://slashr.github.io). About, Projects, and Blog are
-separate pages in a shared tab navigation. The homepage introduces Akash and
-his interests; `/projects/` holds the interactive Workbench for Power Hour, iNAB,
+separate pages in a shared tab navigation. The homepage introduces Akash alongside an animated mascot; `/projects/` holds the interactive Workbench for Power Hour, iNAB,
 and the homelab. The earlier writing lives at `/blog/`.
 
 ## Development

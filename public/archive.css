@@ -1,11 +1,11 @@
 :root {
   color-scheme: light dark;
-  --paper: light-dark(#f8f4f5, #1b1418);
-  --ink: light-dark(#38272e, #f4e9ed);
-  --soft: light-dark(#745f68, #c4b0b9);
-  --line: light-dark(#e4d7de, #4a333f);
-  --accent: light-dark(#7e2341, #edafc3);
-  --accent-soft: light-dark(#efdce3, #53303e);
+  --paper: light-dark(#faf6f3, #1c1212);
+  --ink: light-dark(#382626, #f7ece8);
+  --soft: light-dark(#756060, #c6b1aa);
+  --line: light-dark(#e5d7d0, #4c332c);
+  --accent: light-dark(#800000, #efb4a8);
+  --accent-soft: light-dark(#f1dfda, #542a27);
 }
 * {
   box-sizing: border-box;
@@ -135,7 +135,7 @@ h4 {
 .article-body pre {
   overflow-x: auto;
   padding: 20px;
-  background: light-dark(#f0e5ea, #382530);
+  background: light-dark(#f2e7e0, #39271f);
   border-radius: 10px;
   font-size: 13px;
   line-height: 1.7;

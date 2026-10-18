@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { Moon, Sun, Pause, Play, ArrowUpRight } from "lucide-react";
+import { Moon, Sun, ArrowUpRight } from "lucide-react";
 import { usePreferences } from "./preferences";
 
 export function Header() {
@@ -57,7 +57,6 @@ export function Header() {
   );
 }
 export function Footer() {
-  const { motion, toggleMotion } = usePreferences();
   return (
     <footer className="site-footer">
       <div>
@@ -76,19 +75,6 @@ export function Footer() {
           LinkedIn <ArrowUpRight size={12} aria-hidden="true" />
         </a>
       </div>
-      <button
-        type="button"
-        className="motion-toggle"
-        aria-pressed={!motion}
-        onClick={toggleMotion}
-      >
-        {motion ? (
-          <Pause size={12} aria-hidden="true" />
-        ) : (
-          <Play size={12} aria-hidden="true" />
-        )}
-        {motion ? "Pause background" : "Play background"}
-      </button>
     </footer>
   );
 }
