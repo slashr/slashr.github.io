@@ -8,10 +8,18 @@ is used in the iNAB screenshots.
 ## Power Hour
 
 The source checkout was at `31891c412eeab3d35e49432636b7ee9b83ae0e65`.
-The committed simulator captures are:
+The simulator captures are:
 
-- `docs/previews/plasma-orb/active.png` → `power-hour-workout.webp`.
-  A workout running in the app's explicitly marked Test mode.
+- `power-hour-workout.webp` was freshly captured on 2026-10-18 from a build of
+  that checkout, in a clean iPhone 17 Pro simulator running iOS 27.0.
+  Test mode was explicitly disabled (`testModeEnabled = false`). The app's
+  existing debug launch controls started a normal workout and advanced to the
+  rest after its first set (`--ui-test-start --ui-test-phase=5`); these controls
+  do not enable Test mode. The actual header reads **Pull ups x 2**, **8 reps**.
+  No simulated heart-rate readings or personal history were supplied.
+  The 1206 × 2622 screenshot was resized to 708 × 1539 and compressed to WebP;
+  its interface, text, and badges were not edited. The task-created simulator
+  (`FA0FA773-E7B4-4AB3-B49F-642591AC584C`) was shut down and deleted afterwards.
 - `docs/screenshots/pr-197-muscle-all-routines.png` → `power-hour-muscles.webp`.
   Muscle coverage for the bundled sample routines. Its source documentation
   identifies these as simulator captures with no personal history.

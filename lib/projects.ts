@@ -33,10 +33,10 @@ export const projects: Project[] = [
     screenshots: [
       {
         src: "/projects/power-hour-workout.webp",
-        alt: "Power Hour running a warm-up with a green plasma orb behind the timer",
-        caption: "Workout screen · captured in test mode",
+        alt: "Power Hour resting between sets, with Pull ups x 2 and 8 reps up next",
+        caption: "Workout screen · between sets",
         width: 708,
-        height: 1535,
+        height: 1539,
       },
       {
         src: "/projects/power-hour-muscles.webp",
