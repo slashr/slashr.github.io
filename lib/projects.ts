@@ -83,7 +83,7 @@ export const projects: Project[] = [
     short: "k3s cluster",
     type: "Infrastructure · Self-hosted",
     description:
-      "A k3s cluster across Raspberry Pis and cloud nodes. It runs my apps and services.",
+      "One k3s cluster across Raspberry Pis, Oracle Cloud and Google Cloud. Managed from code, connected over Tailscale.",
     stack: ["k3s", "Terraform", "Ansible", "Tailscale", "Argo CD"],
     notes: [
       "Terraform and Ansible handle provisioning.",

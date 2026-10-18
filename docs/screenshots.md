@@ -41,6 +41,23 @@ The capture captions on the public page explicitly identify the fictional data.
 
 ## Homelab
 
-The site uses an interactive architecture diagram based on the source repository,
-rather than a screenshot of an authenticated management console. Its simulation
-is labeled as an illustration and does not fetch live status or deploy anything.
+The architecture diagram is rendered locally from the configured design, with no
+live cluster queries, deployment simulation, management endpoints, or credentials.
+
+Source snapshots checked on 2026-10-18:
+
+- `homelab` at `e25778a71c383dfb241d7c82970186fe92cd4151`:
+  `ansible/hosts.ini` and `ansible/k3s.yml` define one Raspberry Pi control plane,
+  two Pi workers, three Oracle Cloud workers and one Google Cloud worker.
+  `AGENTS.md` and `README.md` identify the Pi models and Oracle ARM/x86 mix.
+  The playbook joins all workers to the same server over Tailscale.
+- `homelab/kubernetes/cluster.tf` bootstraps Argo CD, cert-manager and the Tailscale
+  operator through Terraform. Ansible handles the node and k3s configuration;
+  Traefik is the configured ingress controller.
+- `homelab-deployments` at `aaaedb5caa944559b667e1dcf8e54a4208f2acc0`:
+  `argo/finance`, `argo/media` and `argo/adguard` define the workload examples;
+  `argo/signoz` and `argo/velero` provide observability and backups.
+
+The cluster boundary contains all seven configured compute nodes. It describes
+the architecture rather than reporting node availability. Public labels omit
+internal hostnames, addresses, private repository URLs and storage identifiers.

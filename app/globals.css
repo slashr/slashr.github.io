@@ -644,32 +644,6 @@ html[data-motion="off"] .light-wash {
   margin: 20px auto;
   object-fit: contain;
 }
-.demo {
-  background: var(--solid);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 22px;
-  box-shadow: 0 12px 35px var(--shadow);
-  font-size: 12px;
-  min-width: 0;
-}
-.demo-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 9px;
-  font-size: 11px;
-  line-height: 1.6;
-  margin-bottom: 22px;
-}
-.demo-badge {
-  font-size: 9px;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  padding: 3px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
 .button {
   display: inline-flex;
   align-items: center;
@@ -698,101 +672,6 @@ html[data-motion="off"] .light-wash {
   background: var(--accent);
   color: var(--base);
   border-color: transparent;
-}
-.demo-disclaimer {
-  font-size: 10px;
-  line-height: 1.8;
-  color: var(--muted);
-  margin: 16px 0 0;
-}
-.lab-demo {
-  width: 100%;
-  max-width: 410px;
-  margin: auto;
-}
-.lab-preview {
-  min-width: 0;
-}
-.topology {
-  height: 217px;
-  position: relative;
-  margin: 10px 0 18px;
-}
-.topology > svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: color-mix(in srgb, var(--accent) 40%, transparent);
-}
-.topology-node {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  position: absolute;
-  min-height: 42px;
-  width: 42%;
-  border: 1px solid var(--line);
-  background: var(--accent-soft);
-  border-radius: 9px;
-  padding: 9px 6px;
-  font-size: 10px;
-  line-height: 1.7;
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    border-color 0.3s ease;
-}
-.topology-node svg {
-  color: var(--accent);
-}
-.topology-node[aria-pressed="true"] {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent-soft) 75%, var(--accent) 25%);
-  transform: translateY(-3px);
-}
-.node-git {
-  left: 29%;
-  top: 0;
-}
-.node-argo {
-  left: 29%;
-  top: 76px;
-}
-.node-pi {
-  left: 0;
-  top: 172px;
-}
-.node-cloud {
-  right: 0;
-  top: 172px;
-}
-.node-information {
-  min-height: 100px;
-  padding: 8px 0 20px;
-}
-.node-information h3 {
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: 0 0 7px;
-}
-.node-information p {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.85;
-  margin: 0;
-}
-.deploy-button {
-  width: 100%;
-}
-.deploy-status {
-  font-size: 11px;
-  line-height: 1.8;
-  color: var(--muted);
-  min-height: 40px;
-  margin: 17px 0 0;
 }
 .site-footer {
   display: flex;
@@ -962,22 +841,6 @@ html[data-motion="off"] .light-wash {
   }
   .portrait .screenshot-open {
     width: 210px;
-  }
-  .topology-node {
-    font-size: 9px;
-    gap: 4px;
-  }
-  .topology-node svg {
-    width: 14px;
-  }
-  .demo {
-    padding: 17px;
-  }
-  .demo-top {
-    font-size: 10px;
-  }
-  .demo-badge {
-    font-size: 8px;
   }
 }
 @media (max-width: 760px) {
@@ -1152,21 +1015,9 @@ html[data-motion="off"] .light-wash {
     max-height: 78vh;
     margin: 15px auto;
   }
-  .demo {
-    padding: 22px;
-  }
-  .demo-badge {
-    font-size: 9px;
-  }
   .button {
     font-size: 11px;
     padding: 11px 12px;
-  }
-  .topology-node {
-    font-size: 10px;
-  }
-  .topology-node svg {
-    width: 15px;
   }
   .site-footer {
     padding: 24px 0;
@@ -1631,5 +1482,564 @@ html[data-motion="off"] .mascot-stage {
 @media (forced-colors: active) {
   .page-tab[aria-current="page"] {
     outline: 2px solid Highlight;
+  }
+}
+/* The homelab gets the whole project stage for a single cluster diagram. */
+.lab-panel .project-body {
+  grid-template-columns: 1fr;
+  gap: 25px;
+  min-height: 0;
+}
+.lab-panel .project-copy {
+  max-width: 580px;
+}
+.lab-panel .project-number {
+  margin-bottom: 9px;
+}
+.lab-panel .project-copy h2 {
+  margin-bottom: 12px;
+}
+.lab-panel .project-copy > p {
+  margin-bottom: 0;
+}
+.lab-panel .project-topline {
+  margin-bottom: 15px;
+}
+.homelab-architecture {
+  --cluster-ink: light-dark(#325a89, #b2cef2);
+  --cluster-line: light-dark(#597da855, #83a8d94a);
+  --cluster-surface: light-dark(#eaf0f75c, #17223073);
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.architecture-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 37px;
+}
+.architecture-source {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  position: relative;
+}
+.architecture-source > svg {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.architecture-source > div > span {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.architecture-source strong {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.architecture-input-flow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 9px);
+  left: 0;
+  font:
+    9px/1.8 ui-monospace,
+    monospace;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.architecture-cluster {
+  position: relative;
+  border: 1px solid var(--cluster-line);
+  border-radius: 16px;
+  padding: 20px;
+  background: var(--cluster-surface);
+  box-shadow: inset 0 1px 0 light-dark(#fffc, #ffffff08);
+}
+.architecture-cluster-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+.architecture-cluster-title {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+.k3s-symbol {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 46px;
+  border: 1px solid var(--cluster-line);
+  border-radius: 12px;
+  background: light-dark(#dfe9f7, #25344b);
+  color: var(--cluster-ink);
+}
+.architecture-cluster-heading h3 {
+  color: var(--cluster-ink);
+  font-size: 20px;
+  letter-spacing: -0.6px;
+  font-weight: 550;
+  margin: 0 0 2px;
+}
+.architecture-cluster-heading p {
+  color: var(--muted);
+  font-size: 10px;
+  margin: 0;
+}
+.architecture-node-count {
+  color: var(--cluster-ink);
+  font:
+    12px/1.7 ui-monospace,
+    monospace;
+  text-align: right;
+  white-space: nowrap;
+}
+.architecture-node-count > span {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+}
+.architecture-delivery {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(44px, 0.45fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+}
+.architecture-layer-label {
+  display: block;
+  font:
+    9px/1.7 ui-monospace,
+    monospace;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.architecture-workloads > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.architecture-workloads > div > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--solid);
+  font-size: 10px;
+}
+.architecture-reconcile {
+  color: var(--cluster-ink);
+  min-width: 0;
+  text-align: center;
+}
+.architecture-reconcile > span {
+  font:
+    8px/1.8 ui-monospace,
+    monospace;
+}
+.architecture-reconcile svg {
+  display: block;
+  width: 100%;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  overflow: visible;
+}
+.architecture-flow {
+  stroke-dasharray: 4 5;
+  animation: reconcile-flow 2s linear infinite;
+}
+.architecture-argo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: light-dark(#79512d, #ecc4a0);
+}
+.architecture-argo > svg {
+  flex-shrink: 0;
+}
+.architecture-argo strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 550;
+}
+.architecture-argo span {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+}
+.architecture-mesh {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: var(--cluster-ink);
+  padding: 10px 12px;
+  border: 1px solid var(--cluster-line);
+  border-radius: 8px;
+  margin-top: 24px;
+  background: light-dark(#e0eaf7a6, #27394a90);
+}
+.architecture-mesh strong {
+  font-weight: 500;
+  font-size: 11px;
+}
+.architecture-mesh > span {
+  font-size: 9px;
+  opacity: 0.85;
+}
+.architecture-mesh-branches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 21px;
+}
+.architecture-mesh-branches span {
+  display: block;
+  height: 100%;
+  width: 1px;
+  background: var(--cluster-line);
+  margin: auto;
+  position: relative;
+}
+.architecture-mesh-branches span::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: var(--cluster-ink);
+  border-radius: 50%;
+  left: -2px;
+  bottom: 0;
+}
+.architecture-pools {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.architecture-pool {
+  min-width: 0;
+  padding: 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--solid) 72%, transparent);
+}
+.architecture-pool > header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 13px;
+  min-height: 33px;
+}
+.architecture-pool > header > svg {
+  flex-shrink: 0;
+  color: var(--cluster-ink);
+}
+.architecture-pool h4 {
+  font-size: 11px;
+  font-weight: 550;
+  margin: 0;
+  line-height: 1.5;
+}
+.architecture-pool > header > div > span {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+}
+.pool-node-count {
+  margin-left: auto;
+  color: var(--muted);
+  font:
+    10px/1.5 ui-monospace,
+    monospace;
+}
+.architecture-pool ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 7px;
+}
+.compute-node {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 7px;
+  min-height: 54px;
+  padding: 9px 7px;
+  position: relative;
+}
+.server-tile {
+  width: 23px;
+  height: 27px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.compute-node strong {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.compute-node > div > span {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+}
+.control-plane-node {
+  border-color: var(--cluster-line);
+  background: light-dark(#e7effb, #27394e);
+}
+.control-plane-node .server-tile,
+.control-plane-node strong,
+.control-plane-node > div > span {
+  color: var(--cluster-ink);
+}
+.control-plane-mark {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: var(--cluster-ink);
+}
+.architecture-platform {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  border-top: 1px solid var(--cluster-line);
+  padding-top: 17px;
+  margin-top: 20px;
+}
+.architecture-platform > div {
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr);
+  column-gap: 6px;
+  row-gap: 2px;
+  align-items: center;
+}
+.architecture-platform svg {
+  color: var(--cluster-ink);
+}
+.architecture-platform strong {
+  font-size: 10px;
+  font-weight: 500;
+}
+.architecture-platform span {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 9px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+@keyframes reconcile-flow {
+  to {
+    stroke-dashoffset: 18;
+  }
+}
+html[data-motion="off"] .architecture-flow,
+.project-panel[hidden] .architecture-flow {
+  animation-play-state: paused;
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .architecture-cluster {
+    padding: 15px;
+  }
+  .architecture-pools {
+    gap: 7px;
+  }
+  .architecture-pool {
+    padding: 11px 7px;
+  }
+  .architecture-pool > header {
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .compute-node {
+    padding: 9px 6px;
+    gap: 5px;
+  }
+  .server-tile {
+    width: 18px;
+  }
+  .architecture-platform {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .architecture-inputs {
+    gap: 10px;
+  }
+  .architecture-source {
+    padding: 12px 10px;
+    gap: 7px;
+  }
+  .architecture-source > svg {
+    width: 15px;
+  }
+  .architecture-source > div > span {
+    font-size: 9px;
+  }
+  .architecture-source strong {
+    font-size: 10px;
+    gap: 4px;
+  }
+  .architecture-input-flow {
+    white-space: normal;
+    text-align: center;
+    font-size: 8px;
+    line-height: 1.4;
+    min-height: 24px;
+    padding: 0 6px;
+  }
+  .architecture-cluster {
+    padding: 15px 12px;
+    border-radius: 12px;
+  }
+  .architecture-cluster-heading {
+    gap: 10px;
+    margin-bottom: 17px;
+  }
+  .k3s-symbol {
+    width: 32px;
+    height: 36px;
+    border-radius: 9px;
+  }
+  .k3s-symbol svg {
+    width: 20px;
+  }
+  .architecture-cluster-title {
+    gap: 8px;
+  }
+  .architecture-cluster-heading h3 {
+    font-size: 17px;
+  }
+  .architecture-cluster-heading p {
+    font-size: 9px;
+  }
+  .architecture-node-count {
+    font-size: 10px;
+  }
+  .architecture-node-count > span {
+    font-size: 8px;
+  }
+  .architecture-delivery {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 9px;
+  }
+  .architecture-argo {
+    grid-row: 1;
+    justify-content: center;
+  }
+  .architecture-reconcile {
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+  }
+  .architecture-reconcile svg {
+    width: 32px;
+    transform: rotate(-90deg);
+  }
+  .architecture-workloads {
+    grid-row: 3;
+    text-align: center;
+  }
+  .architecture-workloads > div {
+    justify-content: center;
+  }
+  .architecture-mesh {
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 9px;
+    margin-top: 18px;
+  }
+  .architecture-mesh > span {
+    width: 100%;
+    text-align: center;
+  }
+  .architecture-mesh-branches {
+    height: 17px;
+    grid-template-columns: 1fr;
+  }
+  .architecture-mesh-branches span:not(:first-child) {
+    display: none;
+  }
+  .architecture-pools {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .architecture-pool {
+    padding: 13px 11px;
+  }
+  .architecture-pool > header {
+    min-height: 0;
+    margin-bottom: 11px;
+  }
+  .architecture-pool h4 {
+    font-size: 12px;
+  }
+  .architecture-pool ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .compute-node strong {
+    font-size: 10px;
+  }
+  .compute-node {
+    min-height: 57px;
+  }
+  .control-plane-node,
+  .pool-oracle .compute-node:first-child,
+  .pool-google .compute-node {
+    grid-column: 1 / -1;
+  }
+  .architecture-platform {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+  }
+  .architecture-platform strong {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .architecture-flow {
+    animation: none;
   }
 }

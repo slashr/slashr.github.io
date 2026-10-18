@@ -90,7 +90,7 @@ test("actual screenshots load, cycle, and enlarge in an accessible dialog", asyn
   ).toBeFocused();
 });
 
-test("homelab simulation is local and finishes without calling any external API", async ({
+test("the homelab architecture groups home and cloud nodes inside one k3s cluster", async ({
   page,
 }) => {
   const external: string[] = [];
@@ -99,15 +99,37 @@ test("homelab simulation is local and finishes without calling any external API"
       external.push(request.url());
   });
   await page.goto("/projects/#homelab");
-  const panel = page.getByRole("tabpanel");
-  await panel.getByRole("button", { name: "Cloud nodes", exact: true }).click();
-  await expect(panel.locator(".node-information h3")).toHaveText("Cloud nodes");
-  await panel.getByRole("button", { name: "Simulate deployment" }).click();
-  await expect(panel.getByRole("status")).toHaveText(
-    "Demo complete. No changes were made to the cluster.",
-    { timeout: 7000 },
-  );
+  const cluster = page.getByRole("region", {
+    name: "k3s cluster",
+    exact: true,
+  });
+  const pis = cluster.getByRole("region", { name: "Raspberry Pis nodes" });
+  await expect(pis.getByRole("listitem")).toHaveCount(3);
+  await expect(pis.getByText("Control plane", { exact: true })).toBeVisible();
+  await expect(pis.getByText("Worker", { exact: true })).toHaveCount(2);
+  await expect(
+    cluster
+      .getByRole("region", { name: "Oracle Cloud nodes" })
+      .getByRole("listitem"),
+  ).toHaveCount(3);
+  await expect(
+    cluster
+      .getByRole("region", { name: "Google Cloud nodes" })
+      .getByRole("listitem"),
+  ).toHaveCount(1);
+  await expect(cluster.getByText("Tailscale", { exact: true })).toBeVisible();
+  await expect(cluster.getByText("Argo CD", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Simulate deployment" }),
+  ).toHaveCount(0);
   expect(external).toEqual([]);
+  for (const colorScheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  }
 });
 
 test("preferences persist and reduced motion starts with a paused background", async ({

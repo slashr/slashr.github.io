@@ -16,8 +16,9 @@ npm run dev
 
 The Projects page uses real app captures. Screenshot provenance and the
 fictional iNAB capture dataset are described in [docs/screenshots.md](docs/screenshots.md).
-The homelab architecture diagram and its deployment simulation run entirely in
-the browser. They do not connect to the private cluster.
+The homelab diagram shows the configured k3s cluster, its home/cloud node pools,
+GitOps delivery and platform services. It does not connect to the private cluster.
+Architecture sources are recorded in [docs/screenshots.md](docs/screenshots.md).
 
 ## Checks and static preview
 

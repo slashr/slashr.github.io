@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion } from "motion/react";
 import { Timer, Wallet, Network, ArrowDownRight } from "lucide-react";
 import { projects, type ProjectId, type Project } from "@/lib/projects";
-import { HomelabDemo } from "./project-demos";
+import { HomelabArchitecture } from "./homelab-architecture";
 import { Screenshots } from "./screenshots";
 import { usePreferences } from "./preferences";
 const icons = { "power-hour": Timer, inab: Wallet, homelab: Network };
@@ -18,7 +18,7 @@ function ProjectPanel({
   const isLab = project.id === "homelab";
   return (
     <motion.section
-      className={`project-panel ${project.id === "inab" ? "wide-panel" : ""}`}
+      className={`project-panel ${project.id === "inab" ? "wide-panel" : ""} ${isLab ? "lab-panel" : ""}`}
       role="tabpanel"
       id={`panel-${project.id}`}
       aria-labelledby={`tab-${project.id}`}
@@ -38,21 +38,25 @@ function ProjectPanel({
           </div>
           <h2>{project.name}</h2>
           <p>{project.description}</p>
-          <div className="tech-stack">
-            {project.stack.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-          <details className="project-notes">
-            <summary>
-              More about the project <span aria-hidden="true">+</span>
-            </summary>
-            <ul>
-              {project.notes.map((note) => (
-                <li key={note}>{note}</li>
-              ))}
-            </ul>
-          </details>
+          {!isLab && (
+            <>
+              <div className="tech-stack">
+                {project.stack.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <details className="project-notes">
+                <summary>
+                  More about the project <span aria-hidden="true">+</span>
+                </summary>
+                <ul>
+                  {project.notes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ul>
+              </details>
+            </>
+          )}
           {!isLab && (
             <span className="screenshot-hint">
               <ArrowDownRight size={13} aria-hidden="true" />
@@ -61,11 +65,7 @@ function ProjectPanel({
           )}
         </div>
         <div className={`project-preview ${isLab ? "lab-preview" : ""}`}>
-          {isLab ? (
-            <HomelabDemo active={active} />
-          ) : (
-            <Screenshots project={project} />
-          )}
+          {isLab ? <HomelabArchitecture /> : <Screenshots project={project} />}
         </div>
       </div>
     </motion.section>
