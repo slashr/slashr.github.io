@@ -63,17 +63,17 @@ export const projects: Project[] = [
     screenshots: [
       {
         src: "/projects/inab-home.webp",
-        alt: "The actual iNAB dashboard showing its overview and charts with fictional test data",
-        caption: "Actual dashboard · fictional test data",
+        alt: "The actual iNAB dashboard with a two-year net worth trend, investment holdings, and a spending map using fictional data",
+        caption: "Dashboard overview · fictional data",
         width: 1440,
-        height: 1050,
+        height: 1200,
       },
       {
         src: "/projects/inab-budget.webp",
-        alt: "The actual iNAB budget workspace rendered with fictional test data",
-        caption: "Budget workspace · fictional test data",
+        alt: "The actual iNAB budget workspace showing spending against a plan and cash flow by pay period using fictional data",
+        caption: "Budget workspace · fictional data",
         width: 1440,
-        height: 1050,
+        height: 1200,
       },
     ],
   },

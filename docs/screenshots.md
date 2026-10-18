@@ -31,8 +31,20 @@ folder from the local iNAB checkout at
 `8ea98caa25f74c251874a88fa97db4e84e037b6d`.
 
 `dashboard-app/scripts/build-api-fixture.py` creates fictional rows in a temporary
-SQLite database and projects them through the app's finance API contract. The
-browser's dashboard requests were intercepted and fulfilled with that synthetic
+SQLite database and projects them through the app's finance API contract. For
+the portfolio captures, its seed rows were replaced in a temporary copy with
+24 fictional months (October 2024–September 2026): varied salary and spending,
+regular investment contributions, gains and drawdowns, six holdings, and
+matching balances. Net worth is the sum of cash, credit and investments in each
+month; monthly cash flow agrees with the fictional transaction ledger.
+
+The refreshed 1440 × 1200 captures were taken on 2026-10-18. Home shows the
+all-time net worth trend, positions, progress indicators and spending map;
+Budget shows the plan comparison and cash flow by pay period. The actual
+frontend rendered every chart and number; no interface text or chart pixels
+were edited in the images.
+
+The browser's dashboard requests were intercepted and fulfilled with that synthetic
 payload; optional API calls were answered as unconfigured, and nonlocal requests
 were blocked. No raw statements, private database, or real dashboard payload was
 loaded. The captures show the Home and Budget workspaces with this sample data.
