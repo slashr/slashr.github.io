@@ -2,8 +2,8 @@
 
 A personal site built with Next.js and React, exported as static files
 for [slashr.github.io](https://slashr.github.io). About, Projects, and Blog are
-separate pages in a shared tab navigation. The homepage introduces Akash alongside an animated mascot; `/projects/` holds the interactive Workbench for Power Hour, iNAB,
-and the homelab. The earlier writing lives at `/blog/`.
+separate pages in a shared tab navigation. The homepage has an animated desk scene;
+`/projects/` holds the interactive Workbench for Power Hour, iNAB, and the homelab. The earlier writing lives at `/blog/`.
 
 ## Development
 
@@ -19,6 +19,13 @@ fictional iNAB capture dataset are described in [docs/screenshots.md](docs/scree
 The homelab diagram shows the configured k3s cluster, its home/cloud node pools,
 GitOps delivery and platform services. It does not connect to the private cluster.
 Architecture sources are recorded in [docs/screenshots.md](docs/screenshots.md).
+
+The desk scene is local SVG artwork. The tabby wanders behind the laptop, grooms,
+and watches the pointer. Three invisible nearby targets trigger a crouch and a
+short pounce, with planted paws, joint movement, a landing, and a return to the
+desk. **Call the cat** works with mouse, keyboard, or touch. Animation respects
+reduced motion and stored motion preferences. The controller stops when hidden
+or offscreen and removes its listeners and any flying cat when leaving About.
 
 ## Checks and static preview
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { Mascot } from "@/components/mascot";
+import { DeskCompanion } from "@/components/desk-companion";
 
 export default function Home() {
   return (
@@ -33,7 +33,7 @@ export default function Home() {
             <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
-        <Mascot />
+        <DeskCompanion />
       </section>
     </main>
   );

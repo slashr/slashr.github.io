@@ -1056,6 +1056,9 @@ html[data-motion="off"] .ambient-gradient,
 .blog-page {
   animation: page-arrive 0.45s ease both;
 }
+.about-page {
+  animation-fill-mode: backwards;
+}
 @keyframes page-arrive {
   from {
     opacity: 0;
@@ -1106,8 +1109,8 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
 }
 .about-spread {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 45px;
+  grid-template-columns: 1fr 1.18fr;
+  gap: 24px;
   align-items: center;
   padding: 64px 0;
   min-height: calc(100svh - 172px);
@@ -1167,165 +1170,6 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
 }
 .about-project-link:hover svg {
   transform: translate(3px, -3px);
-}
-.mascot-stage {
-  --look-x: 0px;
-  --look-y: 0px;
-  --head-x: 0px;
-  --head-y: 0px;
-  --head-tilt: 0deg;
-  display: block;
-  position: relative;
-  width: 100%;
-  max-width: 510px;
-  aspect-ratio: 1;
-  padding: 0;
-  border: 0;
-  border-radius: 42%;
-  background: radial-gradient(
-    ellipse,
-    color-mix(in srgb, var(--maroon-soft) 58%, transparent),
-    transparent 68%
-  );
-  color: var(--accent);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.mascot-scene {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-.mascot-orbit {
-  opacity: 0.14;
-}
-.mascot-shadow {
-  fill: var(--ink);
-  opacity: 0.07;
-  transform-origin: 242px 421px;
-  animation: mascot-shadow 5.5s ease-in-out infinite;
-}
-.mascot-bot {
-  animation: mascot-hover 5.5s ease-in-out infinite;
-}
-.mascot-wave {
-  transform-origin: 320px 306px;
-  animation: mascot-wave 7s ease-in-out infinite;
-}
-.mascot-head {
-  transform-origin: 240px 285px;
-  transform: translate(var(--head-x), var(--head-y)) rotate(var(--head-tilt));
-  transition: transform 0.2s ease-out;
-}
-.mascot-look {
-  transform: translate(var(--look-x), var(--look-y));
-  transition: transform 0.1s ease-out;
-}
-.mascot-blink {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: mascot-blink 6.3s linear infinite;
-}
-.mascot-antenna {
-  animation: mascot-glow 4s ease-in-out infinite;
-}
-.mascot-star {
-  animation: mascot-star 7s ease-in-out infinite;
-}
-.star-one {
-  color: var(--accent);
-}
-.star-two {
-  color: light-dark(#b6843e, #ddb47c);
-  animation-delay: -2.3s;
-}
-.star-three {
-  color: var(--muted);
-  animation-delay: -4.5s;
-}
-.mascot-cube {
-  color: var(--accent);
-  opacity: 0.4;
-  animation: mascot-star 9s ease-in-out infinite reverse;
-}
-.cube-two {
-  animation-delay: -4s;
-}
-@keyframes mascot-hover {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  50% {
-    transform: translateY(-13px) rotate(1deg);
-  }
-}
-@keyframes mascot-shadow {
-  0%,
-  100% {
-    transform: scaleX(1);
-    opacity: 0.07;
-  }
-  50% {
-    transform: scaleX(0.82);
-    opacity: 0.04;
-  }
-}
-@keyframes mascot-wave {
-  0%,
-  23%,
-  100% {
-    transform: rotate(0);
-  }
-  4%,
-  12% {
-    transform: rotate(-18deg);
-  }
-  8%,
-  16% {
-    transform: rotate(11deg);
-  }
-  20% {
-    transform: rotate(-5deg);
-  }
-}
-@keyframes mascot-blink {
-  0%,
-  41%,
-  45%,
-  72%,
-  76%,
-  100% {
-    transform: scaleY(1);
-  }
-  43%,
-  74% {
-    transform: scaleY(0.08);
-  }
-}
-@keyframes mascot-glow {
-  0%,
-  100% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-@keyframes mascot-star {
-  0%,
-  100% {
-    translate: -5px 8px;
-  }
-  50% {
-    translate: 5px -8px;
-  }
-}
-html[data-motion="off"] .mascot-stage *,
-html[data-motion="off"] .mascot-stage {
-  animation: none;
-  transition: none;
 }
 .projects-intro .eyebrow {
   display: block;
@@ -1397,10 +1241,7 @@ html[data-motion="off"] .mascot-stage {
   .about-story p {
     font-size: 15px;
   }
-  .mascot-stage {
-    width: min(100%, 380px);
-    margin: 0 auto;
-  }
+
   .project-page-note {
     display: none;
   }
@@ -1421,11 +1262,6 @@ html[data-motion="off"] .mascot-stage {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .mascot-stage *,
-  .mascot-stage {
-    animation: none;
-    transition: none;
-  }
 }
 @media (forced-colors: active) {
   .page-tab[aria-current="page"] {
