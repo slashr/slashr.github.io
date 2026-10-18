@@ -1,0 +1,127 @@
+[
+  {
+    "filename": "2015-06-24-welcome.md",
+    "url": "/welcome/",
+    "sourceHash": "b1c69716bf0c9d43f7b03006ba46e337dae12a9aaa838c1ae1dc15afdf741bf3"
+  },
+  {
+    "filename": "2015-06-25-unix-fundamentals.md",
+    "url": "/unix-fundamentals/",
+    "sourceHash": "cf7fbac47cfb9f54f004442a5ebada3438e440b8e6b3b4bf8175d8497240c3c1"
+  },
+  {
+    "filename": "2015-07-08-aws-designing-a-3-tier-web-application.md",
+    "url": "/aws-designing-a-3-tier-web-application/",
+    "sourceHash": "3a874cb5124d967007b62516a553a107769c224add05c2481fb5beb3f306b92c"
+  },
+  {
+    "filename": "2015-10-08-cloudwatch-custom-metric-quick-start.md",
+    "url": "/cloudwatch-custom-metric-quick-start/",
+    "sourceHash": "1f2a0c80dc13aa4c103ccb4fe94ade0c46f51afc83ac3899493138446ca069f0"
+  },
+  {
+    "filename": "2015-10-26-codecommit-walkthrough.md",
+    "url": "/codecommit-walkthrough/",
+    "sourceHash": "6ba6477f481331c2a89aea530431328f0cbcb533e3b7763a17c603f73274d185"
+  },
+  {
+    "filename": "2015-12-28-iam-restrict-user-specific-instance.md",
+    "url": "/iam-restrict-user-specific-instance/",
+    "sourceHash": "f7912c0f4c47212e5b1578ea4a47f4a5a2a23eb35fe79ebb8d80a51641816e4c"
+  },
+  {
+    "filename": "2016-02-12-launching-ec2-instances-using-vagrant.md",
+    "url": "/launching-ec2-instances-using-vagrant/",
+    "sourceHash": "89863d57728ab88c5523c6a90004bc6c25c0469f04ac2c33a297906b5c02e4e7"
+  },
+  {
+    "filename": "2016-02-24-route-53-use-cases.md",
+    "url": "/route-53-use-cases/",
+    "sourceHash": "b8267f955602a020bb19eaaad9ff5092d936f650d159a0feb3e18380eb68f5e1"
+  },
+  {
+    "filename": "2016-03-19-iam-restrict-bucket-access-by-username.md",
+    "url": "/iam-restrict-bucket-access-by-username/",
+    "sourceHash": "59e6e25817b28b11a04c6ba842747e01475a2dd562266d632a0bed3a8dd05a8b"
+  },
+  {
+    "filename": "2016-03-23-deploying-django-to-beanstalk.md",
+    "url": "/deploying-django-to-beanstalk/",
+    "sourceHash": "806c057f693d1cc180446d35d7232200f142a2a393a483f42ad90b9f891a6ddb"
+  },
+  {
+    "filename": "2016-04-22-using-openvas-perform-security-scan-ec2.md",
+    "url": "/using-openvas-perform-security-scan-ec2/",
+    "sourceHash": "2e34ff07098b1f60070a2e048423814ac0a9995e5fd2882a7597ba3bc6d89bfb"
+  },
+  {
+    "filename": "2016-04-29-cloudformation-launch-ec2-execute-script-startup.md",
+    "url": "/cloudformation-launch-ec2-execute-script-startup/",
+    "sourceHash": "d39f635a218ef4400b4a09b0c46f0e755ee7c5b3ebf2c9f444eaee7bd21323d4"
+  },
+  {
+    "filename": "2016-05-05-configuration-management-ec2-ansible.md",
+    "url": "/configuration-management-ec2-ansible/",
+    "sourceHash": "3d46005640d1c19a4842f1b3c1665b1659618303277ebe69153ee11f4f82f581"
+  },
+  {
+    "filename": "2016-06-16-elb-logs-using-elk.md",
+    "url": "/elb-logs-using-elk/",
+    "sourceHash": "58bfd28911ad89ad8743ab84ef57dce726bf5edcd6081501aa3cafb51f30b389"
+  },
+  {
+    "filename": "2016-07-06-iam-restrict-ec2-access-specific-region.md",
+    "url": "/iam-restrict-ec2-access-specific-region/",
+    "sourceHash": "c0a83fb6205c30ddfb266d056a41911d8e052b5159571aa190dcfbd6b920856d"
+  },
+  {
+    "filename": "2016-07-13-ansible-playbook-tomcat-cluster.md",
+    "url": "/ansible-playbook-tomcat-cluster/",
+    "sourceHash": "a8eed872d4cb51eef1de8c3b016627101fa4681f8c47ca759b158346781a8ce5"
+  },
+  {
+    "filename": "2016-07-20-docker.md",
+    "url": "/docker/",
+    "sourceHash": "e05f90c8d52011101573d1fe841b947b132110b1a672fda0a42c11e55fbe67f0"
+  },
+  {
+    "filename": "2016-09-07-rds-read-replica-aurora-mysql.md",
+    "url": "/rds-read-replica-aurora-mysql/",
+    "sourceHash": "10f0c2957957a5d74b908890dfc91df9e88c45cbb7915d97cb6d01cde76051a9"
+  },
+  {
+    "filename": "2016-11-24-using-lambda-turn-off-ec2-instances.md",
+    "url": "/using-lambda-turn-off-ec2-instances/",
+    "sourceHash": "8a36b983f267f91d4d51525737d1a83e70ccedf0004fdb823a876df42975b0de"
+  },
+  {
+    "filename": "2018-03-17-fire-suppression-using-smart-sensors-iot.md",
+    "url": "/fire-suppression-using-smart-sensors-iot/",
+    "sourceHash": "e22f9ccfc67d03898a0a00eb272fcf7a56c987f06e1ac243cbe285a779027e65"
+  },
+  {
+    "filename": "2019-06-24-jenkins-kaniko-kubernetes-the-cloud-ci-cd-trifecta.md",
+    "url": "/jenkins-kaniko-kubernetes-cloud-ci-cd/",
+    "sourceHash": "047aa5a015931e1aea7302521e075c2d75997129a8544295e23e1d36f792a8fe"
+  },
+  {
+    "filename": "2021-01-01-migrate-from-helm2-to-helm3-safely.md",
+    "url": "/migrate-helm2-to-helm3/",
+    "sourceHash": "4ea5bf05e3ea564394335ec49f8f953f10700c110e3f88bc2fd1076668992ab1"
+  },
+  {
+    "filename": "2021-07-16-observable-k8s-cluster-using-grafana-loki-prometheus.md",
+    "url": "/https:/figments.medium.com/observable-kubernetes-cluster-using-grafana-loki-prometheus-a661a31d7ad8",
+    "sourceHash": "15cf6068ec53a1930d28870101cd4c1c89569802cf60b2faba0cf78c5f98e049"
+  },
+  {
+    "filename": "2022-04-15-gitops-in-reverse-argo-cd.md",
+    "url": "/git-to-ops/",
+    "sourceHash": "17596f7aba0fbb34fd56c8cae7e016183b7f13838bf72f1bcff5ba95f41e6dbe"
+  },
+  {
+    "filename": "2022-08-13-making-terraform-less-terrafying.md",
+    "url": "/2022/08/13/making-terraform-less-terrafying.html",
+    "sourceHash": "4090bb9f92bf6e3f5a565ee8dcdbf027862d6090e4285f6d160eb222f8429c43"
+  }
+]

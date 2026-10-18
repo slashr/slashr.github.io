@@ -1,0 +1,322 @@
+.desk-companion {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 640px;
+}
+.desk-companion .desk-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 640/500;
+}
+.desk-companion .desk-art {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.desk-companion .wall-line {
+  stroke: var(--accent);
+  opacity: 0.12;
+  stroke-width: 1;
+  fill: none;
+}
+.desk-companion .wall-note {
+  fill: var(--accent);
+  opacity: 0.12;
+}
+.desk-companion .note-ink {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.desk-companion .engineer-head {
+  transform-origin: 286px 205px;
+  animation: desk-working 7s ease-in-out infinite;
+}
+.desk-companion .hand {
+  animation: desk-typing 0.9s ease-in-out infinite;
+  transform-origin: 280px 330px;
+}
+.desk-companion .hand-right {
+  animation-delay: -0.45s;
+}
+.desk-companion .steam {
+  animation: desk-steam 4s ease-in-out infinite;
+}
+.desk-companion [data-cat-home] {
+  position: absolute;
+  left: 68.5%;
+  top: 36.92%;
+  width: 25.5%;
+  aspect-ratio: 180/210;
+  z-index: 2;
+  transform-origin: 50% 84.75%;
+}
+.desk-companion [data-cat] {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.desk-companion[data-busy="true"] [data-cat-home] {
+  visibility: hidden;
+}
+:is(.desk-companion, .desk-flight) .cat-head {
+  transform-origin: 89px 122px;
+  transform: translate(var(--hx, 0px), var(--hy, 0px)) rotate(var(--tilt, 0deg));
+  transition: transform 0.18s ease-out;
+}
+:is(.desk-companion, .desk-flight) .cat-eyes {
+  transform: translate(var(--gx, 0px), var(--gy, 0px));
+  transition: transform 0.09s ease-out;
+}
+:is(.desk-companion, .desk-flight) .cat-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: desk-blink 6.3s linear infinite;
+}
+:is(.desk-companion, .desk-flight) .cat-tail {
+  transform-origin: 131px 164px;
+  animation: desk-tail 6.7s ease-in-out infinite;
+}
+:is(.desk-companion, .desk-flight) .sit-rig {
+  opacity: 1;
+}
+:is(.desk-companion, .desk-flight) .side-rig {
+  opacity: 0;
+}
+:is(.desk-companion, .desk-flight) :is(.side-rig, .sit-rig) {
+  transition: opacity 0.24s ease;
+}
+.desk-companion :is([data-pose="walk"], [data-pose="stalk"]) .sit-rig,
+.desk-flight[data-pose="flight"] .sit-rig {
+  opacity: 0;
+}
+.desk-companion :is([data-pose="walk"], [data-pose="stalk"]) .side-rig,
+.desk-flight[data-pose="flight"] .side-rig {
+  opacity: 1;
+}
+:is(.desk-companion, .desk-flight) .leg {
+  fill: url(#desk-cat-leg);
+  stroke: none;
+}
+:is(.desk-companion, .desk-flight) :is(.leg.front-far, .leg.back-far) {
+  fill: #7c7466;
+}
+:is(.desk-companion, .desk-flight) .leg .toe {
+  fill: #c2b49b;
+}
+:is(.desk-companion, .desk-flight) :is(.front-far, .back-far) .toe {
+  fill: #938876;
+}
+.desk-flight .cat-contact-shadow {
+  opacity: 0;
+}
+.desk-companion .cat-body {
+  transform-origin: 90px 177px;
+  animation: desk-cat-breathe 4.8s ease-in-out infinite;
+}
+:is(.desk-companion, .desk-flight) .cat-ear {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: desk-ear-listen 11s ease-in-out infinite;
+}
+:is(.desk-companion, .desk-flight) .ear-right {
+  animation-delay: -4s;
+}
+.desk-companion .licking .seated-front-paw {
+  opacity: 0;
+}
+:is(.desk-companion, .desk-flight) .groom-paw {
+  opacity: 0;
+  transform-origin: 118px 157px;
+}
+:is(.desk-companion, .desk-flight) .cat-tongue {
+  opacity: 0;
+}
+.desk-companion .licking .groom-paw {
+  opacity: 1;
+  animation: desk-groom 0.65s ease-in-out infinite;
+}
+.desk-companion .licking .seated-head {
+  transform: rotate(8deg) translate(2px, 1px);
+}
+.desk-companion .licking .cat-tongue {
+  animation: desk-lick 0.65s ease-in-out infinite;
+}
+.desk-companion .licking .cat-eyes {
+  transform: translate(1px, 1px);
+}
+:is(.desk-companion, .desk-flight) .walking-head {
+  transform-origin: 64px 123px;
+  transform: translate(
+      var(--hx, 0px),
+      calc(var(--hy, 0px) + var(--head-drop, 0px))
+    )
+    rotate(calc(var(--tilt, 0deg) + var(--head-pitch, 0deg)));
+}
+:is(.desk-companion, .desk-flight) .side-tail {
+  animation: none;
+}
+.desk-flight {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+  transform-origin: 50% 84.75%;
+}
+.desk-flight > svg {
+  width: 100%;
+  display: block;
+  overflow: visible;
+}
+.desk-flight .cat-head,
+.desk-flight .cat-eyes {
+  transition: none;
+}
+.desk-flight .cat-eyes {
+  transform: translate(-1px, 1px);
+}
+.desk-companion .laptop-foreground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+.desk-companion .desk-call {
+  display: block;
+  margin: 2px 0 0 auto;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font:
+    11px/1.8 ui-monospace,
+    monospace;
+  padding: 8px 0;
+}
+.desk-companion .desk-call span {
+  margin-left: 12px;
+}
+.desk-companion .desk-call:hover {
+  color: var(--accent);
+}
+.desk-companion .desk-call:disabled {
+  visibility: hidden;
+}
+.desk-companion .pounce-marker {
+  display: none;
+}
+@keyframes desk-cat-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.012);
+  }
+}
+@keyframes desk-ear-listen {
+  0%,
+  63%,
+  71%,
+  100% {
+    transform: rotate(0);
+  }
+  66% {
+    transform: rotate(-9deg);
+  }
+  68% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes desk-working {
+  0%,
+  100% {
+    transform: rotate(-1.5deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+@keyframes desk-typing {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-2.5px);
+  }
+}
+@keyframes desk-steam {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(-4px);
+  }
+}
+@keyframes desk-tail {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes desk-blink {
+  0%,
+  41%,
+  45%,
+  100% {
+    transform: scaleY(1);
+  }
+  43% {
+    transform: scaleY(0.08);
+  }
+}
+@keyframes desk-groom {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(0, -2px) rotate(-4deg);
+  }
+}
+@keyframes desk-lick {
+  0%,
+  25%,
+  90%,
+  100% {
+    opacity: 0;
+  }
+  40%,
+  70% {
+    opacity: 1;
+  }
+}
+html[data-motion="off"] .desk-companion * {
+  animation: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .desk-companion *,
+  .desk-flight * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (max-width: 700px) {
+  .desk-companion {
+    max-width: 530px;
+    margin: 0 auto;
+  }
+}
