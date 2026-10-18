@@ -1,10 +1,11 @@
 :root {
   color-scheme: light dark;
-  --paper: light-dark(#f5f7f5, #111b19);
-  --ink: light-dark(#21362e, #e8f0e8);
-  --soft: light-dark(#536c5f, #a4b6a8);
-  --line: light-dark(#d6e0d6, #344b3d);
-  --accent: light-dark(#276449, #a6d1b1);
+  --paper: light-dark(#f8f4f5, #1b1418);
+  --ink: light-dark(#38272e, #f4e9ed);
+  --soft: light-dark(#745f68, #c4b0b9);
+  --line: light-dark(#e4d7de, #4a333f);
+  --accent: light-dark(#7e2341, #edafc3);
+  --accent-soft: light-dark(#efdce3, #53303e);
 }
 * {
   box-sizing: border-box;
@@ -62,7 +63,7 @@ a {
 }
 .archive-nav nav a[aria-current="page"] {
   color: var(--ink);
-  background: light-dark(#dcecdf, #304b37);
+  background: var(--accent-soft);
   box-shadow: inset 0 0 0 1px var(--line);
 }
 main {
@@ -134,7 +135,7 @@ h4 {
 .article-body pre {
   overflow-x: auto;
   padding: 20px;
-  background: light-dark(#e7eee6, #1d3026);
+  background: light-dark(#f0e5ea, #382530);
   border-radius: 10px;
   font-size: 13px;
   line-height: 1.7;
