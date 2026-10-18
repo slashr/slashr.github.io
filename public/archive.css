@@ -48,11 +48,22 @@ a {
 }
 .archive-nav nav {
   display: flex;
-  gap: 24px;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
 }
 .archive-nav nav a {
   text-decoration: none;
   color: var(--soft);
+  padding: 5px 13px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.archive-nav nav a[aria-current="page"] {
+  color: var(--ink);
+  background: light-dark(#dcecdf, #304b37);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
 main {
   max-width: 730px;
@@ -190,7 +201,7 @@ a:focus-visible {
     gap: 12px;
   }
   .archive-nav nav {
-    gap: 18px;
+    gap: 3px;
   }
   main {
     margin-top: 28px;

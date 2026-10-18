@@ -1,8 +1,10 @@
 # Akash Nair / slashr
 
-A project-first portfolio built with Next.js and React, exported as static files
-for [slashr.github.io](https://slashr.github.io). The homepage is an interactive
-Workbench for Power Hour, iNAB, and the homelab. The earlier writing lives at `/blog/`.
+A personal site built with Next.js and React, exported as static files
+for [slashr.github.io](https://slashr.github.io). About, Projects, and Blog are
+separate pages in a shared tab navigation. The homepage introduces Akash and
+his interests; `/projects/` holds the interactive Workbench for Power Hour, iNAB,
+and the homelab. The earlier writing lives at `/blog/`.
 
 ## Development
 
@@ -13,7 +15,7 @@ npm ci
 npm run dev
 ```
 
-The default homepage uses real app captures. Screenshot provenance and the
+The Projects page uses real app captures. Screenshot provenance and the
 fictional iNAB capture dataset are described in [docs/screenshots.md](docs/screenshots.md).
 The optional workout/budget sketches and deployment simulation run entirely in
 the browser. They do not connect to the private apps or cluster.

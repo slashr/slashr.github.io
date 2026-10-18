@@ -1,37 +1,51 @@
-import { Workbench } from "@/components/workbench";
-import { readPosts } from "@/lib/archive.mjs";
 import Link from "next/link";
-import { MapPin, ArrowRight } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { PersonalMap } from "@/components/personal-map";
+
 export default function Home() {
-  const posts = readPosts();
   return (
-    <main id="main">
-      <section className="intro">
-        <div>
-          <h1>Akash Nair</h1>
-          <p>
-            DevOps engineer. These are the apps and systems I work on outside of
-            my day job.
+    <main id="main" className="about-page">
+      <section className="about-spread" aria-labelledby="about-title">
+        <div className="about-copy">
+          <span className="eyebrow about-hello">Hello, I'm</span>
+          <h1 id="about-title">
+            Akash
+            <br />
+            Nair<span className="name-period">.</span>
+          </h1>
+          <p className="about-role">
+            DevOps engineer.
+            <br />
+            Usually building something.
           </p>
-        </div>
-        <span className="location">
-          <MapPin size={13} aria-hidden="true" />
-          Berlin, Germany
-        </span>
-      </section>
-      <Workbench />
-      <section className="archive-teaser" aria-label="Earlier writing">
-        <div>
-          <Link href="/blog/">
-            Blog archive <ArrowRight size={14} aria-hidden="true" />
+          <span className="location about-location">
+            <MapPin size={13} aria-hidden="true" />
+            Berlin, Germany
+          </span>
+          <div className="about-story">
+            <p>
+              You might know me as <span className="inline-handle">slashr</span>
+              . I work on infrastructure, and spend a fair bit of my spare time
+              making things I use myself.
+            </p>
+            <p>
+              A workout app for the gym. A way to make sense of my finances. A
+              small cluster of machines to run my apps and services.
+            </p>
+          </div>
+          <Link className="about-project-link" href="/projects/">
+            See what I'm working on{" "}
+            <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
-          <span>{posts.length} posts · 2015–2022</span>
         </div>
-        <p>
-          I used to write about AWS, Kubernetes, and infrastructure. Those posts
-          are still here.
-        </p>
+        <PersonalMap />
       </section>
+      <div className="about-margin-note">
+        <span>Akash in person. slashr on the internet.</span>
+        <span>
+          Always a work in progress <span aria-hidden="true">↗</span>
+        </span>
+      </div>
     </main>
   );
 }

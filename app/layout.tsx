@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://slashr.github.io"),
   title: { default: "Akash Nair / slashr", template: "%s · Akash Nair" },
   description:
-    "Personal projects by Akash Nair, a DevOps engineer in Berlin. Power Hour, iNAB, and a self-hosted homelab.",
+    "Akash Nair, also known as slashr. DevOps engineer in Berlin, building personal apps and a self-hosted homelab.",
   openGraph: {
     title: "Akash Nair / slashr",
     description: "Apps, infrastructure, and personal projects.",

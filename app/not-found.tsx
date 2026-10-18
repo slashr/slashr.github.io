@@ -6,7 +6,7 @@ export default function NotFound() {
       <h1>Page not found</h1>
       <p>The projects and the old writing are still here.</p>
       <div>
-        <Link className="button button-primary" href="/">
+        <Link className="button button-primary" href="/projects/">
           Personal projects
         </Link>
         <Link className="button" href="/blog/">

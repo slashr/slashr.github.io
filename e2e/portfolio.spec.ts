@@ -5,10 +5,51 @@ const originals: { url: string }[] = JSON.parse(
   readFileSync(new URL("../tests/legacy-posts.json", import.meta.url), "utf8"),
 );
 
-test("project tabs support keyboard, deep links, and back navigation", async ({
+test("the homepage introduces Akash and the main tabs open their own pages", async ({
   page,
 }) => {
   await page.goto("/");
+  const navigation = page.getByRole("navigation", { name: "Main navigation" });
+  await expect(
+    navigation.getByRole("link", { name: "About", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "AkashNair.",
+  );
+  await expect(
+    page.getByRole("tablist", { name: "Choose a project" }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Self-hosting", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Self-hosting", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page
+    .getByRole("link", { name: "Explore Homelab", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/projects\/#homelab$/);
+  await expect(page.getByRole("tab", { name: "Homelab" })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  await expect(
+    navigation.getByRole("link", { name: "Projects", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  await navigation.getByRole("link", { name: "Blog", exact: true }).click();
+  await expect(page).toHaveURL(/\/blog\/$/);
+  await expect(
+    navigation.getByRole("link", { name: "Blog", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  await expect(
+    page.getByRole("heading", { name: "Blog archive", exact: true }),
+  ).toBeVisible();
+  await navigation.getByRole("link", { name: "About", exact: true }).click();
+  await expect(page).toHaveURL("http://127.0.0.1:4173/");
+});
+
+test("project tabs support keyboard, deep links, and back navigation", async ({
+  page,
+}) => {
+  await page.goto("/projects/");
   const power = page.getByRole("tab", { name: "Power Hour" });
   await expect(power).toHaveAttribute("aria-selected", "true");
   await power.focus();
@@ -37,7 +78,7 @@ test("project tabs support keyboard, deep links, and back navigation", async ({
 test("actual screenshots load, cycle, and enlarge in an accessible dialog", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/projects/");
   const panel = page.getByRole("tabpanel");
   const image = panel.locator(".screenshot-open img");
   await expect(image).toBeVisible();
@@ -62,7 +103,7 @@ test("actual screenshots load, cycle, and enlarge in an accessible dialog", asyn
 test("workout and budget sketches respond and the timer stops when switching projects", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/projects/");
   await page.getByRole("button", { name: "Try a demo" }).first().click();
   const workout = page.locator(".workout-demo");
   await workout
@@ -107,7 +148,7 @@ test("homelab simulation is local and finishes without calling any external API"
     if (new URL(request.url()).origin !== "http://127.0.0.1:4173")
       external.push(request.url());
   });
-  await page.goto("/#homelab");
+  await page.goto("/projects/#homelab");
   const panel = page.getByRole("tabpanel");
   await panel.getByRole("button", { name: "Cloud nodes", exact: true }).click();
   await expect(panel.locator(".node-information h3")).toHaveText("Cloud nodes");
@@ -171,7 +212,7 @@ test("light, dark and narrow layouts remain accessible and fit their viewport", 
 }) => {
   for (const colorScheme of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
-    await page.goto("/");
+    await page.goto("/projects/");
     for (const width of [1280, 768, 390, 320]) {
       await page.setViewportSize({ width, height: 1000 });
       for (const name of ["Power Hour", "iNAB", "Homelab"]) {
@@ -182,10 +223,22 @@ test("light, dark and narrow layouts remain accessible and fit their viewport", 
         expect(overflow, `${colorScheme} ${width} ${name}`).toBe(false);
       }
     }
-    await page.setViewportSize({ width: 1280, height: 1000 });
-    const results = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-      .analyze();
-    expect(results.violations).toEqual([]);
+    for (const route of ["/projects/", "/", "/blog/"]) {
+      await page.goto(route);
+      for (const width of [1280, 768, 390, 320]) {
+        await page.setViewportSize({ width, height: 1000 });
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          ),
+          `${colorScheme} ${width} ${route}`,
+        ).toBe(false);
+      }
+      await page.setViewportSize({ width: 1280, height: 1000 });
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze();
+      expect(results.violations, `${colorScheme} ${route}`).toEqual([]);
+    }
   }
 });

@@ -31,6 +31,7 @@ for (const post of readPosts()) {
 }
 for (const path of [
   "/",
+  "/projects/",
   "/blog/",
   "/feed.xml",
   "/sitemap.xml",
@@ -46,7 +47,7 @@ for (const path of [
 ]) {
   if (!targetFile(path)) throw new Error("Missing exported asset: " + path);
 }
-for (const page of ["/", "/blog/"]) {
+for (const page of ["/", "/projects/", "/blog/"]) {
   const $ = load(readFileSync(targetFile(page), "utf8"));
   for (const el of $("a[href],script[src],link[href],img[src]").toArray()) {
     const value = $(el).attr("href") || $(el).attr("src");
