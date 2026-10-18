@@ -1,23 +1,81 @@
 "use client";
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePreferences } from "./preferences";
 
 export function Mascot() {
   const stage = useRef<HTMLButtonElement>(null);
   const [wave, setWave] = useState(0);
   const { motion } = usePreferences();
-  const look = (event: PointerEvent<HTMLButtonElement>) => {
-    if (!motion || event.pointerType === "touch") return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    stage.current?.style.setProperty(
-      "--look-x",
-      `${((event.clientX - bounds.left) / bounds.width - 0.5) * 8}px`,
-    );
-    stage.current?.style.setProperty(
-      "--look-y",
-      `${((event.clientY - bounds.top) / bounds.height - 0.5) * 6}px`,
-    );
-  };
+  useEffect(() => {
+    const element = stage.current;
+    if (!element) return;
+    let pointer: { x: number; y: number } | null = null;
+    let frame = 0;
+    const reset = () => {
+      pointer = null;
+      cancelAnimationFrame(frame);
+      frame = 0;
+      element.style.setProperty("--look-x", "0px");
+      element.style.setProperty("--look-y", "0px");
+      element.style.setProperty("--head-x", "0px");
+      element.style.setProperty("--head-y", "0px");
+      element.style.setProperty("--head-tilt", "0deg");
+    };
+    reset();
+    if (!motion) return;
+    const update = () => {
+      frame = 0;
+      if (!pointer || document.hidden) return;
+      const bounds = element.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      const x =
+        (pointer.x - bounds.left - bounds.width * 0.5) /
+        Math.max(bounds.width * 0.7, 200);
+      const y =
+        (pointer.y - bounds.top - bounds.height * (215 / 480)) /
+        Math.max(bounds.height * 0.6, 180);
+      const distance = Math.max(1, Math.hypot(x, y));
+      const dx = x / distance;
+      const dy = y / distance;
+      element.style.setProperty("--look-x", `${dx * 7}px`);
+      element.style.setProperty("--look-y", `${dy * 5}px`);
+      element.style.setProperty("--head-x", `${dx * 3}px`);
+      element.style.setProperty("--head-y", `${dy * 2}px`);
+      element.style.setProperty("--head-tilt", `${dx * 4}deg`);
+    };
+    const schedule = () => {
+      if (!frame && pointer) frame = requestAnimationFrame(update);
+    };
+    const move = (event: PointerEvent) => {
+      if (event.pointerType === "touch") {
+        reset();
+        return;
+      }
+      pointer = { x: event.clientX, y: event.clientY };
+      schedule();
+    };
+    const leave = (event: PointerEvent) => {
+      if (event.relatedTarget === null) reset();
+    };
+    const visibility = () => {
+      if (document.hidden) reset();
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("pointerout", leave);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    window.addEventListener("blur", reset);
+    document.addEventListener("visibilitychange", visibility);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerout", leave);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("blur", reset);
+      document.removeEventListener("visibilitychange", visibility);
+      reset();
+    };
+  }, [motion]);
   return (
     <button
       ref={stage}
@@ -25,11 +83,6 @@ export function Mascot() {
       type="button"
       aria-label="Wave to the mascot"
       onClick={() => setWave((value) => value + 1)}
-      onPointerMove={look}
-      onPointerLeave={() => {
-        stage.current?.style.setProperty("--look-x", "0px");
-        stage.current?.style.setProperty("--look-y", "0px");
-      }}
     >
       <svg viewBox="0 0 480 480" aria-hidden="true" className="mascot-scene">
         <defs>
@@ -177,48 +230,56 @@ export function Mascot() {
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path
-            d="M237 145 237 121"
-            fill="none"
-            stroke="#a3543d"
-            strokeWidth="7"
-            strokeLinecap="round"
-          />
-          <circle
-            className="mascot-antenna"
-            cx="237"
-            cy="114"
-            r="10"
-            fill="#e2b397"
-          />
-          <rect
-            x="139"
-            y="145"
-            width="203"
-            height="154"
-            rx="55"
-            fill="url(#shell)"
-          />
-          <path
-            d="M159 171 Q173 155 196 155H281"
-            fill="none"
-            stroke="#f5b999"
-            strokeOpacity="0.35"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-          <rect
-            x="159"
-            y="172"
-            width="163"
-            height="104"
-            rx="35"
-            fill="url(#face)"
-          />
-          <g className="mascot-look">
-            <g className="mascot-blink" fill="#61291e">
-              <ellipse cx="208" cy="215" rx="8" ry="11" />
-              <ellipse cx="274" cy="215" rx="8" ry="11" />
+          <g className="mascot-head">
+            <path
+              d="M237 145 237 121"
+              fill="none"
+              stroke="#a3543d"
+              strokeWidth="7"
+              strokeLinecap="round"
+            />
+            <circle
+              className="mascot-antenna"
+              cx="237"
+              cy="114"
+              r="10"
+              fill="#e2b397"
+            />
+            <rect
+              x="139"
+              y="145"
+              width="203"
+              height="154"
+              rx="55"
+              fill="url(#shell)"
+            />
+            <path
+              d="M159 171 Q173 155 196 155H281"
+              fill="none"
+              stroke="#f5b999"
+              strokeOpacity="0.35"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+            <rect
+              x="159"
+              y="172"
+              width="163"
+              height="104"
+              rx="35"
+              fill="url(#face)"
+            />
+            <g className="mascot-blink">
+              <g fill="#fffaf2">
+                <ellipse cx="208" cy="215" rx="15" ry="18" />
+                <ellipse cx="274" cy="215" rx="15" ry="18" />
+              </g>
+              <g className="mascot-look" fill="#61291e">
+                <ellipse cx="208" cy="215" rx="8" ry="11" />
+                <ellipse cx="274" cy="215" rx="8" ry="11" />
+                <circle cx="206" cy="212" r="2" fill="#fffaf2" />
+                <circle cx="272" cy="212" r="2" fill="#fffaf2" />
+              </g>
             </g>
             <path
               d="M226 245 Q241 258 256 245"
@@ -227,25 +288,25 @@ export function Mascot() {
               strokeWidth="3.5"
               strokeLinecap="round"
             />
+            <ellipse
+              cx="187"
+              cy="241"
+              rx="9"
+              ry="5"
+              fill="#c57961"
+              opacity="0.25"
+            />
+            <ellipse
+              cx="294"
+              cy="241"
+              rx="9"
+              ry="5"
+              fill="#c57961"
+              opacity="0.25"
+            />
+            <circle cx="153" cy="223" r="4" fill="#f0c7a7" opacity="0.7" />
+            <circle cx="329" cy="223" r="4" fill="#f0c7a7" opacity="0.7" />
           </g>
-          <ellipse
-            cx="187"
-            cy="241"
-            rx="9"
-            ry="5"
-            fill="#c57961"
-            opacity="0.25"
-          />
-          <ellipse
-            cx="294"
-            cy="241"
-            rx="9"
-            ry="5"
-            fill="#c57961"
-            opacity="0.25"
-          />
-          <circle cx="153" cy="223" r="4" fill="#f0c7a7" opacity="0.7" />
-          <circle cx="329" cy="223" r="4" fill="#f0c7a7" opacity="0.7" />
         </g>
       </svg>
     </button>

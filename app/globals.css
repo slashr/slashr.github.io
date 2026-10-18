@@ -1372,6 +1372,9 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
 .mascot-stage {
   --look-x: 0px;
   --look-y: 0px;
+  --head-x: 0px;
+  --head-y: 0px;
+  --head-tilt: 0deg;
   display: block;
   position: relative;
   width: 100%;
@@ -1411,9 +1414,14 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
   transform-origin: 320px 306px;
   animation: mascot-wave 7s ease-in-out infinite;
 }
+.mascot-head {
+  transform-origin: 240px 285px;
+  transform: translate(var(--head-x), var(--head-y)) rotate(var(--head-tilt));
+  transition: transform 0.2s ease-out;
+}
 .mascot-look {
   transform: translate(var(--look-x), var(--look-y));
-  transition: transform 0.18s ease-out;
+  transition: transform 0.1s ease-out;
 }
 .mascot-blink {
   transform-box: fill-box;
