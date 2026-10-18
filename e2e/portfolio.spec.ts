@@ -278,6 +278,10 @@ test("the desk cat crouches on planted paws, pounces, and returns", async ({
   );
   await expect(flying).toHaveCount(0);
   await expect(scene.locator("[data-cat-home]")).toBeVisible();
+  await expect(scene.locator("[data-cat-home]")).toHaveAttribute(
+    "data-pose",
+    "walk",
+  );
   expect(
     await scene
       .locator(".laptop-foreground")
@@ -317,4 +321,60 @@ test("desk animations clean up on navigation and reduced-motion changes", async 
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await expect(page.locator(".pounce-marker")).toHaveCount(3);
   expect(errors).toEqual([]);
+});
+
+test("walking paws stay planted as the cat moves across the desk", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  await expect(page.locator("[data-cat-home]")).toHaveAttribute(
+    "data-pose",
+    "walk",
+    { timeout: 12_000 },
+  );
+  const samples = await page.evaluate(async () => {
+    const home = document.querySelector<HTMLElement>("[data-cat-home]")!;
+    const svg = home.querySelector<SVGSVGElement>("[data-cat]")!;
+    const legs = [...home.querySelectorAll<SVGGElement>(".side-rig .leg")];
+    const result: { x: number; feet: { x: number; planted: boolean }[] }[] = [];
+    const start = performance.now();
+    while (performance.now() - start < 1100) {
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      result.push({
+        x: home.getBoundingClientRect().left,
+        feet: legs.map((leg) => {
+          const foot = new DOMPoint(
+            Number(leg.dataset.footX),
+            Number(leg.dataset.footY),
+          );
+          return {
+            x: foot.matrixTransform(svg.getScreenCTM()!).x,
+            planted: foot.y === 177,
+          };
+        }),
+      });
+    }
+    return result;
+  });
+  expect(samples[0].x - samples.at(-1)!.x).toBeGreaterThan(10);
+  let checkedContacts = 0;
+  for (let leg = 0; leg < 4; leg++) {
+    let contact: number[] = [];
+    const check = () => {
+      if (contact.length >= 6) {
+        expect(Math.max(...contact) - Math.min(...contact)).toBeLessThan(0.75);
+        checkedContacts++;
+      }
+      contact = [];
+    };
+    for (const sample of samples) {
+      if (sample.feet[leg].planted) contact.push(sample.feet[leg].x);
+      else check();
+    }
+    check();
+  }
+  expect(checkedContacts).toBeGreaterThanOrEqual(4);
 });

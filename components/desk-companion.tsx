@@ -20,6 +20,21 @@ export function DeskCompanion() {
       >
         <svg viewBox="0 0 640 500" className="desk-art" aria-hidden="true">
           <defs>
+            <linearGradient id="desk-cat-coat" x1="0" y1="0" x2=".25" y2="1">
+              <stop stopColor="#726c63" />
+              <stop offset=".45" stopColor="#a49a87" />
+              <stop offset="1" stopColor="#827769" />
+            </linearGradient>
+            <linearGradient id="desk-cat-face" x1="0" y1="0" x2=".7" y2="1">
+              <stop stopColor="#b5aa95" />
+              <stop offset=".6" stopColor="#a09580" />
+              <stop offset="1" stopColor="#887d6c" />
+            </linearGradient>
+            <linearGradient id="desk-cat-leg" x1="0" y1="0" x2="1" y2="0">
+              <stop stopColor="#938672" />
+              <stop offset=".65" stopColor="#b8aa92" />
+              <stop offset="1" stopColor="#a0937e" />
+            </linearGradient>
             <linearGradient id="desk-hoodie" x1="0" y1="0" x2="1" y2="1">
               <stop stopColor="#a65361" />
               <stop offset="1" stopColor="#60253c" />
@@ -235,194 +250,254 @@ export function DeskCompanion() {
         </svg>
         <div data-cat-home="" data-pose="sit">
           <svg data-cat="" viewBox="0 0 180 210" aria-hidden="true">
+            <ellipse
+              className="cat-contact-shadow"
+              cx="99"
+              cy="179"
+              rx="39"
+              ry="2.3"
+              fill="#352b30"
+              opacity=".17"
+            />
             <g className="sit-rig">
               <g className="cat-tail">
                 <path
-                  d="M109 170Q153 185 148 150Q143 127 155 119"
-                  stroke="#80766b"
+                  d="M111 169C134 180 157 179 151 160Q147 150 154 144"
+                  stroke="#8b8171"
                   strokeWidth="7"
                   fill="none"
                   strokeLinecap="round"
                 />
                 <path
-                  d="M155 119q-1-5 2-7"
-                  stroke="#625c55"
-                  strokeWidth="7"
+                  d="M154 144q3-3 2-7"
+                  stroke="#5d5951"
+                  strokeWidth="5.5"
                   fill="none"
                   strokeLinecap="round"
                 />
               </g>
               <g className="cat-body">
                 <path
-                  d="M78 118Q62 128 62 151Q54 173 72 178L112 178Q125 171 115 151Q114 128 102 119Z"
-                  fill="#938674"
+                  d="M78 118C65 129 68 141 61 156Q55 168 65 175L76 178H112Q124 171 115 154C109 144 114 131 101 119Z"
+                  fill="url(#desk-cat-coat)"
                 />
                 <path
-                  d="M81 126Q78 149 83 175H98Q104 146 99 126Z"
-                  fill="#c6b8a2"
+                  d="M78 123Q89 131 101 122L98 143 95 171H82L80 143Z"
+                  fill="#d0c3ab"
                 />
                 <path
-                  d="M77 137 76 173Q75 177 83 177M104 137 103 173Q102 177 111 177"
+                  d="M80 128l4 7 4-3 4 5 6-8"
+                  stroke="#ece0c8"
+                  strokeWidth="1"
                   fill="none"
-                  stroke="#a99b88"
-                  strokeWidth="6"
-                  strokeLinecap="round"
+                  opacity=".6"
                 />
                 <path
-                  d="m65 150 8 4m-9 5 7 4m41-16-7 5m9 3-8 4"
-                  stroke="#716b5e"
-                  strokeWidth="2.2"
+                  d="M70 148Q59 161 68 171L78 174M109 148Q120 163 109 174"
                   fill="none"
+                  stroke="#736c60"
+                  strokeWidth="1.3"
+                />
+                <path
+                  d="M78 135Q74 153 76 171Q70 173 73 177H85Q89 176 85 171L86 137Z"
+                  fill="url(#desk-cat-leg)"
+                />
+                <path
+                  className="seated-front-paw"
+                  d="M99 136Q98 151 100 171Q95 173 98 177H110Q114 175 108 171L106 135Z"
+                  fill="url(#desk-cat-leg)"
+                />
+                <path
+                  d="M76 175v2m4-2v2m21-2v2m4-2v2"
+                  fill="none"
+                  stroke="#776d5e"
+                  strokeWidth=".6"
+                />
+                <path
+                  d="M67 141q2 4 8 5m-12 4q4 5 10 5m-12 4q3 5 9 5m42-22-7 6m10 2-9 6m10 3-8 5M78 143l6 2m-7 6 6 2m17-9 7-2m-7 10 7-2"
+                  stroke="#57584f"
+                  strokeWidth="2"
+                  fill="none"
+                  opacity=".65"
                   strokeLinecap="round"
                 />
               </g>
               <g className="groom-paw">
                 <path
-                  d="M105 159Q111 137 104 128"
-                  stroke="#a99b88"
+                  d="M105 158Q110 146 104 133Q102 128 105 126"
+                  stroke="#b5a58d"
                   strokeWidth="6"
                   fill="none"
                   strokeLinecap="round"
                 />
-                <ellipse cx="104" cy="127" rx="5" ry="4" fill="#cbbca5" />
+                <path
+                  d="M100 129Q99 122 104 122Q111 122 108 129Z"
+                  fill="#cfc0a6"
+                />
               </g>
               <g className="cat-head seated-head">
+                <g className="cat-ear ear-left">
+                  <path d="M68 99Q64 84 69 73Q77 77 82 89Z" fill="#81796a" />
+                  <path d="M70 80 72 94 78 88Z" fill="#b49c91" />
+                  <path d="m70 80 2 12" stroke="#d3bfb0" strokeWidth=".8" />
+                </g>
+                <g className="cat-ear ear-right">
+                  <path
+                    d="M99 88Q105 77 113 74Q116 88 111 100Z"
+                    fill="#777063"
+                  />
+                  <path d="M110 81 102 89 110 94Z" fill="#b49c91" />
+                </g>
                 <path
-                  d="M67 94 68 69 82 82Q90 78 99 82L113 70 113 96Z"
-                  fill="#80766b"
+                  d="M68 98Q71 86 89 87Q107 86 112 99L114 109 109 111 110 116 105 116Q101 126 90 128Q77 126 73 117L68 116 70 111 65 109Z"
+                  fill="url(#desk-cat-face)"
                 />
-                <path d="m72 78 2 13 7-7M108 78l-2 13-7-7" fill="#b59c91" />
                 <path
-                  d="M66 102Q63 85 88 82Q114 83 115 102L110 117Q102 129 89 130Q75 127 69 116Z"
-                  fill="#a99b88"
+                  d="M76 110Q83 108 89 116Q95 108 104 110L105 119Q98 127 90 127Q79 125 75 119Z"
+                  fill="#d1c4ac"
                 />
                 <path
-                  d="M70 111Q79 109 89 117Q99 109 111 110L107 121Q89 134 73 121Z"
-                  fill="#cbbca5"
+                  d="M85 96Q89 101 93 96L92 112 88 115 86 111Z"
+                  fill="#b9ab91"
                 />
                 <g className="cat-blink">
                   <path
-                    d="M71 101q8-6 15 1-8 7-15-1M94 102q8-7 15-1-7 8-15 1"
-                    fill="#c6b57b"
-                    stroke="#625b51"
-                    strokeWidth="1"
+                    d="M72 102Q78 97 85 103Q80 108 75 105ZM95 103Q102 97 108 101L105 105Q99 108 95 103Z"
+                    fill="#b2b38b"
+                    stroke="#494b42"
+                    strokeWidth=".9"
                   />
-                  <g className="cat-eyes" fill="#30342d">
-                    <ellipse cx="79" cy="102" rx="1.5" ry="4" />
-                    <ellipse cx="101" cy="102" rx="1.5" ry="4" />
+                  <g className="cat-eyes" fill="#30362f">
+                    <ellipse cx="79" cy="103" rx="1.2" ry="2.8" />
+                    <ellipse cx="101" cy="103" rx="1.2" ry="2.8" />
                   </g>
+                  <path
+                    d="M74 101l3-1m22 1 3-1"
+                    stroke="#e4dcc5"
+                    strokeWidth=".8"
+                  />
                 </g>
-                <path d="m85 117 8 0-4 4Z" fill="#765a56" />
+                <path d="m86 115 7 0q1 2-3.5 4-4-2-3.5-4" fill="#916f69" />
                 <path
-                  d="M89 121v3m0 0-5 2m5-2 5 2"
+                  d="M89.5 119v3m0 0q-3 3-6 0m6 0q3 3 6 0"
                   fill="none"
-                  stroke="#726659"
-                  strokeWidth=".9"
-                />
-                <path
-                  d="m75 116-18-2m18 5-19 3m48-6 19-2m-19 5 18 3"
-                  fill="none"
-                  stroke="#d5cabc"
+                  stroke="#786c5e"
                   strokeWidth=".7"
-                  opacity=".7"
                 />
                 <path
-                  d="m81 86 3 8m6-10v10m8-8-3 8"
+                  d="m78 116-19-3m19 6-20 1m21 2-17 5m39-11 19-4m-18 7 20 0m-20 3 17 4"
                   fill="none"
-                  stroke="#736d60"
-                  strokeWidth="2"
+                  stroke="#e4dbca"
+                  strokeWidth=".55"
+                  opacity=".9"
+                />
+                <path
+                  d="m77 91 5 5 2-5 5 6 5-6 2 5 6-5M70 108l7 3m-6 2 6 2m32-7-7 3m6 2-6 2"
+                  fill="none"
+                  stroke="#5d6053"
+                  strokeWidth="1.6"
+                  opacity=".8"
                   strokeLinecap="round"
                 />
                 <path
                   className="cat-tongue"
-                  d="M90 124q2 7 5 4l-1-5"
-                  fill="#bb8887"
+                  d="M90 124q2 6 4 3v-4"
+                  fill="#c79793"
                 />
               </g>
             </g>
             <g className="side-rig">
               <g className="cat-tail side-tail">
                 <path
-                  d="M139 134Q170 133 164 108Q158 88 170 84"
+                  d="M139 137C160 143 176 132 173 117Q171 108 176 106"
                   fill="none"
-                  stroke="#80766b"
+                  stroke="#8b8171"
                   strokeWidth="7"
                   strokeLinecap="round"
                 />
                 <path
-                  d="M170 84q3-2 2-6"
+                  d="M176 106q4-3 3-8"
                   fill="none"
-                  stroke="#625c55"
-                  strokeWidth="7"
+                  stroke="#5d5951"
+                  strokeWidth="5.5"
                   strokeLinecap="round"
                 />
               </g>
               <g className="leg back-far">
-                <path d="M126 138 135 158 129 177" />
-                <path className="toe" d="M129 177H123" />
+                <path d="M122 136Q136 155 127 175L132 177Q143 156 130 134Z" />
+                <path className="toe" d="M123 174h9v4h-10Z" />
               </g>
               <g className="leg front-far">
-                <path d="M69 137 66 157 61 177" />
-                <path className="toe" d="M61 177H55" />
+                <path d="M65 134 64 157 58 175 63 178 72 157 73 135Z" />
+                <path className="toe" d="M56 174h9v4H55Z" />
               </g>
               <path
                 className="side-torso"
-                d="M62 120Q77 112 94 117Q113 116 132 122Q148 129 143 145Q139 159 123 158L94 153 70 149Q57 143 62 120Z"
-                fill="#938674"
+                d="M62 122C68 113 77 114 88 119C104 124 117 112 132 121Q148 129 143 146Q140 157 127 155C107 147 91 153 71 149Q58 144 62 122Z"
+                fill="url(#desk-cat-coat)"
               />
               <path
                 d="M69 145Q96 154 125 149"
                 fill="none"
                 stroke="#c6b8a2"
-                strokeWidth="5"
+                strokeWidth="3"
                 strokeLinecap="round"
+                opacity=".6"
               />
               <path
                 d="m84 120 2 13m8-14 1 11m13-10-2 11m12-8-5 10m17-6-6 9"
-                stroke="#716b5e"
-                strokeWidth="2.8"
+                stroke="#55584e"
+                strokeWidth="2.1"
                 fill="none"
+                opacity=".65"
                 strokeLinecap="round"
               />
               <g className="leg back-near">
-                <path d="M130 141 113 159 119 177" />
-                <path className="toe" d="M119 177H113" />
+                <path d="M124 135Q108 155 116 177L122 177Q119 157 136 139Z" />
+                <path className="toe" d="M112 174h10v4h-11Z" />
               </g>
               <g className="leg front-near">
-                <path d="M74 140 80 159 70 177" />
-                <path className="toe" d="M70 177H64" />
+                <path d="M69 136 73 157 67 175 73 178 82 157 79 136Z" />
+                <path className="toe" d="M63 174h11v4H62Z" />
               </g>
               <g className="cat-head walking-head">
-                <path d="m38 103 1-23 14 14 11-6 3 22Z" fill="#80766b" />
-                <path d="m42 88 1 12 7-4" fill="#b59c91" />
-                <path
-                  d="M39 99Q56 90 68 104L66 123Q59 135 43 131L32 124 23 119 29 111Z"
-                  fill="#a99b88"
-                />
-                <path d="m25 117 16-3 9 7-6 9-14-6Z" fill="#cbbca5" />
-                <path d="m23 116 6 0-2 4-5-1Z" fill="#765a56" />
-                <g className="cat-blink">
-                  <path
-                    d="M37 108q7-5 13 0-7 6-13 0"
-                    fill="#c6b57b"
-                    stroke="#625b51"
-                    strokeWidth="1"
-                  />
-                  <g className="cat-eyes" fill="#30342d">
-                    <ellipse cx="43" cy="108" rx="1.4" ry="3.2" />
-                  </g>
+                <path d="M57 100 61 82Q70 87 71 104Z" fill="#716d60" />
+                <g className="cat-ear ear-left">
+                  <path d="M42 102Q39 88 44 80Q53 86 57 98Z" fill="#8c8372" />
+                  <path d="m45 86 2 13 7-2Z" fill="#b49c91" />
                 </g>
                 <path
-                  d="m30 124 9 2m-7-6-18 1m20 3-18 4M57 99l-3 8m10-5-5 8"
+                  d="M43 99Q58 94 68 104Q74 115 65 125L62 129 57 128Q49 132 43 127L35 125 29 120 31 115 36 111Z"
+                  fill="url(#desk-cat-face)"
+                />
+                <path
+                  d="M32 116Q39 112 46 118L48 122 44 127 36 124 30 120Z"
+                  fill="#d1c4ac"
+                />
+                <path d="M29 116q3-2 5 1l-2 3-3-1Z" fill="#916f69" />
+                <g className="cat-blink">
+                  <path
+                    d="M40 109q6-5 12-1-5 6-11 3Z"
+                    fill="#b2b38b"
+                    stroke="#494b42"
+                    strokeWidth=".9"
+                  />
+                  <g className="cat-eyes" fill="#30362f">
+                    <ellipse cx="45" cy="109" rx="1.1" ry="2.6" />
+                  </g>
+                  <path d="m42 108 3-1" stroke="#e4dcc5" strokeWidth=".8" />
+                </g>
+                <path
+                  d="M32 121q4 3 8 1M56 100l-3 5m11-1-6 7m8 1-7 6m-17 2-6 3"
                   fill="none"
-                  stroke="#736d60"
-                  strokeWidth="1"
+                  stroke="#626454"
+                  strokeWidth="1.3"
                   strokeLinecap="round"
                 />
                 <path
-                  d="m34 123-16 5"
-                  stroke="#d5cabc"
-                  strokeWidth=".7"
+                  d="m37 119-17-1m18 4-18 3m20 0-15 5"
+                  stroke="#e4dbca"
+                  strokeWidth=".55"
                   fill="none"
                 />
               </g>

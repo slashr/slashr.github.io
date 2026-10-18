@@ -79,7 +79,7 @@
 }
 :is(.desk-companion, .desk-flight) .cat-tail {
   transform-origin: 131px 164px;
-  animation: desk-tail 4s ease-in-out infinite;
+  animation: desk-tail 6.7s ease-in-out infinite;
 }
 :is(.desk-companion, .desk-flight) .sit-rig {
   opacity: 1;
@@ -88,7 +88,7 @@
   opacity: 0;
 }
 :is(.desk-companion, .desk-flight) :is(.side-rig, .sit-rig) {
-  transition: opacity 0.13s ease;
+  transition: opacity 0.24s ease;
 }
 .desk-companion :is([data-pose="walk"], [data-pose="stalk"]) .sit-rig,
 .desk-flight[data-pose="flight"] .sit-rig {
@@ -99,14 +99,35 @@
   opacity: 1;
 }
 :is(.desk-companion, .desk-flight) .leg {
-  fill: none;
-  stroke: #a99b88;
-  stroke-width: 6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: url(#desk-cat-leg);
+  stroke: none;
 }
 :is(.desk-companion, .desk-flight) :is(.leg.front-far, .leg.back-far) {
-  stroke: #726b60;
+  fill: #7c7466;
+}
+:is(.desk-companion, .desk-flight) .leg .toe {
+  fill: #c2b49b;
+}
+:is(.desk-companion, .desk-flight) :is(.front-far, .back-far) .toe {
+  fill: #938876;
+}
+.desk-flight .cat-contact-shadow {
+  opacity: 0;
+}
+.desk-companion .cat-body {
+  transform-origin: 90px 177px;
+  animation: desk-cat-breathe 4.8s ease-in-out infinite;
+}
+:is(.desk-companion, .desk-flight) .cat-ear {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: desk-ear-listen 11s ease-in-out infinite;
+}
+:is(.desk-companion, .desk-flight) .ear-right {
+  animation-delay: -4s;
+}
+.desk-companion .licking .seated-front-paw {
+  opacity: 0;
 }
 :is(.desk-companion, .desk-flight) .groom-paw {
   opacity: 0;
@@ -188,6 +209,29 @@
 .desk-companion .pounce-marker {
   display: none;
 }
+@keyframes desk-cat-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.012);
+  }
+}
+@keyframes desk-ear-listen {
+  0%,
+  63%,
+  71%,
+  100% {
+    transform: rotate(0);
+  }
+  66% {
+    transform: rotate(-9deg);
+  }
+  68% {
+    transform: rotate(-5deg);
+  }
+}
 @keyframes desk-working {
   0%,
   100% {
@@ -221,10 +265,10 @@
 @keyframes desk-tail {
   0%,
   100% {
-    transform: rotate(-4deg);
+    transform: rotate(-2deg);
   }
   50% {
-    transform: rotate(7deg);
+    transform: rotate(3deg);
   }
 }
 @keyframes desk-blink {
