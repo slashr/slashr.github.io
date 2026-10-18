@@ -93,6 +93,7 @@ test("actual screenshots load, cycle, and enlarge in an accessible dialog", asyn
 test("the homelab architecture groups home and cloud nodes inside one k3s cluster", async ({
   page,
 }) => {
+  await page.emulateMedia({ reducedMotion: "reduce", colorScheme: "light" });
   const external: string[] = [];
   page.on("request", (request) => {
     if (new URL(request.url()).origin !== "http://127.0.0.1:4173")
@@ -125,6 +126,10 @@ test("the homelab architecture groups home and cloud nodes inside one k3s cluste
   expect(external).toEqual([]);
   for (const colorScheme of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-theme",
+      colorScheme,
+    );
     const results = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
       .analyze();
