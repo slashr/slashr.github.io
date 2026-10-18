@@ -1,16 +1,9 @@
 "use client";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion } from "motion/react";
-import {
-  Timer,
-  Wallet,
-  Network,
-  Images,
-  MousePointer2,
-  ArrowDownRight,
-} from "lucide-react";
+import { Timer, Wallet, Network, ArrowDownRight } from "lucide-react";
 import { projects, type ProjectId, type Project } from "@/lib/projects";
-import { WorkoutDemo, BudgetDemo, HomelabDemo } from "./project-demos";
+import { HomelabDemo } from "./project-demos";
 import { Screenshots } from "./screenshots";
 import { usePreferences } from "./preferences";
 const icons = { "power-hour": Timer, inab: Wallet, homelab: Network };
@@ -21,12 +14,11 @@ function ProjectPanel({
   project: Project;
   active: boolean;
 }) {
-  const [view, setView] = useState<"screenshots" | "demo">("screenshots");
   const { motion: animated } = usePreferences();
   const isLab = project.id === "homelab";
   return (
     <motion.section
-      className={`project-panel ${project.id === "inab" && view === "screenshots" ? "wide-panel" : ""}`}
+      className={`project-panel ${project.id === "inab" ? "wide-panel" : ""}`}
       role="tabpanel"
       id={`panel-${project.id}`}
       aria-labelledby={`tab-${project.id}`}
@@ -37,30 +29,6 @@ function ProjectPanel({
     >
       <div className="project-topline">
         <span>{project.type}</span>
-        {!isLab && (
-          <div
-            className="view-picker"
-            role="group"
-            aria-label={`${project.name} preview type`}
-          >
-            <button
-              type="button"
-              aria-pressed={view === "screenshots"}
-              onClick={() => setView("screenshots")}
-            >
-              <Images size={13} aria-hidden="true" />
-              Screenshots
-            </button>
-            <button
-              type="button"
-              aria-pressed={view === "demo"}
-              onClick={() => setView("demo")}
-            >
-              <MousePointer2 size={12} aria-hidden="true" />
-              Try a demo
-            </button>
-          </div>
-        )}
       </div>
       <div className="project-body">
         <div className="project-copy">
@@ -85,28 +53,18 @@ function ProjectPanel({
               ))}
             </ul>
           </details>
-          {!isLab && view === "screenshots" && (
+          {!isLab && (
             <span className="screenshot-hint">
               <ArrowDownRight size={13} aria-hidden="true" />
               Actual app captures. Click to enlarge.
             </span>
           )}
-          {view === "demo" && (
-            <p className="concept-note">
-              This is a small browser sketch of an interaction, separate from
-              the actual app.
-            </p>
-          )}
         </div>
         <div className={`project-preview ${isLab ? "lab-preview" : ""}`}>
           {isLab ? (
             <HomelabDemo active={active} />
-          ) : view === "screenshots" ? (
-            <Screenshots project={project} />
-          ) : project.id === "power-hour" ? (
-            <WorkoutDemo active={active && view === "demo"} />
           ) : (
-            <BudgetDemo />
+            <Screenshots project={project} />
           )}
         </div>
       </div>

@@ -376,31 +376,6 @@ html[data-motion="off"] .light-wash {
   color: var(--muted);
   letter-spacing: 0.5px;
 }
-.view-picker {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 3px;
-  white-space: nowrap;
-}
-.view-picker button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  line-height: 1.7;
-  background: transparent;
-  border: 0;
-  border-radius: 5px;
-  padding: 6px 8px;
-  color: var(--muted);
-}
-.view-picker button[aria-pressed="true"] {
-  background: var(--accent-soft);
-  color: var(--ink);
-}
 .project-body {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -497,10 +472,6 @@ html[data-motion="off"] .light-wash {
 .screenshot-hint svg {
   margin-top: 2px;
   flex-shrink: 0;
-}
-.project-copy .concept-note {
-  font-size: 11px;
-  margin-top: 20px;
 }
 .project-preview {
   min-width: 0;
@@ -680,11 +651,6 @@ html[data-motion="off"] .light-wash {
   font-size: 12px;
   min-width: 0;
 }
-.workout-demo,
-.budget-demo {
-  max-width: 330px;
-  margin: 0 auto;
-}
 .demo-top {
   display: flex;
   align-items: center;
@@ -701,49 +667,6 @@ html[data-motion="off"] .light-wash {
   padding: 3px 6px;
   border-radius: 4px;
   white-space: nowrap;
-}
-.workout-demo h3 {
-  text-align: center;
-  font-size: 21px;
-  line-height: 1.3;
-  font-weight: 500;
-  letter-spacing: -0.5px;
-  margin: 5px 0;
-}
-.demo-subtitle {
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.7;
-  margin: 0;
-}
-.timer-ring {
-  width: 164px;
-  height: 164px;
-  display: grid;
-  place-items: center;
-  position: relative;
-  border-radius: 50%;
-  margin: 26px auto;
-}
-.timer-ring::before {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border-radius: 50%;
-  background: var(--solid);
-}
-.timer-value {
-  position: relative;
-  font-size: 38px;
-  letter-spacing: -1.7px;
-  font-variant-numeric: tabular-nums;
-}
-.demo-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
 }
 .button {
   display: inline-flex;
@@ -773,81 +696,6 @@ html[data-motion="off"] .light-wash {
   background: var(--accent);
   color: var(--base);
   border-color: transparent;
-}
-.demo-actions .button-primary {
-  flex: 1;
-}
-.demo-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  border-top: 1px solid var(--line);
-  padding-top: 13px;
-  margin-top: 20px;
-  font-size: 10px;
-  line-height: 1.8;
-  color: var(--muted);
-}
-.text-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: 0;
-  padding: 12px 0 0;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font-size: 10px;
-  color: var(--muted);
-}
-.budget-label {
-  font-size: 11px;
-  line-height: 1.6;
-  color: var(--muted);
-}
-.budget-value {
-  font-size: 38px;
-  letter-spacing: -1.5px;
-  line-height: 1.3;
-  margin: 5px 0 25px;
-  font-variant-numeric: tabular-nums;
-}
-.budget-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  font-size: 11px;
-  line-height: 1.7;
-  margin: 16px 0 7px;
-}
-.budget-bar {
-  height: 6px;
-  border-radius: 4px;
-  background: var(--accent-soft);
-  overflow: hidden;
-  margin: 0 0 15px;
-}
-.budget-bar > span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--accent);
-  transition: width 0.5s ease;
-}
-.range-label {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-top: 25px;
-}
-.budget-demo input[type="range"] {
-  width: 100%;
-  margin: 10px 0 25px;
-  min-height: 26px;
-  accent-color: var(--accent);
 }
 .demo-disclaimer {
   font-size: 10px;
@@ -1233,13 +1081,6 @@ html[data-motion="off"] .light-wash {
   .project-topline > span {
     font-size: 9px;
   }
-  .view-picker {
-    gap: 3px;
-  }
-  .view-picker button {
-    font-size: 10px;
-    padding: 6px 8px;
-  }
   .project-body {
     grid-template-columns: 1fr;
     min-height: 0;
@@ -1413,8 +1254,7 @@ html[data-motion="off"] .light-wash {
   .project-tab[aria-selected="true"] {
     outline: 2px solid Highlight;
   }
-  .button,
-  .view-picker button[aria-pressed="true"] {
+  .button {
     border: 1px solid ButtonText;
   }
 }

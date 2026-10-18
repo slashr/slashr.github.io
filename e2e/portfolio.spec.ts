@@ -100,46 +100,6 @@ test("actual screenshots load, cycle, and enlarge in an accessible dialog", asyn
   ).toBeFocused();
 });
 
-test("workout and budget sketches respond and the timer stops when switching projects", async ({
-  page,
-}) => {
-  await page.goto("/projects/");
-  await page.getByRole("button", { name: "Try a demo" }).first().click();
-  const workout = page.locator(".workout-demo");
-  await workout
-    .getByRole("button", { name: "Start demo", exact: true })
-    .click();
-  await expect(workout.locator(".timer-value")).not.toHaveText("00:40");
-  await workout.getByRole("button", { name: "Pause", exact: true }).click();
-  const time = await workout.locator(".timer-value").innerText();
-  await page.waitForTimeout(1100);
-  await expect(workout.locator(".timer-value")).toHaveText(time);
-  await workout.getByRole("button", { name: "Next", exact: true }).click();
-  await expect(workout.getByRole("heading", { name: "Rest" })).toBeVisible();
-  await workout.getByRole("button", { name: "Reset session" }).click();
-  await workout
-    .getByRole("button", { name: "Start demo", exact: true })
-    .click();
-  await page.getByRole("tab", { name: "iNAB" }).click();
-  await page.waitForTimeout(400);
-  await page.getByRole("tab", { name: "Power Hour" }).click();
-  await expect(
-    workout.getByRole("button", { name: "Start demo", exact: true }),
-  ).toBeVisible();
-  await page.getByRole("tab", { name: "iNAB" }).click();
-  await page
-    .getByRole("tabpanel")
-    .getByRole("button", { name: "Try a demo" })
-    .click();
-  const budget = page.locator(".budget-demo");
-  await budget.getByRole("button", { name: "Add €20 expense" }).click();
-  await expect(budget.locator(".budget-value")).toHaveText("€114");
-  await page.getByLabel("Dining budget").fill("400");
-  await expect(budget.locator(".budget-value")).toHaveText("€194");
-  await budget.getByRole("button", { name: "Reset", exact: true }).click();
-  await expect(budget.locator(".budget-value")).toHaveText("€134");
-});
-
 test("homelab simulation is local and finishes without calling any external API", async ({
   page,
 }) => {

@@ -17,8 +17,8 @@ npm run dev
 
 The Projects page uses real app captures. Screenshot provenance and the
 fictional iNAB capture dataset are described in [docs/screenshots.md](docs/screenshots.md).
-The optional workout/budget sketches and deployment simulation run entirely in
-the browser. They do not connect to the private apps or cluster.
+The homelab architecture diagram and its deployment simulation run entirely in
+the browser. They do not connect to the private cluster.
 
 ## Checks and static preview
 
