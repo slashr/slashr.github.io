@@ -3,9 +3,14 @@ name: "Rubocop"
 
 on: push
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   rubocop:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, ARM64, portfolio-always-on]
+    timeout-minutes: 30
     strategy:
       fail-fast: false
 
@@ -13,12 +18,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # If running on a self-hosted runner, check it meets the requirements
-    # listed at https://github.com/ruby/setup-ruby#using-self-hosted-runners
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.2'
+    - name: Set up Ruby in the disposable Linux container
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y --no-install-recommends ruby ruby-dev build-essential zlib1g-dev
+        echo "GEM_HOME=$RUNNER_TEMP/gems" >> "$GITHUB_ENV"
+        echo "$RUNNER_TEMP/gems/bin" >> "$GITHUB_PATH"
+
+    - name: Install Bundler
+      run: gem install bundler --no-document
 
     # This step is not necessary if you add the gem to your Gemfile
     - name: Install Code Scanning integration
