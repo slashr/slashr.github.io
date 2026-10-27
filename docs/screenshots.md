@@ -49,7 +49,8 @@ payload; optional API calls were answered as unconfigured, and nonlocal requests
 were blocked. No raw statements, private database, or real dashboard payload was
 loaded. The captures show the Home and Budget workspaces with this sample data.
 
-The capture captions on the public page explicitly identify the fictional data.
+The public captions identify the captured workspace; fixture provenance is
+recorded here.
 
 ## Homelab
 
