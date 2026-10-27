@@ -11,20 +11,13 @@ export default function Home() {
           <h1 id="about-title">
             Akash Nair<span className="name-period">.</span>
           </h1>
-          <p className="about-role">
-            Software engineer by training.
-            <br />
-            DevOps engineer by profession.
-            <br />
-            Full stack using AI.
-          </p>
           <span className="location about-location">
             <MapPin size={13} aria-hidden="true" />
             Berlin, Germany
           </span>
           <div className="about-story">
             <p>
-              I like seeing network entropy reduce, the servers align and
+              I like seeing network entropy reduce, servers align and
               infrastructure converge to code.
             </p>
           </div>

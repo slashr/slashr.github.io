@@ -1135,12 +1135,6 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
 .name-period {
   color: var(--accent);
 }
-.about-role {
-  margin: 0 0 21px;
-  font-size: 19px;
-  line-height: 1.6;
-  letter-spacing: -0.3px;
-}
 .about-location {
   margin-bottom: 29px;
 }
@@ -1194,9 +1188,6 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
     font-size: clamp(40px, 5.4vw, 60px);
     letter-spacing: -2.8px;
   }
-  .about-role {
-    font-size: 17px;
-  }
 }
 @media (max-width: 760px) {
   .site-header {
@@ -1231,9 +1222,6 @@ html[data-motion="off"] :is(.about-page, .projects-page, .blog-page) {
     font-size: clamp(39px, 10vw, 64px);
     letter-spacing: -2.3px;
     margin-bottom: 23px;
-  }
-  .about-role {
-    font-size: 17px;
   }
   .about-story {
     max-width: 450px;

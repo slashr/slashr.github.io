@@ -60,80 +60,72 @@
   width: 100%;
   overflow: visible;
 }
-.desk-companion[data-busy="true"] [data-cat-home] {
-  visibility: hidden;
-}
-:is(.desk-companion, .desk-flight) .cat-head {
+.desk-companion .cat-head {
   transform-origin: 89px 122px;
   transform: translate(var(--hx, 0px), var(--hy, 0px)) rotate(var(--tilt, 0deg));
   transition: transform 0.18s ease-out;
 }
-:is(.desk-companion, .desk-flight) .cat-eyes {
+.desk-companion .cat-eyes {
   transform: translate(var(--gx, 0px), var(--gy, 0px));
   transition: transform 0.09s ease-out;
 }
-:is(.desk-companion, .desk-flight) .cat-blink {
+.desk-companion .cat-blink {
   transform-box: fill-box;
   transform-origin: center;
   animation: desk-blink 6.3s linear infinite;
 }
-:is(.desk-companion, .desk-flight) .cat-tail {
+.desk-companion .cat-tail {
   transform-origin: 131px 164px;
   animation: desk-tail 6.7s ease-in-out infinite;
 }
-:is(.desk-companion, .desk-flight) .sit-rig {
+.desk-companion .sit-rig {
   opacity: 1;
 }
-:is(.desk-companion, .desk-flight) .side-rig {
+.desk-companion .side-rig {
   opacity: 0;
 }
-:is(.desk-companion, .desk-flight) :is(.side-rig, .sit-rig) {
+.desk-companion :is(.side-rig, .sit-rig) {
   transition: opacity 0.24s ease;
 }
-.desk-companion :is([data-pose="walk"], [data-pose="stalk"]) .sit-rig,
-.desk-flight[data-pose="flight"] .sit-rig {
+.desk-companion [data-pose="walk"] .sit-rig {
   opacity: 0;
 }
-.desk-companion :is([data-pose="walk"], [data-pose="stalk"]) .side-rig,
-.desk-flight[data-pose="flight"] .side-rig {
+.desk-companion [data-pose="walk"] .side-rig {
   opacity: 1;
 }
-:is(.desk-companion, .desk-flight) .leg {
+.desk-companion .leg {
   fill: url(#desk-cat-leg);
   stroke: none;
 }
-:is(.desk-companion, .desk-flight) :is(.leg.front-far, .leg.back-far) {
+.desk-companion :is(.leg.front-far, .leg.back-far) {
   fill: #7c7466;
 }
-:is(.desk-companion, .desk-flight) .leg .toe {
+.desk-companion .leg .toe {
   fill: #c2b49b;
 }
-:is(.desk-companion, .desk-flight) :is(.front-far, .back-far) .toe {
+.desk-companion :is(.front-far, .back-far) .toe {
   fill: #938876;
-}
-.desk-flight .cat-contact-shadow {
-  opacity: 0;
 }
 .desk-companion .cat-body {
   transform-origin: 90px 177px;
   animation: desk-cat-breathe 4.8s ease-in-out infinite;
 }
-:is(.desk-companion, .desk-flight) .cat-ear {
+.desk-companion .cat-ear {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: desk-ear-listen 11s ease-in-out infinite;
 }
-:is(.desk-companion, .desk-flight) .ear-right {
+.desk-companion .ear-right {
   animation-delay: -4s;
 }
 .desk-companion .licking .seated-front-paw {
   opacity: 0;
 }
-:is(.desk-companion, .desk-flight) .groom-paw {
+.desk-companion .groom-paw {
   opacity: 0;
   transform-origin: 118px 157px;
 }
-:is(.desk-companion, .desk-flight) .cat-tongue {
+.desk-companion .cat-tongue {
   opacity: 0;
 }
 .desk-companion .licking .groom-paw {
@@ -149,7 +141,7 @@
 .desk-companion .licking .cat-eyes {
   transform: translate(1px, 1px);
 }
-:is(.desk-companion, .desk-flight) .walking-head {
+.desk-companion .walking-head {
   transform-origin: 64px 123px;
   transform: translate(
       var(--hx, 0px),
@@ -157,26 +149,8 @@
     )
     rotate(calc(var(--tilt, 0deg) + var(--head-pitch, 0deg)));
 }
-:is(.desk-companion, .desk-flight) .side-tail {
+.desk-companion .side-tail {
   animation: none;
-}
-.desk-flight {
-  position: fixed;
-  pointer-events: none;
-  z-index: 2;
-  transform-origin: 50% 84.75%;
-}
-.desk-flight > svg {
-  width: 100%;
-  display: block;
-  overflow: visible;
-}
-.desk-flight .cat-head,
-.desk-flight .cat-eyes {
-  transition: none;
-}
-.desk-flight .cat-eyes {
-  transform: translate(-1px, 1px);
 }
 .desk-companion .laptop-foreground {
   position: absolute;
@@ -185,29 +159,6 @@
   height: 100%;
   z-index: 3;
   pointer-events: none;
-}
-.desk-companion .desk-call {
-  display: block;
-  margin: 2px 0 0 auto;
-  border: 0;
-  background: none;
-  color: var(--muted);
-  font:
-    11px/1.8 ui-monospace,
-    monospace;
-  padding: 8px 0;
-}
-.desk-companion .desk-call span {
-  margin-left: 12px;
-}
-.desk-companion .desk-call:hover {
-  color: var(--accent);
-}
-.desk-companion .desk-call:disabled {
-  visibility: hidden;
-}
-.desk-companion .pounce-marker {
-  display: none;
 }
 @keyframes desk-cat-breathe {
   0%,
@@ -308,8 +259,7 @@ html[data-motion="off"] .desk-companion * {
   transition: none !important;
 }
 @media (prefers-reduced-motion: reduce) {
-  .desk-companion *,
-  .desk-flight * {
+  .desk-companion * {
     animation: none !important;
     transition: none !important;
   }

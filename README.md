@@ -23,12 +23,13 @@ Architecture sources are recorded in [docs/screenshots.md](docs/screenshots.md).
 The desk scene is local SVG artwork. The tabby has shaded fur, tapered limbs,
 shaped paws, and independent ear and head movement. She wanders behind the laptop,
 grooms, and watches the pointer. Her four-beat gait advances by distance so
-planted paws stay still as her body moves; starts, stops, and landings settle
-before the next action. Three invisible nearby targets trigger a crouch and a
-short pounce, with planted paws, joint movement, a landing, and a return to the
-desk. **Call the cat** works with mouse, keyboard, or touch. Animation respects
-reduced motion and stored motion preferences. The controller stops when hidden
-or offscreen and removes its listeners and any flying cat when leaving About.
+planted paws stay still as her body moves; starts and stops settle
+before the next action. She walks along the desk toward a cursor ahead of her,
+then sits in place and follows with her head and eyes when it moves behind her,
+without flipping her body. Her paws stay on the desk or keyboard as she passes
+behind the laptop. Animation respects reduced motion and stored motion
+preferences. The controller stops when hidden or
+offscreen and removes its listeners when leaving About.
 
 ## Checks and static preview
 

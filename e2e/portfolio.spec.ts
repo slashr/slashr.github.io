@@ -217,71 +217,84 @@ test("light, dark and narrow layouts remain accessible and fit their viewport", 
   }
 });
 
-test("the desk cat crouches on planted paws, pounces, and returns", async ({
+test("the desk cat follows ahead and sits to look behind without flipping", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const scene = page.locator(".desk-companion");
-  await expect(scene.locator(".pounce-marker")).toHaveCount(3);
-  await expect(page.locator(".glasses")).toHaveCount(0);
-  const points = await scene.locator(".pounce-marker").evaluateAll((dots) =>
-    dots.map((dot) => ({
-      x: parseFloat((dot as HTMLElement).style.left),
-      y: parseFloat((dot as HTMLElement).style.top),
-    })),
+  const home = scene.locator("[data-cat-home]");
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "on");
+  await expect(
+    page.getByRole("button", { name: "Call the cat", exact: true }),
+  ).toHaveCount(0);
+  const bounds = (await scene.boundingBox())!;
+  const start = await home.evaluate((el) => el.getBoundingClientRect().left);
+  await page.mouse.move(
+    bounds.x + bounds.width * 0.3,
+    bounds.y + bounds.height * 0.3,
   );
-  const target = points[0];
-  const approach = Array.from({ length: 16 }, (_, i) => ({
-    x: target.x + Math.cos((i * Math.PI) / 8) * 80,
-    y: target.y + Math.sin((i * Math.PI) / 8) * 80,
-  })).find((point) =>
-    points.every((spot) => Math.hypot(point.x - spot.x, point.y - spot.y) > 65),
+  await expect(home).toHaveAttribute("data-pose", "walk");
+  await expect
+    .poll(() => home.evaluate((el) => el.getBoundingClientRect().left))
+    .toBeLessThan(start - 25);
+  const beforeTurn = await home.evaluate(
+    (el) => el.getBoundingClientRect().left,
   );
-  expect(approach).toBeDefined();
-  await page.mouse.move(approach!.x, approach!.y);
-  await expect(scene.locator("[data-cat-home]")).toHaveAttribute(
-    "data-pose",
-    "stalk",
+  await page.mouse.move(
+    bounds.x + bounds.width * 0.95,
+    bounds.y + bounds.height * 0.3,
   );
-  const feet = await scene
-    .locator(".side-rig .leg")
-    .evaluateAll((legs) =>
-      legs.map((leg) => Number((leg as HTMLElement).dataset.footY)),
-    );
-  expect(feet).toEqual([177, 177, 177, 177]);
-  await expect(page.locator(".desk-flight")).toHaveCount(0);
-  await page.mouse.move(target.x, target.y);
-  await page.waitForFunction(
-    () =>
-      document.querySelector<HTMLElement>(".desk-companion")?.dataset
-        .catPhase === "outbound",
-  );
-  const flying = page.locator(".desk-flight");
-  await expect(flying).toHaveAttribute("aria-hidden", "true");
+  await expect(home).toHaveAttribute("data-pose", "sit");
+  const seated = await home.evaluate((el) => el.getBoundingClientRect().left);
+  expect(Math.abs(seated - beforeTurn)).toBeLessThan(5);
+  // Hold the cursor behind her: no repositioning, reversal, or delayed jump.
+  const samples = await home.evaluate(async (el) => {
+    const values: { x: number; body: string; gaze: number }[] = [];
+    const start = performance.now();
+    while (performance.now() - start < 3000) {
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
+      values.push({
+        x: el.getBoundingClientRect().left,
+        body: el.querySelector<SVGSVGElement>("[data-cat]")!.style.transform,
+        gaze: parseFloat((el as HTMLElement).style.getPropertyValue("--hx")),
+      });
+    }
+    return values;
+  });
+  expect(
+    Math.max(...samples.map((v) => v.x)) - Math.min(...samples.map((v) => v.x)),
+  ).toBeLessThan(0.1);
+  expect(samples.every((v) => v.body === "scaleX(1)")).toBe(true);
+  expect(samples.at(-1)!.gaze).toBeGreaterThan(0);
+  // Moving above her changes her gaze, keeping the seated body in place.
+  await page.mouse.move(bounds.x + bounds.width * 0.95, bounds.y);
   await expect
     .poll(() =>
-      flying
-        .locator(".side-rig")
-        .evaluate((rig) => getComputedStyle(rig).opacity),
+      home.evaluate((el) =>
+        parseFloat((el as HTMLElement).style.getPropertyValue("--hy")),
+      ),
     )
-    .toBe("1");
-  await page.waitForFunction(
-    () =>
-      document.querySelector<HTMLElement>(".desk-companion")?.dataset
-        .catPhase === "caught",
+    .toBeLessThan(-0.2);
+  expect(
+    await home.evaluate((el) => el.getBoundingClientRect().left),
+  ).toBeCloseTo(seated, 1);
+  // Bring the cursor ahead again and she resumes walking in the same direction.
+  await page.mouse.move(
+    bounds.x + bounds.width * 0.1,
+    bounds.y + bounds.height * 0.4,
   );
-  await page.waitForFunction(
-    () =>
-      document.querySelector<HTMLElement>(".desk-companion")?.dataset.busy ===
-      "false",
+  await expect(home).toHaveAttribute("data-pose", "walk");
+  await expect
+    .poll(() => home.evaluate((el) => el.getBoundingClientRect().left))
+    .toBeLessThan(seated - 15);
+  await expect(home.locator("[data-cat]")).toHaveCSS(
+    "transform",
+    "matrix(1, 0, 0, 1, 0, 0)",
   );
-  await expect(flying).toHaveCount(0);
-  await expect(scene.locator("[data-cat-home]")).toBeVisible();
-  await expect(scene.locator("[data-cat-home]")).toHaveAttribute(
-    "data-pose",
-    "walk",
-  );
+  await expect(page.locator(".desk-flight, .pounce-marker")).toHaveCount(0);
   expect(
     await scene
       .locator(".laptop-foreground")
@@ -289,37 +302,40 @@ test("the desk cat crouches on planted paws, pounces, and returns", async ({
   ).toBe("3");
 });
 
-test("desk animations clean up on navigation and reduced-motion changes", async ({
+test("desk tracking cleans up on navigation and respects reduced motion", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
-  const call = page.getByRole("button", { name: "Call the cat", exact: true });
-  await expect(call).toBeEnabled();
-  await call.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.locator(".desk-flight")).toHaveCount(1);
-  await page
-    .getByRole("navigation", { name: "Main navigation" })
-    .getByRole("link", { name: "Projects", exact: true })
-    .click();
-  await expect(page.locator(".desk-flight")).toHaveCount(0);
-  await page
-    .getByRole("navigation", { name: "Main navigation" })
-    .getByRole("link", { name: "About", exact: true })
-    .click();
-  await expect(page.locator(".pounce-marker")).toHaveCount(3);
-  await call.click();
-  await expect(page.locator(".desk-flight")).toHaveCount(1);
+  const home = page.locator("[data-cat-home]");
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "on");
+  let bounds = (await page.locator(".desk-companion").boundingBox())!;
+  await page.mouse.move(bounds.x, bounds.y);
+  await expect(home).toHaveAttribute("data-pose", "walk");
+  const navigation = page.getByRole("navigation", { name: "Main navigation" });
+  await navigation.getByRole("link", { name: "Projects", exact: true }).click();
+  await expect(home).toHaveCount(0);
+  await page.mouse.move(50, 50);
+  await navigation.getByRole("link", { name: "About", exact: true }).click();
+  await expect(home).toBeVisible();
+  bounds = (await page.locator(".desk-companion").boundingBox())!;
+  await page.mouse.move(bounds.x, bounds.y);
+  await expect(home).toHaveAttribute("data-pose", "walk");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.locator(".desk-flight")).toHaveCount(0);
-  await expect(page.locator(".desk-call")).toBeDisabled();
-  await expect(page.locator(".desk-call")).toBeHidden();
-  await expect(page.locator(".pounce-marker")).toHaveCount(0);
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "off");
+  await expect(home).toHaveAttribute("data-pose", "sit");
+  const paused = await home.evaluate((el) => el.getBoundingClientRect().left);
+  await page.mouse.move(bounds.x + bounds.width, bounds.y + bounds.height);
+  await page.waitForTimeout(400);
+  expect(await home.evaluate((el) => el.getBoundingClientRect().left)).toBe(
+    paused,
+  );
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await expect(page.locator(".pounce-marker")).toHaveCount(3);
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "on");
+  await page.mouse.move(bounds.x, bounds.y);
+  await expect(home).toHaveAttribute("data-pose", "walk");
   expect(errors).toEqual([]);
 });
 

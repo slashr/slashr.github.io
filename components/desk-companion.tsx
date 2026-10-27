@@ -534,15 +534,6 @@ export function DeskCompanion() {
           </g>
         </svg>
       </div>
-      <button
-        className="desk-call"
-        type="button"
-        disabled={!motion}
-        aria-label="Call the cat"
-      >
-        Call the cat <span aria-hidden="true">↗</span>
-      </button>
-      <div className="pounce-spots" aria-hidden="true" />
     </div>
   );
 }
