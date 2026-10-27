@@ -20,17 +20,12 @@ The homelab diagram shows the configured k3s cluster, its home/cloud node pools,
 GitOps delivery and platform services. It does not connect to the private cluster.
 Architecture sources are recorded in [docs/screenshots.md](docs/screenshots.md).
 
-The desk scene is local SVG artwork. The tabby has shaded fur, tapered limbs,
-shaped paws, and independent ear and head movement. She wanders behind the laptop,
-grooms, and watches the pointer. Her four-beat gait advances by distance so
-planted paws stay still as her body moves; starts and stops settle
-before the next action. She walks along the desk toward a cursor ahead of her,
-then sits in place and follows with her head and eyes when it moves behind or
-above her, without flipping her body. Hovering the top navigation makes her lift
-her head and look up. Her paws stay on the desk or keyboard as she passes
-behind the laptop. Animation respects reduced motion and stored motion
-preferences. The controller stops when hidden or
-offscreen and removes its listeners when leaving About.
+The desk scene is local SVG artwork. The tabby stays seated in a fixed spot
+beside the laptop. Her head visibly turns, tilts, and looks up or down toward
+the cursor, with smooth eye tracking and independent ear movement. Her body
+and paws stay still; she never walks, jumps, or flips. Animation respects
+reduced motion and stored motion preferences. The controller stops when hidden
+or offscreen and removes its listeners when leaving About.
 
 ## Checks and static preview
 

@@ -78,42 +78,6 @@
   transform-origin: center;
   animation: desk-blink 6.3s linear infinite;
 }
-.desk-companion .cat-tail {
-  transform-origin: 131px 164px;
-  animation: desk-tail 6.7s ease-in-out infinite;
-}
-.desk-companion .sit-rig {
-  opacity: 1;
-}
-.desk-companion .side-rig {
-  opacity: 0;
-}
-.desk-companion :is(.side-rig, .sit-rig) {
-  transition: opacity 0.24s ease;
-}
-.desk-companion [data-pose="walk"] .sit-rig {
-  opacity: 0;
-}
-.desk-companion [data-pose="walk"] .side-rig {
-  opacity: 1;
-}
-.desk-companion .leg {
-  fill: url(#desk-cat-leg);
-  stroke: none;
-}
-.desk-companion :is(.leg.front-far, .leg.back-far) {
-  fill: #7c7466;
-}
-.desk-companion .leg .toe {
-  fill: #c2b49b;
-}
-.desk-companion :is(.front-far, .back-far) .toe {
-  fill: #938876;
-}
-.desk-companion .cat-body {
-  transform-origin: 90px 177px;
-  animation: desk-cat-breathe 4.8s ease-in-out infinite;
-}
 .desk-companion .cat-ear {
   transform-box: fill-box;
   transform-origin: 50% 100%;
@@ -122,44 +86,6 @@
 .desk-companion .ear-right {
   animation-delay: -4s;
 }
-.desk-companion .licking .seated-front-paw {
-  opacity: 0;
-}
-.desk-companion .groom-paw {
-  opacity: 0;
-  transform-origin: 118px 157px;
-}
-.desk-companion .cat-tongue {
-  opacity: 0;
-}
-.desk-companion .licking .groom-paw {
-  opacity: 1;
-  animation: desk-groom 0.65s ease-in-out infinite;
-}
-.desk-companion .licking .seated-head {
-  transform: rotate(8deg) translate(2px, 1px);
-}
-.desk-companion .licking .cat-tongue {
-  animation: desk-lick 0.65s ease-in-out infinite;
-}
-.desk-companion .licking .cat-eyes {
-  transform: translate(1px, 1px);
-}
-.desk-companion .walking-head {
-  transform-origin: 64px 123px;
-  transform: translate(
-      var(--hx, 0px),
-      calc(var(--hy, 0px) + var(--head-drop, 0px))
-    )
-    rotate(
-      calc(
-        var(--tilt, 0deg) + var(--head-pitch, 0deg) + var(--gaze-pitch, 0deg)
-      )
-    );
-}
-.desk-companion .side-tail {
-  animation: none;
-}
 .desk-companion .laptop-foreground {
   position: absolute;
   inset: 0;
@@ -167,15 +93,6 @@
   height: 100%;
   z-index: 3;
   pointer-events: none;
-}
-@keyframes desk-cat-breathe {
-  0%,
-  100% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(1.012);
-  }
 }
 @keyframes desk-ear-listen {
   0%,
@@ -221,15 +138,6 @@
     transform: translateY(-4px);
   }
 }
-@keyframes desk-tail {
-  0%,
-  100% {
-    transform: rotate(-2deg);
-  }
-  50% {
-    transform: rotate(3deg);
-  }
-}
 @keyframes desk-blink {
   0%,
   41%,
@@ -239,27 +147,6 @@
   }
   43% {
     transform: scaleY(0.08);
-  }
-}
-@keyframes desk-groom {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0);
-  }
-  50% {
-    transform: translate(0, -2px) rotate(-4deg);
-  }
-}
-@keyframes desk-lick {
-  0%,
-  25%,
-  90%,
-  100% {
-    opacity: 0;
-  }
-  40%,
-  70% {
-    opacity: 1;
   }
 }
 html[data-motion="off"] .desk-companion * {
