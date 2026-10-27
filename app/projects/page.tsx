@@ -17,9 +17,6 @@ export default function Projects() {
           <h1>Things I make.</h1>
           <p>Personal apps and infrastructure. Built for my own day-to-day.</p>
         </div>
-        <span className="project-page-note">
-          03 projects · always tinkering
-        </span>
       </header>
       <Workbench />
     </main>
