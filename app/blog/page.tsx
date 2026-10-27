@@ -20,7 +20,6 @@ export default function Blog() {
   return (
     <main id="main" className="blog-page">
       <header className="blog-intro">
-        <span className="eyebrow">2015–2022</span>
         <h1>Blog archive</h1>
         <p>
           An archive of past write-ups on challenging tasks I've worked through.
