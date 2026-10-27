@@ -22,8 +22,7 @@ Architecture sources are recorded in [docs/screenshots.md](docs/screenshots.md).
 
 The desk scene is local SVG artwork. The tabby stays seated in a fixed spot
 beside the laptop. Her head visibly turns, tilts, and looks up or down toward
-the cursor, with smooth eye tracking and independent ear movement. Looking up
-tips her whole head back around the neck and raises her chin. Her body
+the cursor, with smooth eye tracking and independent ear movement. Her body
 and paws stay still; she never walks, jumps, or flips. Animation respects
 reduced motion and stored motion preferences. The controller stops when hidden
 or offscreen and removes its listeners when leaving About.

@@ -71,15 +71,7 @@
 }
 .desk-companion .seated-head {
   transform: translate(var(--hx, 0px), var(--hy, 0px)) rotate(var(--tilt, 0deg))
-    perspective(180px) rotateX(var(--head-pitch, 0deg));
-}
-.desk-companion .cat-chin {
-  opacity: var(--look-up, 0);
-  transition: opacity 0.18s ease-out;
-}
-.desk-companion .cat-muzzle {
-  transform: translateY(var(--muzzle-lift, 0px));
-  transition: transform 0.18s ease-out;
+    scaleY(var(--head-scale-y, 1));
 }
 .desk-companion .cat-blink {
   transform-box: fill-box;
