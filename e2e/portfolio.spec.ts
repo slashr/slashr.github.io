@@ -234,11 +234,12 @@ test("the seated cat visibly tracks in every direction while her body stays fixe
     home.evaluate((el) => {
       const body = el.getBoundingClientRect();
       const head = el.querySelector(".seated-head")!.getBoundingClientRect();
+      const nose = el.querySelector(".cat-nose")!.getBoundingClientRect();
       return {
         x: body.x,
         y: body.y,
         headX: head.x + head.width / 2,
-        headY: head.y + head.height / 2,
+        headY: nose.y + nose.height / 2,
       };
     });
   const initial = await snapshot();
@@ -277,10 +278,11 @@ test("the seated cat visibly tracks in every direction while her body stays fixe
   const resting = await snapshot();
   expect(resting.x).toBeCloseTo(initial.x, 1);
   expect(resting.y).toBeCloseTo(initial.y, 1);
-  await expect(home.locator(".seated-head")).toHaveCSS(
-    "transform",
-    "matrix(1, 0, 0, 1, 0, 0)",
-  );
+  const restingHead = await home.locator(".seated-head").evaluate((el) => {
+    const matrix = new DOMMatrixReadOnly(getComputedStyle(el).transform);
+    return { pitch: matrix.m23, y: matrix.m42, scale: matrix.m22 };
+  });
+  expect(restingHead).toEqual({ pitch: 0, y: 0, scale: 1 });
 });
 
 test("hovering Projects and Blog visibly lifts the cat's head without moving her body", async ({
@@ -300,10 +302,18 @@ test("hovering Projects and Blog visibly lifts the cat's head without moving her
     home.evaluate((el) => {
       const body = el.getBoundingClientRect();
       const head = el.querySelector(".seated-head")!.getBoundingClientRect();
+      const nose = el.querySelector(".cat-nose")!.getBoundingClientRect();
+      const headMatrix = new DOMMatrixReadOnly(
+        getComputedStyle(el.querySelector(".seated-head")!).transform,
+      );
       return {
         x: body.x,
         y: body.y,
-        headY: head.y + head.height / 2 - body.y,
+        headY: nose.y + nose.height / 2 - body.y,
+        pitch: (Math.atan2(headMatrix.m23, headMatrix.m22) * 180) / Math.PI,
+        noseToEar:
+          el.querySelector(".cat-nose")!.getBoundingClientRect().y -
+          el.querySelector(".ear-left")!.getBoundingClientRect().y,
         eyesY: new DOMMatrixReadOnly(
           getComputedStyle(el.querySelector(".seated-head .cat-eyes")!)
             .transform,
@@ -320,6 +330,10 @@ test("hovering Projects and Blog visibly lifts the cat's head without moving her
       .poll(async () => (await snapshot()).headY)
       .toBeLessThan(initial.headY - 3);
     await expect.poll(async () => (await snapshot()).eyesY).toBeLessThan(-1);
+    await expect.poll(async () => (await snapshot()).pitch).toBeGreaterThan(30);
+    await expect
+      .poll(async () => (await snapshot()).noseToEar)
+      .toBeLessThan(initial.noseToEar - 5);
     const current = await snapshot();
     expect(current.x).toBeCloseTo(initial.x, 1);
     expect(current.y).toBeCloseTo(initial.y, 1);

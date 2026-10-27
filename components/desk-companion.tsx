@@ -327,6 +327,11 @@ export function DeskCompanion() {
                 />
               </g>
               <g className="cat-head seated-head">
+                <path
+                  className="cat-chin"
+                  d="M74 114Q89 123 108 114Q110 128 90 138Q72 129 74 114Z"
+                  fill="#d5c8af"
+                />
                 <g className="cat-ear ear-left">
                   <path d="M68 99Q64 84 69 73Q77 77 82 89Z" fill="#81796a" />
                   <path d="M70 80 72 94 78 88Z" fill="#b49c91" />
@@ -368,9 +373,14 @@ export function DeskCompanion() {
                     strokeWidth=".8"
                   />
                 </g>
-                <path d="m86 115 7 0q1 2-3.5 4-4-2-3.5-4" fill="#916f69" />
+                <path
+                  className="cat-nose cat-muzzle"
+                  d="m86 115 7 0q1 2-3.5 4-4-2-3.5-4"
+                  fill="#916f69"
+                />
                 <path
                   d="M89.5 119v3m0 0q-3 3-6 0m6 0q3 3 6 0"
+                  className="cat-muzzle"
                   fill="none"
                   stroke="#786c5e"
                   strokeWidth=".7"
