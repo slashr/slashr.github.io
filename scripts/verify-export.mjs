@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
-import { resolve } from "node:path";
+import { extname, resolve } from "node:path";
 import { load } from "cheerio";
 import { readPosts } from "../lib/archive.mjs";
 const root = resolve("out");
@@ -17,6 +17,8 @@ let checked = 0;
 for (const post of readPosts()) {
   const file = targetFile(post.url);
   if (!file) throw new Error("Missing original post URL: " + post.url);
+  if (extname(file) !== ".html")
+    throw new Error("Archive page must be exported as HTML: " + post.url);
   const $ = load(readFileSync(file, "utf8"));
   if ($("h1").text() !== post.title)
     throw new Error("Archive title mismatch: " + post.url);

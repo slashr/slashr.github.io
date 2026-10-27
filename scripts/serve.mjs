@@ -34,7 +34,7 @@ const server = createServer(async (request, response) => {
     }
     const content = await readFile(file);
     response.writeHead(200, {
-      "Content-Type": types[extname(file)] || "text/html; charset=utf-8",
+      "Content-Type": types[extname(file)] || "application/octet-stream",
     });
     response.end(request.method === "HEAD" ? undefined : content);
   } catch {

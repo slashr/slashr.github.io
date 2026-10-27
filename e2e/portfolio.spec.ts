@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
+import { extname } from "node:path";
 const originals: { url: string }[] = JSON.parse(
   readFileSync(new URL("../tests/legacy-posts.json", import.meta.url), "utf8"),
 );
@@ -176,8 +177,14 @@ test("the complete archive and every old article URL work on the exported static
     )
     .toBeGreaterThan(0);
   for (const post of originals) {
-    const response = await request.get(post.url);
-    expect(response.status(), post.url).toBe(200);
+    const urls = [post.url];
+    if (!post.url.endsWith("/") && !extname(post.url))
+      urls.push(post.url + ".html");
+    for (const url of urls) {
+      const response = await request.get(url);
+      expect(response.status(), url).toBe(200);
+      expect(response.headers()["content-type"], url).toMatch(/^text\/html\b/i);
+    }
   }
 });
 

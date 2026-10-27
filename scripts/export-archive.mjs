@@ -1,5 +1,5 @@
 import { cpSync, mkdirSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { dirname, extname, resolve } from "node:path";
 import {
   readPosts,
   renderPost,
@@ -10,7 +10,9 @@ const out = resolve("out");
 function write(url, content) {
   const file = resolve(
     out,
-    "." + url + (url.endsWith("/") ? "index.html" : ""),
+    "." +
+      url +
+      (url.endsWith("/") ? "index.html" : extname(url) ? "" : ".html"),
   );
   if (!file.startsWith(out + "/"))
     throw new Error("Archive path escapes output");

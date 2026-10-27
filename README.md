@@ -42,12 +42,13 @@ the actual static output, run `npm run preview` and open `http://127.0.0.1:4173`
 
 ## GitHub Pages
 
-Before merging this migration, change the repository's **Settings → Pages →
-Build and deployment → Source** to **GitHub Actions**. It currently uses the
-legacy Jekyll branch builder. This is a one-time publishing setup change;
-opening this PR does not change the live site or its settings.
+Configure the repository's **Settings → Pages → Build and deployment → Source**
+as **GitHub Actions**. The Portfolio workflow builds and deploys the exported
+static files.
 
-The Portfolio workflow checks pull requests. After a merge into `master`, it
+The Portfolio workflow checks same-repository pull requests on Stanley's
+`portfolio-always-on` Linux ARM64 runner. Fork PRs are skipped on this personal
+runner. After a merge into `master`, it
 builds the site, runs the browser checks, and deploys `out/` to GitHub Pages.
 There is no runtime Node server, API, database, or secret required by the site.
 
@@ -56,7 +57,8 @@ There is no runtime Node server, API, database, or secret required by the site.
 - The 25 Markdown originals in `_posts/` remain unchanged.
 - `lib/archive.mjs` renders them only at build time. The original dates,
   per-post permalinks, dated `.html` URL, and even the historical malformed
-  Medium path remain available.
+  Medium path remain available. Extensionless article paths are exported as
+  `.html` files, preserving both the original URL and its `.html` form on Pages.
 - `tests/legacy-posts.json` pins the source hashes and URLs against the existing
   live site's sitemap. Source edits require deliberately updating that baseline.
 - `assets/images/` stays in its original source location and is copied into the
