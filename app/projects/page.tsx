@@ -13,7 +13,7 @@ export default function Projects() {
     <main id="main" className="projects-page">
       <header className="intro projects-intro">
         <div>
-          <h1>Things I make.</h1>
+          <h1>Currently building</h1>
         </div>
       </header>
       <Workbench />
