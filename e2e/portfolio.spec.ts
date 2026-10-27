@@ -149,14 +149,14 @@ test("preferences persist and reduced motion starts with a paused background", a
   await expect(page.locator("html")).toHaveAttribute("data-motion", "off");
 });
 
-test("archive search and every old article URL work on the exported static host", async ({
+test("the complete archive and every old article URL work on the exported static host", async ({
   page,
   request,
 }) => {
   await page.goto("/blog/");
-  await expect(page.getByRole("status")).toHaveText("25 posts");
-  await page.getByRole("searchbox").fill("terrafying");
-  await expect(page.getByRole("status")).toHaveText("1 post");
+  await expect(page.locator(".result-count")).toHaveText("25 posts");
+  await expect(page.locator(".archive-entry")).toHaveCount(25);
+  await expect(page.getByRole("searchbox")).toHaveCount(0);
   await page
     .getByRole("link", { name: /Making Terraform Less Terrafying/ })
     .click();

@@ -67,5 +67,5 @@ There is no runtime Node server, API, database, or secret required by the site.
   archive. `/feed.xml`, `/sitemap.xml`, the favicons, and Google verification file
   remain available. The old gist embed is retained as an ordinary code link.
 - The archive is pre-rendered HTML, readable without JavaScript; Next.js serves
-  the portfolio and searchable archive index. All local output links and archived
+  the portfolio and archive index. All local output links and archived
   images are checked during the build.

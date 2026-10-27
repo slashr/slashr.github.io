@@ -674,26 +674,6 @@ html[data-motion="off"] .ambient-gradient,
   max-width: 570px;
   margin: 0;
 }
-.archive-search {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 15px;
-  max-width: 420px;
-  color: var(--muted);
-}
-.archive-search input {
-  border: 0;
-  background: none;
-  outline: none;
-  width: 100%;
-  color: var(--ink);
-  font-size: 14px;
-  min-height: 25px;
-}
 .result-count {
   font:
     11px/1.8 ui-monospace,
@@ -1004,9 +984,6 @@ html[data-motion="off"] .ambient-gradient,
   }
   .archive-entry {
     font-size: 13px;
-  }
-  .archive-search input {
-    font-size: 16px;
   }
   .not-found {
     padding: 50px 0 85px;
