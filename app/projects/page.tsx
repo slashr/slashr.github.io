@@ -15,7 +15,6 @@ export default function Projects() {
         <div>
           <span className="eyebrow">The workbench</span>
           <h1>Things I make.</h1>
-          <p>Personal apps and infrastructure. Built for my own day-to-day.</p>
         </div>
       </header>
       <Workbench />
