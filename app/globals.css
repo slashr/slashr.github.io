@@ -306,16 +306,6 @@ html[data-motion="off"] .ambient-gradient,
   line-height: 1.7;
   color: var(--muted);
 }
-.rail-note {
-  font:
-    10px/1.9 ui-monospace,
-    monospace;
-  color: var(--muted);
-  padding: 0 12px;
-  margin-top: auto;
-  padding-top: 90px;
-  margin-bottom: 10px;
-}
 .project-stage {
   min-width: 0;
   min-height: 670px;
@@ -424,19 +414,6 @@ html[data-motion="off"] .ambient-gradient,
 .project-notes li {
   margin: 6px 0;
 }
-.screenshot-hint {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  font-size: 10px;
-  line-height: 1.8;
-  color: var(--muted);
-  margin-top: 24px;
-}
-.screenshot-hint svg {
-  margin-top: 2px;
-  flex-shrink: 0;
-}
 .project-preview {
   min-width: 0;
 }
@@ -475,11 +452,6 @@ html[data-motion="off"] .ambient-gradient,
   grid-row: 4;
   padding-top: 10px;
   margin-top: 10px;
-}
-.wide-panel .screenshot-hint {
-  grid-column: 1;
-  grid-row: 4;
-  margin-top: 17px;
 }
 .wide-panel .project-topline {
   margin-bottom: 18px;
@@ -832,8 +804,7 @@ html[data-motion="off"] .ambient-gradient,
     border-bottom: 1px solid var(--line);
     padding: 11px 9px;
   }
-  .rail-heading,
-  .rail-note {
+  .rail-heading {
     display: none;
   }
   .project-tabs {
@@ -906,10 +877,6 @@ html[data-motion="off"] .ambient-gradient,
   .project-notes summary {
     font-size: 12px;
   }
-  .screenshot-hint {
-    margin-top: 16px;
-    font-size: 10px;
-  }
   .project-preview {
     width: 100%;
   }
@@ -932,9 +899,6 @@ html[data-motion="off"] .ambient-gradient,
   .wide-panel .project-notes {
     margin-top: 18px;
     padding-top: 13px;
-  }
-  .wide-panel .screenshot-hint {
-    margin-top: 17px;
   }
   .wide-panel .project-topline {
     margin-bottom: 23px;

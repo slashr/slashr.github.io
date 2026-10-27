@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion } from "motion/react";
-import { Timer, Wallet, Network, ArrowDownRight } from "lucide-react";
+import { Timer, Wallet, Network } from "lucide-react";
 import { projects, type ProjectId, type Project } from "@/lib/projects";
 import { HomelabArchitecture } from "./homelab-architecture";
 import { Screenshots } from "./screenshots";
@@ -56,12 +56,6 @@ function ProjectPanel({
                 </ul>
               </details>
             </>
-          )}
-          {!isLab && (
-            <span className="screenshot-hint">
-              <ArrowDownRight size={13} aria-hidden="true" />
-              Actual app captures. Click to enlarge.
-            </span>
           )}
         </div>
         <div className={`project-preview ${isLab ? "lab-preview" : ""}`}>
@@ -165,11 +159,6 @@ export function Workbench() {
             );
           })}
         </div>
-        <span className="rail-note">
-          Select a project.
-          <br />
-          Explore it here.
-        </span>
       </aside>
       <div className="project-stage">
         {projects.map((project) => (
