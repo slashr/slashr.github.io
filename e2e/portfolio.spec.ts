@@ -19,7 +19,7 @@ test("the homepage introduces Akash and the main tabs open their own pages", asy
   await expect(
     page.getByRole("tablist", { name: "Choose a project" }),
   ).toHaveCount(0);
-  await page.getByRole("link", { name: "See what I'm working on" }).click();
+  await navigation.getByRole("link", { name: "Projects", exact: true }).click();
   await expect(page).toHaveURL(/\/projects\/$/);
   await expect(
     navigation.getByRole("link", { name: "Projects", exact: true }),

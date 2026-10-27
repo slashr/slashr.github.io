@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { DeskCompanion } from "@/components/desk-companion";
 
 export default function Home() {
@@ -21,10 +20,6 @@ export default function Home() {
               infrastructure converge to code.
             </p>
           </div>
-          <Link className="about-project-link" href="/projects/">
-            See what I'm working on{" "}
-            <ArrowUpRight size={17} aria-hidden="true" />
-          </Link>
         </div>
         <DeskCompanion />
       </section>
