@@ -11,9 +11,9 @@
   --accent: var(--maroon);
   --accent-soft: var(--maroon-soft);
   --shadow: light-dark(#6b1c1310, #0000002b);
-  --ambient-rose: light-dark(#f2e4e7, #301e27);
-  --ambient-neutral: light-dark(#f8f1ed, #281e24);
-  --ambient-plum: light-dark(#eee7ed, #28212d);
+  --ambient-burgundy: light-dark(#f0d8d8, #41151e);
+  --ambient-neutral: light-dark(#f8eee8, #271315);
+  --ambient-maroon: light-dark(#e8c8c6, #341014);
 }
 html[data-theme="light"] {
   color-scheme: light;
@@ -200,9 +200,9 @@ h1 {
   inset: -30%;
   background: linear-gradient(
     120deg,
-    var(--ambient-rose) 0%,
+    var(--ambient-burgundy) 0%,
     var(--ambient-neutral) 45%,
-    var(--ambient-plum) 100%
+    var(--ambient-maroon) 100%
   );
   animation: gradient-drift 32s ease-in-out infinite alternate;
 }
