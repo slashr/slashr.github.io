@@ -69,6 +69,10 @@
   transform: translate(var(--gx, 0px), var(--gy, 0px));
   transition: transform 0.09s ease-out;
 }
+.desk-companion .seated-head {
+  transform: translate(var(--hx, 0px), var(--hy, 0px)) rotate(var(--tilt, 0deg))
+    scaleY(var(--head-scale-y, 1));
+}
 .desk-companion .cat-blink {
   transform-box: fill-box;
   transform-origin: center;
@@ -147,7 +151,11 @@
       var(--hx, 0px),
       calc(var(--hy, 0px) + var(--head-drop, 0px))
     )
-    rotate(calc(var(--tilt, 0deg) + var(--head-pitch, 0deg)));
+    rotate(
+      calc(
+        var(--tilt, 0deg) + var(--head-pitch, 0deg) + var(--gaze-pitch, 0deg)
+      )
+    );
 }
 .desk-companion .side-tail {
   animation: none;

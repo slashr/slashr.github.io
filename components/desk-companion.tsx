@@ -276,6 +276,10 @@ export function DeskCompanion() {
                   strokeLinecap="round"
                 />
               </g>
+              <path
+                d="M80 113Q90 118 100 113L103 132H77Z"
+                fill="url(#desk-cat-coat)"
+              />
               <g className="cat-body">
                 <path
                   d="M78 118C65 129 68 141 61 156Q55 168 65 175L76 178H112Q124 171 115 154C109 144 114 131 101 119Z"
