@@ -1,0 +1,22 @@
+import type { Metadata } from "next";
+import { Workbench } from "@/components/workbench";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Power Hour, iNAB, and my homelab. Apps and systems I build and use.",
+  alternates: { canonical: "/projects/" },
+};
+
+export default function Projects() {
+  return (
+    <main id="main" className="projects-page">
+      <header className="intro projects-intro">
+        <div>
+          <h1>Currently building</h1>
+        </div>
+      </header>
+      <Workbench />
+    </main>
+  );
+}

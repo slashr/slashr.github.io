@@ -48,3 +48,10 @@ Gemfile.lock
 _config.dev.yml
 .vscode
 *.gem
+
+# Next.js and browser checks
+.next/
+out/
+*.tsbuildinfo
+playwright-report/
+test-results/

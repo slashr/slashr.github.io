@@ -1,0 +1,167 @@
+.desk-companion {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 640px;
+}
+.desk-companion .desk-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 640/500;
+}
+.desk-companion .desk-art {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.desk-companion .wall-line {
+  stroke: var(--accent);
+  opacity: 0.12;
+  stroke-width: 1;
+  fill: none;
+}
+.desk-companion .wall-note {
+  fill: var(--accent);
+  opacity: 0.12;
+}
+.desk-companion .note-ink {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.desk-companion .engineer-head {
+  transform-origin: 286px 205px;
+  animation: desk-working 7s ease-in-out infinite;
+}
+.desk-companion .hand {
+  animation: desk-typing 0.9s ease-in-out infinite;
+  transform-origin: 280px 330px;
+}
+.desk-companion .hand-right {
+  animation-delay: -0.45s;
+}
+.desk-companion .steam {
+  animation: desk-steam 4s ease-in-out infinite;
+}
+.desk-companion [data-cat-home] {
+  position: absolute;
+  left: 68.5%;
+  top: 36.92%;
+  width: 25.5%;
+  aspect-ratio: 180/210;
+  z-index: 2;
+  transform-origin: 50% 84.75%;
+}
+.desk-companion [data-cat] {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.desk-companion .cat-head {
+  transform-origin: 89px 122px;
+  transform: translate(var(--hx, 0px), var(--hy, 0px)) rotate(var(--tilt, 0deg));
+  transition: transform 0.18s ease-out;
+}
+.desk-companion .cat-eyes {
+  transform: translate(var(--gx, 0px), var(--gy, 0px));
+  transition: transform 0.09s ease-out;
+}
+.desk-companion .seated-head {
+  transform: translate(var(--hx, 0px), var(--hy, 0px)) rotate(var(--tilt, 0deg))
+    scaleY(var(--head-scale-y, 1));
+}
+.desk-companion .cat-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: desk-blink 6.3s linear infinite;
+}
+.desk-companion .cat-ear {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: desk-ear-listen 11s ease-in-out infinite;
+}
+.desk-companion .ear-right {
+  animation-delay: -4s;
+}
+.desk-companion .laptop-foreground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+@keyframes desk-ear-listen {
+  0%,
+  63%,
+  71%,
+  100% {
+    transform: rotate(0);
+  }
+  66% {
+    transform: rotate(-9deg);
+  }
+  68% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes desk-working {
+  0%,
+  100% {
+    transform: rotate(-1.5deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+@keyframes desk-typing {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-2.5px);
+  }
+}
+@keyframes desk-steam {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(-4px);
+  }
+}
+@keyframes desk-blink {
+  0%,
+  41%,
+  45%,
+  100% {
+    transform: scaleY(1);
+  }
+  43% {
+    transform: scaleY(0.08);
+  }
+}
+html[data-motion="off"] .desk-companion * {
+  animation: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .desk-companion * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (max-width: 700px) {
+  .desk-companion {
+    max-width: 530px;
+    margin: 0 auto;
+  }
+}
